@@ -1,6 +1,7 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import mainFrontEnd.TaskBar;
 
 /**
  * 
@@ -78,7 +78,7 @@ public abstract class InputPage extends JPanel{
 				});
 
 		JPanel fieldPanel = new JPanel();
-		fieldPanel.setLayout(new GridLayout(3,2,15,15));
+		fieldPanel.setLayout(new GridLayout(3,0,0,15));
 
 		fieldPanel.add(new JLabel("username"));
 		fieldPanel.add(nameField);

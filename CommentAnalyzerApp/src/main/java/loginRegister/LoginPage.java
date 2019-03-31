@@ -3,10 +3,11 @@ package loginRegister;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 
-
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 
 public class LoginPage extends InputPage{
 
@@ -52,6 +53,9 @@ public class LoginPage extends InputPage{
 	 * @postcondition this != null
 	 */
 	protected void setPageName() {
-		this.add(new JLabel("Login Screen"), BorderLayout.NORTH);
+		JLabel login = new JLabel("Login Screen");
+		login.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+		login.setHorizontalAlignment(JLabel.CENTER);
+		this.add(login, BorderLayout.NORTH);
 	}
 }

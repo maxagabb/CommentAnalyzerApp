@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 import java.util.ArrayList;
 
-
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -81,7 +81,10 @@ public class RegisterPage extends InputPage{
 	 * @postcondition this != null
 	 */
 	protected void setPageName() {
-		this.add(new JLabel("Register Screen"), BorderLayout.NORTH);
+		JLabel register = new JLabel("Register Screen");
+		register.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+		register.setHorizontalAlignment(JLabel.CENTER);
+		this.add(register, BorderLayout.NORTH);
 	}
 	
 	private String inputEmail;

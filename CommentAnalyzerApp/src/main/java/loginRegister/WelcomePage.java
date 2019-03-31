@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,24 +28,30 @@ public class WelcomePage extends JPanel{
 	 * @postcondition frame = null
 	 */
 	private void setPage() {
-		this.add(new JLabel("Welcome Screen"), BorderLayout.NORTH);
+		this.setLayout(new BorderLayout());
+		JLabel welcome = new JLabel("Welcome Screen");
+		welcome.setHorizontalAlignment(JLabel.CENTER);
+		welcome.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+		this.add(welcome, BorderLayout.NORTH);
 		JButton login = new JButton("login");
 		login.addActionListener(e ->{
+			JFrame nextframe = new JFrame();
+			nextframe.setBounds(frame.getX(), frame.getY(), 
+					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			JFrame frame = new JFrame();
-			frame.setBounds(800, 400, 200, 200);
-			frame.add(new LoginPage(frame));
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			nextframe.add(new LoginPage(frame));
+			nextframe.setVisible(true);
+			nextframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
 		JButton register = new JButton("register");
 		register.addActionListener(e ->{
+			JFrame nextframe = new JFrame();
+			nextframe.setBounds(frame.getX(), frame.getY(), 
+					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			JFrame frame = new JFrame();
-			frame.setBounds(800, 400, 200, 200);
-			frame.add(new RegisterPage(frame));
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			nextframe.add(new RegisterPage(frame));
+			nextframe.setVisible(true);
+			nextframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
