@@ -18,12 +18,6 @@ public class MainPage extends JPanel{
 		add(bar,BorderLayout.NORTH);
 	}
 
-
-
-
-
-
-
 	private JFrame frame;
 	private TaskBar bar;
 }

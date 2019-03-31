@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Google Inc.
+ * Copyright (c) 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -14,234 +14,132 @@
 
 package api;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.auth.oauth2.Credential;
+
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.util.Joiner;
+import com.google.api.client.util.ArrayMap;
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.GeoPoint;
+import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.google.api.services.youtube.model.Thumbnail;
+import com.google.api.services.youtube.model.SearchResultSnippet;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
+import com.google.api.services.youtube.model.VideoLocalization;
+import com.google.common.collect.Lists;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
-/**
- * This sample lists videos that are associated with a particular keyword and are in the radius of
- *   particular geographic coordinates by:
- *
- * 1. Searching videos with "youtube.search.list" method and setting "type", "q", "location" and
- *   "locationRadius" parameters.
- * 2. Retrieving location details for each video with "youtube.videos.list" method and setting
- *   "id" parameter to comma separated list of video IDs in search result.
- *
- * @author Ibrahim Ulukaya
- */
-public class VideoRetriever {
+import org.json.JSONObject;
+
+
+public class VideoRetriever implements Retriever{
 
     /**
-     * Define a global variable that identifies the name of a file that
-     * contains the developer's API key.
-     */
-    private static final String PROPERTIES_FILENAME = "C:\\Users\\mgabb2015\\git\\CommentAnalyzerApp\\CommentAnalyzerApp\\youtube.properties";
-
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
-
-    /**
-     * Define a global instance of a Youtube object, which will be used
-     * to make YouTube Data API requests.
+     * Define a global instance of a YouTube object, which will be used to make
+     * YouTube Data API requests.
      */
     private static YouTube youtube;
 
+
     /**
-     * Initialize a YouTube object to search for videos on YouTube. Then
-     * display the name and thumbnail image of each video in the result set.
+     * Set and retrieve localized metadata for a video.
      *
-     * @param args command line args.
+     * @param args command line args (not used).
+     * @return 
      */
-    public static void main(String[] args) {
-        // Read the developer key from the properties file.
-        Properties properties = new Properties();
-        try {
-            InputStream in = VideoRetriever.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
-            properties.load(in);
+    public SearchListResponse getJson(String searchTerm){
 
-        } catch (IOException e) {
-            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
-                    + " : " + e.getMessage());
-            System.exit(1);
-        }
+        // This OAuth 2.0 access scope allows for full read/write access to the
+        // authenticated user's account.
+        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
 
         try {
-            // This object is used to make YouTube Data API requests. The last
-            // argument is required, but since we don't need anything
-            // initialized when the HttpRequest is initialized, we override
-            // the interface and provide a no-op function.
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
-                @Override
-                public void initialize(HttpRequest request) throws IOException {
-                }
-            }).setApplicationName("youtube-cmdline-geolocationsearch-sample").build();
+            // Authorize the request.
 
-            // Prompt the user to enter a query term.
-            String queryTerm = getInputQuery();
+        Credential credential = Auth.authorize(scopes, "localizations");
+        YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+                .setApplicationName("youtube-cmdline-localizations-sample").build();
 
-            // Prompt the user to enter location coordinates.
-            String location = getInputLocation();
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("part", "snippet");
+            parameters.put("maxResults", "10");
+            parameters.put("q", searchTerm);
+            parameters.put("type", "video");
 
-            // Prompt the user to enter a location radius.
-            String locationRadius = getInputLocationRadius();
-
-            // Define the API request for retrieving search results.
-            YouTube.Search.List search = youtube.search().list("id,snippet");
-
-            // Set your developer key from the {{ Google Cloud Console }} for
-            // non-authenticated requests. See:
-            // {{ https://cloud.google.com/console }}
-            String apiKey = properties.getProperty("youtube.apikey");
-            search.setKey(apiKey);
-            search.setQ(queryTerm);
-            search.setLocation(location);
-            search.setLocationRadius(locationRadius);
-
-            // Restrict the search results to only include videos. See:
-            // https://developers.google.com/youtube/v3/docs/search/list#type
-            search.setType("video");
-
-            // As a best practice, only retrieve the fields that the
-            // application uses.
-            search.setFields("items(id/videoId)");
-            search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
-
-            // Call the API and print results.
-            SearchListResponse searchResponse = search.execute();
-            List<SearchResult> searchResultList = searchResponse.getItems();
-            List<String> videoIds = new ArrayList<String>();
-
-            if (searchResultList != null) {
-
-                // Merge video IDs
-                for (SearchResult searchResult : searchResultList) {
-                    videoIds.add(searchResult.getId().getVideoId());
-                }
-                Joiner stringJoiner = Joiner.on(',');
-                String videoId = stringJoiner.join(videoIds);
-
-                // Call the YouTube Data API's youtube.videos.list method to
-                // retrieve the resources that represent the specified videos.
-                YouTube.Videos.List listVideosRequest = youtube.videos().list("snippet, recordingDetails").setId(videoId);
-                VideoListResponse listResponse = listVideosRequest.execute();
-
-                List<Video> videoList = listResponse.getItems();
-
-                if (videoList != null) {
-                    prettyPrint(videoList.iterator(), queryTerm);
-                }
+            YouTube.Search.List searchListByKeywordRequest = youtube.search().list(parameters.get("part").toString());
+            if (parameters.containsKey("maxResults")) {
+                searchListByKeywordRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
             }
-        } catch (GoogleJsonResponseException e) {
-            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
-                    + e.getDetails().getMessage());
-        } catch (IOException e) {
-            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
-        } catch (Throwable t) {
-            t.printStackTrace();
+
+            if (parameters.containsKey("q") && parameters.get("q") != "") {
+                searchListByKeywordRequest.setQ(parameters.get("q").toString());
+            }
+
+            if (parameters.containsKey("type") && parameters.get("type") != "") {
+                searchListByKeywordRequest.setType(parameters.get("type").toString());
+            }
+
+            SearchListResponse response = searchListByKeywordRequest.execute();
+            return response;
         }
+        catch (Exception e){
+        	
+        }
+		return null;
     }
 
+
+
     /*
-     * Prompt the user to enter a query term and return the user-specified term.
+     * Prompt the user to enter a resource ID. Then return the ID.
      */
-    private static String getInputQuery() throws IOException {
+    private static String getId(String resource) throws IOException {
 
-        String inputQuery = "";
+        String id = "";
 
-        System.out.print("Please enter a search term: ");
+        System.out.print("Please enter a " + resource + " id: ");
         BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-        inputQuery = bReader.readLine();
+        id = bReader.readLine();
 
-        if (inputQuery.length() < 1) {
-            // Use the string "YouTube Developers Live" as a default.
-            inputQuery = "YouTube Developers Live";
-        }
-        return inputQuery;
+        System.out.println("You chose " + id + " for localizations.");
+        return id;
     }
 
-    /*
-     * Prompt the user to enter location coordinates and return the user-specified coordinates.
-     */
-    private static String getInputLocation() throws IOException {
 
-        String inputQuery = "";
 
-        System.out.print("Please enter location coordinates (example: 37.42307,-122.08427): ");
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-        inputQuery = bReader.readLine();
+	@Override
+	public ArrayList<Video1> retrieve(String fieldInput) throws JsonParseException, IOException {
+		SearchListResponse response = getJson(fieldInput);
+		ArrayList<Video1> videos = new ArrayList<Video1>();
+	    for (SearchResult result : response.getItems()) {
+	        Video1 video = new Video1(result);
+	        videos.add(video);
+	    }
+		//System.out.print(videos);
+		return videos;
+	}
 
-        if (inputQuery.length() < 1) {
-            // Use the string "37.42307,-122.08427" as a default.
-            inputQuery = "37.42307,-122.08427";
-        }
-        return inputQuery;
+    public static void main(String[] args) throws IOException {
+    	VideoRetriever retriever = new VideoRetriever();
+    	retriever.retrieve("akira");
     }
 
-    /*
-     * Prompt the user to enter a location radius and return the user-specified radius.
-     */
-    private static String getInputLocationRadius() throws IOException {
 
-        String inputQuery = "";
 
-        System.out.print("Please enter a location radius (examples: 5km, 8mi):");
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-        inputQuery = bReader.readLine();
 
-        if (inputQuery.length() < 1) {
-            // Use the string "5km" as a default.
-            inputQuery = "5km";
-        }
-        return inputQuery;
-    }
 
-    /*
-     * Prints out all results in the Iterator. For each result, print the
-     * title, video ID, location, and thumbnail.
-     *
-     * @param iteratorVideoResults Iterator of Videos to print
-     *
-     * @param query Search query (String)
-     */
-    private static void prettyPrint(Iterator<Video> iteratorVideoResults, String query) {
-
-        System.out.println("\n=============================================================");
-        System.out.println(
-                "   First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + query + "\".");
-        System.out.println("=============================================================\n");
-
-        if (!iteratorVideoResults.hasNext()) {
-            System.out.println(" There aren't any results for your query.");
-        }
-
-        while (iteratorVideoResults.hasNext()) {
-
-            Video singleVideo = iteratorVideoResults.next();
-
-            Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
-            GeoPoint location = singleVideo.getRecordingDetails().getLocation();
-
-            System.out.println(" Video Id" + singleVideo.getId());
-            System.out.println(" Title: " + singleVideo.getSnippet().getTitle());
-            System.out.println(" Location: " + location.getLatitude() + ", " + location.getLongitude());
-            System.out.println(" Thumbnail: " + thumbnail.getUrl());
-            System.out.println("\n-------------------------------------------------------------\n");
-        }
-    }
 }

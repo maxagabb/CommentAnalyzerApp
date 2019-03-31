@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import loginRegister.LoginPage;
 import loginRegister.WelcomePage;
@@ -38,7 +39,8 @@ public class TaskBar extends JPanel{
 				nextFrame.setBounds(frame.getX(), frame.getY(), 
 						frame.getWidth(), frame.getHeight());
 				frame.dispose();
-				nextFrame.add(getPage(button.getText(), nextFrame));
+				JScrollPane pane = new JScrollPane(getPage(button.getText(), nextFrame));
+				nextFrame.add(pane);
 				nextFrame.setVisible(true);
 				nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			});
