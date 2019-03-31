@@ -7,7 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
+
+import mainFrontEnd.MainPage;
+import mainFrontEnd.TaskBar;
 
 public class LoginPage extends InputPage{
 
@@ -34,12 +38,16 @@ public class LoginPage extends InputPage{
 		input.add(inputPassword);
 		if(list.validate(input)) {
 			System.out.print("success");
-			/*frame.dispose();
-			JFrame frame = new JFrame();
-			frame.add(new MainPage(frame));
-			frame.setBounds(800, 400, 200, 200);
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+			
+			JFrame nextFrame = new JFrame();
+			nextFrame.setBounds(frame.getX(), frame.getY(), 
+					frame.getWidth(), frame.getHeight());
+			frame.dispose();
+			JScrollPane pane = new JScrollPane(new MainPage(nextFrame,
+					new TaskBar(nextFrame)));
+			nextFrame.add(pane);
+			nextFrame.setVisible(true);
+			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 		
 		else

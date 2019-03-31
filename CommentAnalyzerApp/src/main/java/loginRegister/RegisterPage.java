@@ -40,13 +40,15 @@ public class RegisterPage extends InputPage{
 			input.add(inputPassword);
 			input.add(inputEmail);
 			list.printToFile(input);
+			
+			JFrame nextFrame = new JFrame();
+			nextFrame.setBounds(frame.getX(), frame.getY(), 
+					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-
-			JFrame frame = new JFrame();
-			frame.add(new LoginPage(frame));
-			frame.setBounds(800, 400, 200, 200);
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			nextFrame.add(new LoginPage(frame));
+			nextFrame.setVisible(true);
+			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
 		}
 		catch(Exception E) {
 			JOptionPane.showMessageDialog(frame, "invalid Input");

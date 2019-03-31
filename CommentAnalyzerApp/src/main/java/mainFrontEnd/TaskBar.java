@@ -33,12 +33,14 @@ public class TaskBar extends JPanel{
 		while(iterator.hasNext()) {
 			JButton button = iterator.next();
 			button.addActionListener(e->{
+				
+				JFrame nextFrame = new JFrame();
+				nextFrame.setBounds(frame.getX(), frame.getY(), 
+						frame.getWidth(), frame.getHeight());
 				frame.dispose();
-				JFrame frame = new JFrame();
-				frame.setBounds(800, 400, 200, 200);
-				frame.add(getPage(button.getText(), frame));
-				frame.setVisible(true);
-				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				nextFrame.add(getPage(button.getText(), nextFrame));
+				nextFrame.setVisible(true);
+				nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			});
 			this.add(button);
 		}
@@ -46,6 +48,8 @@ public class TaskBar extends JPanel{
 	private JPanel getPage(String name, JFrame frame) {
 		if(name.equals("Manage Favorites"))
 			return new WelcomePage(frame);
+		else if(name.equals("By Video"))
+			return new ByVideoPage(frame, new TaskBar(frame));
 		else return new JPanel();
 		
 		

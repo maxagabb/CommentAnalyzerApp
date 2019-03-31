@@ -35,23 +35,23 @@ public class WelcomePage extends JPanel{
 		this.add(welcome, BorderLayout.NORTH);
 		JButton login = new JButton("login");
 		login.addActionListener(e ->{
-			JFrame nextframe = new JFrame();
-			nextframe.setBounds(frame.getX(), frame.getY(), 
+			JFrame nextFrame = new JFrame();
+			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextframe.add(new LoginPage(frame));
-			nextframe.setVisible(true);
-			nextframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			nextFrame.add(new LoginPage(nextFrame));
+			nextFrame.setVisible(true);
+			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
 		JButton register = new JButton("register");
 		register.addActionListener(e ->{
-			JFrame nextframe = new JFrame();
-			nextframe.setBounds(frame.getX(), frame.getY(), 
+			JFrame nextFrame = new JFrame();
+			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextframe.add(new RegisterPage(frame));
-			nextframe.setVisible(true);
-			nextframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			nextFrame.add(new RegisterPage(nextFrame));
+			nextFrame.setVisible(true);
+			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
