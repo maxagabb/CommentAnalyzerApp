@@ -38,8 +38,4 @@ public class VideoPanel extends JPanel{
 		}
 	}
 	private Video1 video;
-	public Video1 getVideo() {
-		// TODO Auto-generated method stub
-		return video;
-	}
 }

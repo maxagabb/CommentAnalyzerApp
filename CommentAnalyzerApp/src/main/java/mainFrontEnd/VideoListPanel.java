@@ -23,7 +23,6 @@ public class VideoListPanel extends JPanel{
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					System.out.print(panel.getVideo());	
 					frame.dispose();
 				}
 				@Override
