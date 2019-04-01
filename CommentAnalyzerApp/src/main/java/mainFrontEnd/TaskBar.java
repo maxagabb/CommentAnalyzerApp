@@ -50,8 +50,11 @@ public class TaskBar extends JPanel{
 	private JPanel getPage(String name, JFrame frame) {
 		if(name.equals("Manage Favorites"))
 			return new WelcomePage(frame);
-		else if(name.equals("By Video"))
-			return new ByVideoPage(frame, new TaskBar(frame));
+		else if(name.equals("By Video")) {
+			ByVideoPage page = new ByVideoPage(frame, new TaskBar(frame));
+			page.setPage();
+			return page;
+		}
 		else return new JPanel();
 		
 		

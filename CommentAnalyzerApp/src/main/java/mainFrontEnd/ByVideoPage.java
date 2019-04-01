@@ -1,5 +1,6 @@
 package mainFrontEnd;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -38,6 +39,12 @@ public class ByVideoPage extends SearchByPage{
 	protected Retriever createRetriever() {
 		// TODO Auto-generated method stub
 		return new VideoRetriever();
+	}
+	
+	@Override
+	protected void setInitialContent() {
+		this.add(top, BorderLayout.NORTH);
+		createJTextFields();
 	}
 	private VideoListPanel panel;
 }

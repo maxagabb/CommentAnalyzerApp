@@ -41,20 +41,19 @@ public class VideoListPanel extends JPanel{
 					nextFrame.setBounds(frame.getX(), frame.getY(), 
 							frame.getWidth(), frame.getHeight());
 					frame.dispose();
-					JScrollPane pane = new JScrollPane(new CommentPage(nextFrame, bar, panel.getVideoID()));
+					CommentPage page = new CommentPage(nextFrame, bar, panel.getVideoID());
+					page.setPage();
+					JScrollPane pane = new JScrollPane(page);
 					nextFrame.add(pane);
 					nextFrame.setVisible(true);
 					nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				}
 				@Override
 				public void mouseEntered(MouseEvent arg0) {}
-
 				@Override
 				public void mouseExited(MouseEvent arg0) {}
-
 				@Override
 				public void mousePressed(MouseEvent arg0) {}
-
 				@Override
 				public void mouseReleased(MouseEvent arg0) {}
 			});

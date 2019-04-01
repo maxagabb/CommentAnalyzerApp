@@ -24,17 +24,14 @@ public abstract class SearchByPage<T> extends JPanel{
 	public SearchByPage(JFrame frame, TaskBar bar) {
 		this.bar = bar;
 		this.frame = frame;
-
-		setPage();
 	}
 
 	public void setPage() {
 		this.setLayout(new BorderLayout());
 		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
 		top.add(bar);
-		//this.add(bar, BorderLayout.NORTH);
 		retriever = createRetriever();
-		createJTextFields();
+		setInitialContent();
 	}
 
 	protected void createJTextFields() {
@@ -54,10 +51,8 @@ public abstract class SearchByPage<T> extends JPanel{
 			this.repaint();
 		});
 		top.add(field);
-		this.add(top, BorderLayout.NORTH);
-		
 	}
-
+	protected abstract void setInitialContent();
 	protected abstract void createPanels(ArrayList<T> retrieverInput);
 	protected abstract Retriever createRetriever();
 	protected JFrame frame;

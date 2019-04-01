@@ -27,6 +27,10 @@ public class CommentPanel extends JPanel{
 		return comment + "\n";
 	}
 	
+	public boolean contains(String input) {
+		return comment.contains(input);
+	}
+	
 	public void setPanel() {
 		JLabel label = new JLabel(comment);
 		this.add(label);
