@@ -14,7 +14,8 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import api.Video1;
+
+import business.Video1;
 
 public class VideoPanel extends JPanel{
 	public VideoPanel(Video1 video) {
@@ -22,8 +23,12 @@ public class VideoPanel extends JPanel{
 		//this.setPanel();
 	}
 	
+	
 	public String toString() {
 		return video.getname() + "\n";
+	}
+	public String getVideoID() {
+		return video.getID();
 	}
 	
 	public void setPanel() {

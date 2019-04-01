@@ -1,4 +1,4 @@
-package api;
+package business;
 
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;

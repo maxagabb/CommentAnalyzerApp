@@ -6,8 +6,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 import api.Retriever;
-import api.Video1;
 import api.VideoRetriever;
+import business.Video1;
 
 public class ByVideoPage extends SearchByPage{
 	public ByVideoPage(JFrame frame,TaskBar bar) {
@@ -22,7 +22,7 @@ public class ByVideoPage extends SearchByPage{
 		panel.emptyList();
 		}
 		else {
-		panel = new VideoListPanel(frame);
+		panel = new VideoListPanel(frame, bar);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		}
 		for (Video1 video: (ArrayList<Video1>)retrieverInput) {

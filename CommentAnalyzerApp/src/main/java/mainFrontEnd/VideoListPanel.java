@@ -10,9 +10,13 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import analysisFrontEnd.CommentPage;
 
 public class VideoListPanel extends JPanel{
-	public VideoListPanel(JFrame frame) {
+	public VideoListPanel(JFrame frame, TaskBar bar) {
+		this.bar = bar;
 		this.frame = frame;
 	}
 	
@@ -33,7 +37,14 @@ public class VideoListPanel extends JPanel{
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					System.out.print(panel);
+					JFrame nextFrame = new JFrame();
+					nextFrame.setBounds(frame.getX(), frame.getY(), 
+							frame.getWidth(), frame.getHeight());
+					frame.dispose();
+					JScrollPane pane = new JScrollPane(new CommentPage(nextFrame, bar, panel.getVideoID()));
+					nextFrame.add(pane);
+					nextFrame.setVisible(true);
+					nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				}
 				@Override
 				public void mouseEntered(MouseEvent arg0) {}
@@ -56,5 +67,6 @@ public class VideoListPanel extends JPanel{
 	}
 	private JFrame frame;
 	private ArrayList<VideoPanel> panels = new ArrayList<VideoPanel>();
+	private TaskBar bar;
 
 }

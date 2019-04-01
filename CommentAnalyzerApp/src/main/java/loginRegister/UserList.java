@@ -6,6 +6,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import business.User;
+
 public class UserList {
 	/**
 	 * constructs UserList with contents of file

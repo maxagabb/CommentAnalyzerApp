@@ -1,0 +1,181 @@
+package api;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.CommentThread;
+import com.google.api.services.youtube.model.CommentThreadListResponse;
+import com.google.api.services.youtube.model.SearchListResponse;
+import com.google.api.services.youtube.model.SearchResult;
+import com.google.common.collect.Lists;
+
+import business.Video1;
+
+public class CommentRetriever implements Retriever{
+
+
+
+
+	/**
+	 * Set and retrieve localized metadata for a video.
+	 *
+	 * @param args command line args (not used).
+	 * @return 
+	 */
+	
+	public CommentThreadListResponse getJson(String searchTerm){
+		try {
+			
+			YouTube youtube = getYouTubeService();
+
+			HashMap<String, String> parameters = new HashMap<>();
+			parameters.put("part", "snippet");//,replies
+			parameters.put("videoId", searchTerm);
+
+			YouTube.CommentThreads.List commentThreadsListByVideoIdRequest = youtube.commentThreads().list(parameters.get("part").toString());
+			if (parameters.containsKey("videoId") && parameters.get("videoId") != "") {
+				commentThreadsListByVideoIdRequest.setVideoId(parameters.get("videoId").toString());
+			}
+
+			return(commentThreadsListByVideoIdRequest.execute());
+
+
+
+		} catch (GoogleJsonResponseException e) {
+			e.printStackTrace();
+			System.err.println("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+
+	@Override
+	public ArrayList<String> retrieve(String fieldInput) throws JsonParseException, IOException {
+		CommentThreadListResponse response = getJson(fieldInput);
+		ArrayList<String> comments = new ArrayList<String>();
+		try {
+			for (CommentThread result : response.getItems()) {
+				String comment = result.getSnippet().getTopLevelComment().getSnippet().getTextDisplay();
+				comments.add(comment);
+			}
+
+			//System.out.print(videos);
+			return comments;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+    /** Application name. */
+    private static final String APPLICATION_NAME = "Experiment";
+
+    /** Directory to store user credentials for this application. */
+    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+    System.getProperty("user.home"), ".credentials/java-youtube-api-tests");
+
+    /** Global instance of the {@link FileDataStoreFactory}. */
+    private static FileDataStoreFactory DATA_STORE_FACTORY;
+
+    /** Global instance of the JSON factory. */
+    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+
+    /** Global instance of the HTTP transport. */
+    private static HttpTransport HTTP_TRANSPORT;
+
+    /** Global instance of the scopes required by this quickstart.
+     *
+     * If modifying these scopes, delete your previously saved credentials
+     * at ~/.credentials/drive-java-quickstart
+     */
+    private static final Collection<String> SCOPES = Arrays.asList("https://www.googleapis.com/auth/youtube.force-ssl", 
+    		"https://www.googleapis.com/auth/youtubepartner");
+    static {
+        try {
+            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Creates an authorized Credential object.
+     * @return an authorized Credential object.
+     * @throws IOException
+     */
+    public static Credential authorize() throws IOException {
+        // Load client secrets.
+        InputStream in =  new FileInputStream("C:\\Users\\mgabb2015\\eclipse-workspace\\CommentAnalyzerApp\\client_secret_460298885215-rlitofilod32q6sfcl5ln21p3pqcg93p.apps.googleusercontent.com.json");
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader( in ));
+
+        // Build flow and trigger user authorization request.
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+            .setDataStoreFactory(DATA_STORE_FACTORY)
+            .setAccessType("offline")
+            .build();
+        Credential credential = new AuthorizationCodeInstalledApp(
+        flow, new LocalServerReceiver()).authorize("user");
+        System.out.println(
+            "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+        return credential;
+    }
+
+    /**
+     * 
+     * Build and return an authorized API client service, such as a YouTube
+     * Data API client service.
+     * @return an authorized API client service
+     * @throws IOException
+     */
+    public static YouTube getYouTubeService() throws IOException {
+        Credential credential = authorize();
+        return new YouTube.Builder(
+        HTTP_TRANSPORT, JSON_FACTORY, credential)
+            .setApplicationName(APPLICATION_NAME)
+            .build();
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

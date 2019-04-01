@@ -33,6 +33,8 @@ import com.google.api.services.youtube.model.VideoListResponse;
 import com.google.api.services.youtube.model.VideoLocalization;
 import com.google.common.collect.Lists;
 
+import business.Video1;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -132,14 +134,5 @@ public class VideoRetriever implements Retriever{
 		//System.out.print(videos);
 		return videos;
 	}
-
-    public static void main(String[] args) throws IOException {
-    	VideoRetriever retriever = new VideoRetriever();
-    	retriever.retrieve("akira");
-    }
-
-
-
-
 
 }
