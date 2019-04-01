@@ -34,7 +34,7 @@ public class VideoPanel extends JPanel{
 	public void setPanel() {
 		this.setLayout(new FlowLayout());
 		BufferedImage image = null;
-		JLabel name = new JLabel(video.getname());
+		JLabel name = new JLabel(String.format(html, 200, video.getname()));
 		name.setVerticalAlignment(JLabel.CENTER);
 		
 		try {
@@ -50,4 +50,5 @@ public class VideoPanel extends JPanel{
 		}
 	}
 	private Video1 video;
+	private final String html = "<html><body style='width: %1spx'>%1s";
 }

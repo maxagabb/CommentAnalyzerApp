@@ -90,7 +90,8 @@ public class CommentRetriever implements Retriever{
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		return null;
+		comments.add("no comments");
+		return comments;
 	}
 	
 	

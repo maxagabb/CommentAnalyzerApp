@@ -23,7 +23,7 @@ public class ByVideoPage extends SearchByPage{
 		panel.emptyList();
 		}
 		else {
-		panel = new VideoListPanel(frame, bar);
+		panel = new VideoListPanel(frame);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		}
 		for (Video1 video: (ArrayList<Video1>)retrieverInput) {

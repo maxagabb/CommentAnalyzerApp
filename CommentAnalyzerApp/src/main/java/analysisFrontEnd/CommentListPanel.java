@@ -3,6 +3,7 @@ package analysisFrontEnd;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -13,12 +14,14 @@ import javax.swing.JPanel;
 
 public class CommentListPanel extends JPanel{
 	public CommentListPanel(JFrame frame) {
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(20, 0, 20, 0);
+		gbc.ipady = 10;
 		this.frame = frame;
 	}
 
 	public void setPanel(){
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -32,11 +35,14 @@ public class CommentListPanel extends JPanel{
 	
 	public void addPanel(CommentPanel commentPanel) {
 		panels.add(commentPanel);
-		savedPanels.add(commentPanel);
+		allPanels.add(commentPanel);
 	}
 	
 	public void parseComments(String text) {
-		this.panels = (ArrayList<CommentPanel>) savedPanels.clone();
+		panels.clear();
+		for(CommentPanel panel : allPanels) {
+		    panels.add(panel.clone());
+		}
 		ArrayList<CommentPanel> panelsToRemove = new ArrayList<CommentPanel>();
 		for(CommentPanel panel: panels) {
 			if (panel.contains(text) == false) {
@@ -45,12 +51,13 @@ public class CommentListPanel extends JPanel{
 		}
 		panels.removeAll(panelsToRemove);
 		this.removeAll();
-		setPanel();
 		this.revalidate();
 		this.repaint();
+		setPanel();
 	}
+	private GridBagConstraints gbc;
 	private JFrame frame;
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();
-	ArrayList<CommentPanel> savedPanels= new ArrayList<CommentPanel>();
+	ArrayList<CommentPanel> allPanels= new ArrayList<CommentPanel>();
 
 }

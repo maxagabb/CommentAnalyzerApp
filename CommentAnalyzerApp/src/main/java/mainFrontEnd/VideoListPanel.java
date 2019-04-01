@@ -15,8 +15,7 @@ import javax.swing.JScrollPane;
 import analysisFrontEnd.CommentPage;
 
 public class VideoListPanel extends JPanel{
-	public VideoListPanel(JFrame frame, TaskBar bar) {
-		this.bar = bar;
+	public VideoListPanel(JFrame frame) {
 		this.frame = frame;
 	}
 	
@@ -41,7 +40,7 @@ public class VideoListPanel extends JPanel{
 					nextFrame.setBounds(frame.getX(), frame.getY(), 
 							frame.getWidth(), frame.getHeight());
 					frame.dispose();
-					CommentPage page = new CommentPage(nextFrame, bar, panel.getVideoID());
+					CommentPage page = new CommentPage(nextFrame, new TaskBar(frame), panel.getVideoID());
 					page.setPage();
 					JScrollPane pane = new JScrollPane(page);
 					nextFrame.add(pane);
@@ -66,6 +65,5 @@ public class VideoListPanel extends JPanel{
 	}
 	private JFrame frame;
 	private ArrayList<VideoPanel> panels = new ArrayList<VideoPanel>();
-	private TaskBar bar;
 
 }
