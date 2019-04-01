@@ -1,6 +1,7 @@
 package mainFrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -20,18 +21,24 @@ public class VideoPanel extends JPanel{
 		this.video = video;
 		//this.setPanel();
 	}
+	
+	public String toString() {
+		return video.getname() + "\n";
+	}
+	
 	public void setPanel() {
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setLayout(new FlowLayout());
 		BufferedImage image = null;
 		JLabel name = new JLabel(video.getname());
-		name.setHorizontalAlignment(JLabel.CENTER);
-		this.add(name);
+		name.setVerticalAlignment(JLabel.CENTER);
+		
 		try {
 		    URL imageUrl = new URL(video.getthumbnailURL());
 		    InputStream in = imageUrl.openStream();
 		    image = ImageIO.read(in);
 		    in.close();
 		    this.add(new JLabel(new ImageIcon(image)));
+		    this.add(name);
 		}
 		catch (IOException ioe) {
 		    ioe.printStackTrace();

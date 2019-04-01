@@ -76,7 +76,7 @@ public class VideoRetriever implements Retriever{
 
             HashMap<String, String> parameters = new HashMap<>();
             parameters.put("part", "snippet");
-            parameters.put("maxResults", "25");
+            parameters.put("maxResults", "10");
             parameters.put("q", searchTerm);
             parameters.put("type", "video");
 

@@ -1,10 +1,13 @@
 package mainFrontEnd;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,15 +21,19 @@ public class VideoListPanel extends JPanel{
 	}
 
 	public void setPanel(){
-		this.setLayout(new GridLayout(0,2,15,15));
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
 		for(VideoPanel panel: panels) {
 			
 			panel.setPanel();
-			panel.setAlignmentX(CENTER_ALIGNMENT);
+			panel.setAlignmentX(LEFT_ALIGNMENT);
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					frame.dispose();
+					System.out.print(panel);
 				}
 				@Override
 				public void mouseEntered(MouseEvent arg0) {}
@@ -40,7 +47,8 @@ public class VideoListPanel extends JPanel{
 				@Override
 				public void mouseReleased(MouseEvent arg0) {}
 			});
-			this.add(panel);
+			this.add(panel, gbc);
+			gbc.gridy++;
 		}
 	}
 	public void addPanel(VideoPanel videoPanel) {

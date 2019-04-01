@@ -50,9 +50,12 @@ public abstract class SearchByPage<T> extends JPanel{
 				e1.printStackTrace();
 			}
 			createPanels(retrieverInput);
+			this.revalidate();
+			this.repaint();
 		});
 		top.add(field);
 		this.add(top, BorderLayout.NORTH);
+		
 	}
 
 	protected abstract void createPanels(ArrayList<T> retrieverInput);
