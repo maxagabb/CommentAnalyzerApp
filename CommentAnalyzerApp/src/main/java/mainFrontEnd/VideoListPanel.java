@@ -18,8 +18,11 @@ public class VideoListPanel extends JPanel{
 	}
 
 	public void setPanel(){
+		this.setLayout(new GridLayout(0,2,15,15));
 		for(VideoPanel panel: panels) {
+			
 			panel.setPanel();
+			panel.setAlignmentX(CENTER_ALIGNMENT);
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {

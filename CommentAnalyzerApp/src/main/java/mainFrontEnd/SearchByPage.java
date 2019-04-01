@@ -12,6 +12,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -22,7 +24,6 @@ public abstract class SearchByPage<T> extends JPanel{
 	public SearchByPage(JFrame frame, TaskBar bar) {
 		this.bar = bar;
 		this.frame = frame;
-
 
 		setPage();
 	}

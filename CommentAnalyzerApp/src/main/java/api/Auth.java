@@ -50,7 +50,7 @@ public class Auth {
     public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException {
 
         // Load client secrets.
-    	InputStream in =  new FileInputStream("C:\\Users\\mgabb2015\\eclipse-workspace\\CommentAnalyzerApp\\client_secret_460298885215-rlitofilod32q6sfcl5ln21p3pqcg93p.apps.googleusercontent.com.json");
+    	InputStream in =  new FileInputStream("client_secret_460298885215-rlitofilod32q6sfcl5ln21p3pqcg93p.apps.googleusercontent.com.json");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader( in ));
 
         // Checks that the defaults have been replaced (Default = "Enter X here").
