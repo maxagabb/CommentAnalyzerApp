@@ -45,7 +45,7 @@ public class RegisterPage extends InputPage{
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextFrame.add(new LoginPage(frame));
+			nextFrame.add(new LoginPage(nextFrame));
 			nextFrame.setVisible(true);
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
