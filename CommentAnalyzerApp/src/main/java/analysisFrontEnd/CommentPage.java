@@ -1,13 +1,17 @@
 package analysisFrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -28,7 +32,13 @@ public class CommentPage extends SearchByPage{
 		field2.addActionListener(e ->{
 			panel.parseComments(field2.getText());
 		});
-		top.add(field2);
+		JPanel fieldPanel = new JPanel();
+		field2.setColumns(15);
+		fieldPanel.add(field2);
+		fieldPanel.setBorder(new EtchedBorder());
+		top.add(fieldPanel);
+		top.add(Box.createRigidArea(new Dimension(0,40)));
+		
 	}
 
 	@Override
@@ -62,7 +72,9 @@ public class CommentPage extends SearchByPage{
 		}
 		createPanels(retrieverInput);
 		createJTextFields();
-		this.add(top, BorderLayout.NORTH);
+		JPanel topPanel = new JPanel();
+		topPanel.add(top);
+		this.add(topPanel, BorderLayout.NORTH);
 	}
 	@Override
 	protected JLabel getTitle() {

@@ -22,8 +22,8 @@ public class RegisterPage extends InputPage{
 	 * @param frame
 	 * @invariant this != null
 	 */
-	public RegisterPage(JFrame frame,GridBagConstraints gbc ) {
-		super(frame, gbc);
+	public RegisterPage(JFrame frame ) {
+		super(frame);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class RegisterPage extends InputPage{
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextFrame.add(new LoginPage(nextFrame, gbc));
+			nextFrame.add(new LoginPage(nextFrame));
 			nextFrame.setVisible(true);
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
@@ -84,7 +84,6 @@ public class RegisterPage extends InputPage{
 	 */
 	protected void setPageName() {
 		JLabel register = new JLabel("Register Screen");
-		register.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 		register.setHorizontalAlignment(JLabel.CENTER);
 		this.add(register, BorderLayout.NORTH);
 	}

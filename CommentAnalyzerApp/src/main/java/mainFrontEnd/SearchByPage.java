@@ -35,13 +35,13 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 	public void setPage() {
 		this.setLayout(new BorderLayout());
 		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
-		top.setBorder(new EmptyBorder(0, 50, 0, 50));
+		//top.setBorder(new EmptyBorder(0, 50, 0, 50));
 		top.add(bar);
 		top.add(Box.createRigidArea(new Dimension(0,20)));
 		JLabel title = getTitle();
 		title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		top.add(title);
-		top.add(Box.createRigidArea(new Dimension(0,40)));
+		top.add(Box.createRigidArea(new Dimension(0,20)));
 		retriever = createRetriever();
 		setInitialContent();
 	}
@@ -52,7 +52,11 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 			Thread thread = new Thread(this);
 			thread.start();
 		});
-		top.add(field);
+		JPanel fieldPanel = new JPanel();
+		field.setColumns(15);
+		fieldPanel.add(field);
+		fieldPanel.setBorder(new EtchedBorder());
+		top.add(fieldPanel);
 		top.add(Box.createRigidArea(new Dimension(0,40)));
 	}
 	

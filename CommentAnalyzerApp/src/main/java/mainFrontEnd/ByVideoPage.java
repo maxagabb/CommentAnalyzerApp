@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -51,7 +52,9 @@ public class ByVideoPage extends SearchByPage{
 
 	@Override
 	protected void setInitialContent() {
-		this.add(top, BorderLayout.NORTH);
+		JPanel topPanel = new JPanel();
+		topPanel.add(top);
+		this.add(topPanel, BorderLayout.NORTH);
 		if(channelName == null) {
 			createJTextFields();
 		}
