@@ -22,8 +22,8 @@ public class LoginPage extends InputPage{
 	 * @param frame
 	 * @invariant this != null
 	 */
-	public LoginPage(JFrame frame, GridBagConstraints gbc) {
-		super(frame, gbc);
+	public LoginPage(JFrame frame) {
+		super(frame);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class LoginPage extends InputPage{
 	 */
 	protected void setPageName() {
 		JLabel login = new JLabel("Login Screen");
-		login.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+		//login.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 		login.setHorizontalAlignment(JLabel.CENTER);
 		this.add(login, BorderLayout.NORTH);
 	}

@@ -1,31 +1,27 @@
 package mainFrontEnd;
 
-import java.awt.FlowLayout;
-import java.awt.List;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EtchedBorder;
 
-import loginRegister.LoginPage;
 import loginRegister.WelcomePage;
 
 public class TaskBar extends JPanel{
 	public TaskBar(JFrame frame) {
+		this.setLayout(new GridBagLayout());
 		this.frame = frame;
-		this.setBorder(new EtchedBorder());
 		setBar();
 	}
 
 	private void setBar() {
-		this.setLayout(new FlowLayout());
 		ArrayList<String> buttonNames = new ArrayList<String>();
 		buttonNames.add("Manage Favorites");buttonNames.add("By Video");
 		buttonNames.add("By Channel");buttonNames.add("By Favorites");
