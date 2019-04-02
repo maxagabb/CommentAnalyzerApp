@@ -23,8 +23,6 @@ import javax.swing.border.EtchedBorder;
  * @author mgabb2015
  */
 public abstract class InputPage extends JPanel{
-
-	
 	protected abstract void setPageName();
 	protected abstract void nextPage(UserList list);
 	protected JTextField getEmailField() {return null;}
@@ -36,10 +34,9 @@ public abstract class InputPage extends JPanel{
 	 * @postcondition this != null
 	 * @param frame
 	 */
-	public InputPage(JFrame frame) {
-		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(20, 50, 20, 50);
-		gbc.ipady = 10;
+	public InputPage(JFrame frame, GridBagConstraints gbc) {
+		//gbc.insets = new Insets(20, 50, 20, 50);
+		this.gbc = gbc;
 		this.frame = frame;
 		setPage();
 	}
@@ -88,8 +85,6 @@ public abstract class InputPage extends JPanel{
 		JPanel fieldPanel = new JPanel();
 		fieldPanel.setLayout(new GridBagLayout());
 		//gbc.anchor = GridBagConstraints.WEST;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1; 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		fieldPanel.add(makeInputPanel("username", nameField), gbc);

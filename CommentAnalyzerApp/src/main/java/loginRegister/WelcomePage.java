@@ -2,6 +2,9 @@ package loginRegister;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -18,6 +21,12 @@ public class WelcomePage extends JPanel{
 	 * @param frame
 	 */
 	public WelcomePage(JFrame frame) {
+		
+		gbc.insets = new Insets(20, 150, 20, 150);
+		gbc.ipady = 10;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1; 
+		gbc.anchor = GridBagConstraints.WEST;
 		this.frame = frame;
 		setPage();
 	}
@@ -39,7 +48,7 @@ public class WelcomePage extends JPanel{
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextFrame.add(new LoginPage(nextFrame));
+			nextFrame.add(new LoginPage(nextFrame, gbc));
 			nextFrame.setVisible(true);
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
@@ -49,15 +58,16 @@ public class WelcomePage extends JPanel{
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextFrame.add(new RegisterPage(nextFrame));
+			nextFrame.add(new RegisterPage(nextFrame, gbc));
 			nextFrame.setVisible(true);
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout());
-		buttonPanel.add(login,BorderLayout.CENTER);
-		buttonPanel.add(register,BorderLayout.CENTER);
+		buttonPanel.setLayout(new GridBagLayout());
+		buttonPanel.add(login,gbc);gbc.gridx++;
+		buttonPanel.add(register,gbc);
 		this.add(buttonPanel);
 	}
 	private JFrame frame;
+	private GridBagConstraints gbc = new GridBagConstraints();
 }
