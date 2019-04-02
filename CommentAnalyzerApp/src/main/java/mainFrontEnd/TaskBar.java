@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EtchedBorder;
 
 import loginRegister.LoginPage;
 import loginRegister.WelcomePage;
@@ -19,6 +20,7 @@ import loginRegister.WelcomePage;
 public class TaskBar extends JPanel{
 	public TaskBar(JFrame frame) {
 		this.frame = frame;
+		this.setBorder(new EtchedBorder());
 		setBar();
 	}
 

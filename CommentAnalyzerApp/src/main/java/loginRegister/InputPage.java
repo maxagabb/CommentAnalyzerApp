@@ -2,7 +2,10 @@ package loginRegister;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -12,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 
 
 /**
@@ -20,6 +24,7 @@ import javax.swing.JTextField;
  */
 public abstract class InputPage extends JPanel{
 
+	
 	protected abstract void setPageName();
 	protected abstract void nextPage(UserList list);
 	protected JTextField getEmailField() {return null;}
@@ -32,6 +37,9 @@ public abstract class InputPage extends JPanel{
 	 * @param frame
 	 */
 	public InputPage(JFrame frame) {
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(20, 50, 20, 50);
+		gbc.ipady = 10;
 		this.frame = frame;
 		setPage();
 	}
@@ -78,16 +86,36 @@ public abstract class InputPage extends JPanel{
 				});
 
 		JPanel fieldPanel = new JPanel();
-		fieldPanel.setLayout(new GridLayout(3,0,0,15));
-
-		fieldPanel.add(new JLabel("username"));
-		fieldPanel.add(nameField);
-		fieldPanel.add(new JLabel("password"));
-		fieldPanel.add(passwordField);
+		fieldPanel.setLayout(new GridBagLayout());
+		//gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1; 
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		fieldPanel.add(makeInputPanel("username", nameField), gbc);
+		gbc.gridy++;
+		fieldPanel.add(makeInputPanel("password", passwordField), gbc);
 		if (getEmailField()!=null) {
-			fieldPanel.add(new JLabel("email"));
-			fieldPanel.add(getEmailField());}
+			gbc.gridy++;
+			fieldPanel.add(makeInputPanel("Email", getEmailField()), gbc);}
 		this.add(fieldPanel, BorderLayout.CENTER);
+	}
+	
+	private JPanel makeInputPanel(String name, JTextField field) {
+		GridBagConstraints gbc2 = new GridBagConstraints();
+		gbc2.fill = GridBagConstraints.HORIZONTAL;
+		gbc2.weightx = 1; 
+		gbc2.gridx = 1;
+		gbc2.gridy = 0; 
+		JLabel label = new JLabel(name);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		JPanel result = new JPanel();
+		result.setLayout(new GridBagLayout());
+		result.add(label, gbc2);
+		gbc2.gridy++;
+		result.add(field, gbc2);
+		result.setBorder(new EtchedBorder());
+		return result;
 	}
 	/**
 	 * sets the submit button and adds to the page,
@@ -108,7 +136,8 @@ public abstract class InputPage extends JPanel{
 	protected JFrame frame;
 	protected String inputName;
 	protected String inputPassword;
-
+	protected GridBagConstraints gbc;
+	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setLayout(new BorderLayout());
