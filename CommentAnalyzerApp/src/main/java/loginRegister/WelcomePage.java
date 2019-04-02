@@ -1,11 +1,9 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,11 +20,10 @@ public class WelcomePage extends JPanel{
 	 */
 	public WelcomePage(JFrame frame) {
 		
-		gbc.insets = new Insets(20, 150, 20, 150);
+		gbc.insets = new Insets(20, 100, 20, 100);
 		gbc.ipady = 10;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1; 
-		gbc.anchor = GridBagConstraints.WEST;
 		this.frame = frame;
 		setPage();
 	}
