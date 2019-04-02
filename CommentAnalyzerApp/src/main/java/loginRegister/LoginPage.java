@@ -63,7 +63,6 @@ public class LoginPage extends InputPage{
 	 */
 	protected void setPageName() {
 		JLabel login = new JLabel("Login Screen");
-		//login.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 		login.setHorizontalAlignment(JLabel.CENTER);
 		this.add(login, BorderLayout.NORTH);
 	}

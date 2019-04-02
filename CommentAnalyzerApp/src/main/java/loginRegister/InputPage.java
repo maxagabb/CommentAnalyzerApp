@@ -85,6 +85,7 @@ public abstract class InputPage extends JPanel{
 		JPanel fieldPanel = new JPanel();
 		fieldPanel.setLayout(new BoxLayout(fieldPanel,BoxLayout.PAGE_AXIS));
 		fieldPanel.setBorder(new EtchedBorder());
+		fieldPanel.add(Box.createRigidArea(new Dimension(180,20)));
 		fieldPanel.add(makeInputPanel("username", nameField));
 		fieldPanel.add(makeInputPanel("password", passwordField));
 		if (getEmailField()!=null) {

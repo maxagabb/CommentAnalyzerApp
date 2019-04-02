@@ -84,7 +84,6 @@ public class RegisterPage extends InputPage{
 	 */
 	protected void setPageName() {
 		JLabel register = new JLabel("Register Screen");
-		//register.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 		register.setHorizontalAlignment(JLabel.CENTER);
 		this.add(register, BorderLayout.NORTH);
 	}

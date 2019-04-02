@@ -63,11 +63,11 @@ public class WelcomePage extends JPanel{
 		login.setPreferredSize(register.getPreferredSize());
 		JPanel pane2 = new JPanel();pane2.add(register);
 		JPanel pane = new JPanel();pane.add(login);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,40)));
+		buttonPanel.add(Box.createRigidArea(new Dimension(120,20)));
 		buttonPanel.add(pane);
 		buttonPanel.add(Box.createRigidArea(new Dimension(120,40)));
 		buttonPanel.add(pane2);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,40)));
+		buttonPanel.add(Box.createRigidArea(new Dimension(120,20)));
 		JPanel buttonPanel2 = new JPanel();
 		buttonPanel2.add(buttonPanel);
 		buttonPanel.setBorder(new EtchedBorder());
