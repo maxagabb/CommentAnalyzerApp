@@ -32,7 +32,7 @@ import com.google.common.collect.Lists;
 
 import business.Video1;
 
-public class CommentRetriever implements Retriever{
+public class CommentRetriever extends Retriever{
 
 
 

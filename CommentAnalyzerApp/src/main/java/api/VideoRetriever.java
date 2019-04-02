@@ -48,7 +48,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 
-public class VideoRetriever implements Retriever{
+public class VideoRetriever extends Retriever{
 
     /**
      * Define a global instance of a YouTube object, which will be used to make

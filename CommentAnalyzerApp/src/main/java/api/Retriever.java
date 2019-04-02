@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-public interface Retriever {
+public abstract class Retriever {
 
-	<T> ArrayList<T> retrieve(String fieldInput) throws JsonParseException, IOException;
-
+	public abstract <T> ArrayList<T> retrieve(String fieldInput) throws JsonParseException, IOException;
+	public <T> ArrayList<T> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
+		return null;
+	}
 }

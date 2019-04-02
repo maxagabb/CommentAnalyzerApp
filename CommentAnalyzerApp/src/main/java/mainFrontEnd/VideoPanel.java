@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 
 import business.Video1;
 
@@ -45,6 +46,7 @@ public class VideoPanel extends JPanel{
 		    in.close();
 		    this.add(new JLabel(new ImageIcon(image)));
 		    this.add(name);
+		    this.setBorder(new EtchedBorder());
 		}
 		catch (IOException ioe) {
 		    try {
