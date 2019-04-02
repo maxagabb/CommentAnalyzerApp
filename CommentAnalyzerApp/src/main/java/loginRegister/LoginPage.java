@@ -1,6 +1,7 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -21,8 +22,8 @@ public class LoginPage extends InputPage{
 	 * @param frame
 	 * @invariant this != null
 	 */
-	public LoginPage(JFrame frame) {
-		super(frame);
+	public LoginPage(JFrame frame, GridBagConstraints gbc) {
+		super(frame, gbc);
 	}
 
 	@Override

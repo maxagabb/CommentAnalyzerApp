@@ -1,7 +1,7 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
-
+import java.awt.GridBagConstraints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -22,8 +22,8 @@ public class RegisterPage extends InputPage{
 	 * @param frame
 	 * @invariant this != null
 	 */
-	public RegisterPage(JFrame frame) {
-		super(frame);
+	public RegisterPage(JFrame frame,GridBagConstraints gbc ) {
+		super(frame, gbc);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class RegisterPage extends InputPage{
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
 			frame.dispose();
-			nextFrame.add(new LoginPage(nextFrame));
+			nextFrame.add(new LoginPage(nextFrame, gbc));
 			nextFrame.setVisible(true);
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
