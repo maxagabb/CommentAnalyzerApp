@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class MainPage extends JPanel{
 
@@ -15,6 +16,7 @@ public class MainPage extends JPanel{
 	
 	private void setPage() {
 		this.setLayout(new BorderLayout());
+		this.setBorder(new EmptyBorder(0, 50, 0, 50));
 		add(bar,BorderLayout.NORTH);
 	}
 

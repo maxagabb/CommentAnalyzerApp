@@ -141,7 +141,7 @@ public abstract class InputPage extends JPanel{
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setLayout(new BorderLayout());
-		frame.setBounds(800, 400, 400, 400);
+		frame.setBounds(800, 400, 600, 400);
 		frame.add(new WelcomePage(frame));
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -34,10 +35,12 @@ public abstract class SearchByPage<T> extends JPanel{
 	public void setPage() {
 		this.setLayout(new BorderLayout());
 		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
-		
+		top.setBorder(new EmptyBorder(0, 50, 0, 50));
 		top.add(bar);
 		top.add(Box.createRigidArea(new Dimension(0,20)));
-		top.add(getTitle());
+		JLabel title = getTitle();
+		title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		top.add(title);
 		top.add(Box.createRigidArea(new Dimension(0,40)));
 		retriever = createRetriever();
 		setInitialContent();
@@ -61,6 +64,7 @@ public abstract class SearchByPage<T> extends JPanel{
 			this.repaint();
 		});
 		top.add(field);
+		top.add(Box.createRigidArea(new Dimension(0,40)));
 	}
 	protected abstract JLabel getTitle();
 	protected abstract void setInitialContent();
