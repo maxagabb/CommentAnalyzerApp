@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import api.Retriever;
 import api.VideoRetriever;
@@ -46,5 +47,12 @@ public class ByVideoPage extends SearchByPage{
 		this.add(top, BorderLayout.NORTH);
 		createJTextFields();
 	}
+	@Override
+	protected JLabel getTitle() {
+		JLabel label = new JLabel("Video Selection Page");
+		label.setHorizontalAlignment(JLabel.CENTER);
+		return label;
+	}
 	private VideoListPanel panel;
+
 }

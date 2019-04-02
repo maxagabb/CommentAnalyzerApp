@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -62,6 +63,12 @@ public class CommentPage extends SearchByPage{
 		createPanels(retrieverInput);
 		createJTextFields();
 		this.add(top, BorderLayout.NORTH);
+	}
+	@Override
+	protected JLabel getTitle() {
+		JLabel label = new JLabel("Comment Page");
+		label.setHorizontalAlignment(JLabel.CENTER);
+		return label;
 	}
 	private String videoID;
 	private CommentListPanel panel;
