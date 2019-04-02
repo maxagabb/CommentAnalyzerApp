@@ -40,7 +40,7 @@ public class VideoListPanel extends JPanel{
 					nextFrame.setBounds(frame.getX(), frame.getY(), 
 							frame.getWidth(), frame.getHeight());
 					frame.dispose();
-					CommentPage page = new CommentPage(nextFrame, new TaskBar(frame), panel.getVideoID());
+					CommentPage page = new CommentPage(nextFrame, new TaskBar(nextFrame), panel.getVideoID());
 					page.setPage();
 					JScrollPane pane = new JScrollPane(page);
 					nextFrame.add(pane);

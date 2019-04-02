@@ -14,6 +14,10 @@ public class Video1 {
 		this.name = result.getSnippet().getTitle();
 		this.thumbnailURL = result.getSnippet().getThumbnails().getDefault().getUrl();
 	}
+	public Video1(String error) {
+		this.name = error;
+		this.thumbnailURL = "iconfinder_sign-error_299045.png";
+	}
 	public String getID() {
 		return ID;
 	}

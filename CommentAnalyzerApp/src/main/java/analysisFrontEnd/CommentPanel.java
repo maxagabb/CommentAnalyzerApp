@@ -33,6 +33,7 @@ public class CommentPanel extends JPanel implements Cloneable{
 	}
 	
 	public boolean contains(String input) {
+		System.out.print(input);
 		return comment.contains(input);
 	}
 	

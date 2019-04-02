@@ -62,14 +62,15 @@ public class VideoRetriever implements Retriever{
      *
      * @param args command line args (not used).
      * @return 
+     * @throws IOException 
      */
-    public SearchListResponse getJson(String searchTerm){
+    public SearchListResponse getJson(String searchTerm) throws IOException{
 
         // This OAuth 2.0 access scope allows for full read/write access to the
         // authenticated user's account.
         List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
 
-        try {
+      
             // Authorize the request.
 
         Credential credential = Auth.authorize(scopes, "localizations");
@@ -97,11 +98,7 @@ public class VideoRetriever implements Retriever{
 
             SearchListResponse response = searchListByKeywordRequest.execute();
             return response;
-        }
-        catch (Exception e){
-        	e.printStackTrace();
-        }
-		return null;
+        
     }
 
 
@@ -125,14 +122,19 @@ public class VideoRetriever implements Retriever{
 
 	@Override
 	public ArrayList<Video1> retrieve(String fieldInput) throws JsonParseException, IOException {
-		SearchListResponse response = getJson(fieldInput);
 		ArrayList<Video1> videos = new ArrayList<Video1>();
+		try {
+		SearchListResponse response = getJson(fieldInput);
 	    for (SearchResult result : response.getItems()) {
 	        Video1 video = new Video1(result);
 	        videos.add(video);
 	    }
-		//System.out.print(videos);
 		return videos;
+		}
+		catch(IOException e){
+			videos.add(new Video1(e.getMessage()));
+			return videos;
+		}
 	}
 
 }

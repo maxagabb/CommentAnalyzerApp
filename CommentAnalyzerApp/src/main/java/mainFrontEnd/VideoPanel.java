@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -46,7 +47,14 @@ public class VideoPanel extends JPanel{
 		    this.add(name);
 		}
 		catch (IOException ioe) {
-		    ioe.printStackTrace();
+		    try {
+				image = ImageIO.read(new File(video.getthumbnailURL()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    this.add(new JLabel(new ImageIcon(image)));
+		    this.add(name);
 		}
 	}
 	private Video1 video;

@@ -42,10 +42,10 @@ public class CommentRetriever implements Retriever{
 	 *
 	 * @param args command line args (not used).
 	 * @return 
+	 * @throws IOException 
 	 */
 	
-	public CommentThreadListResponse getJson(String searchTerm){
-		try {
+	public CommentThreadListResponse getJson(String searchTerm) throws IOException, NullPointerException{
 			
 			YouTube youtube = getYouTubeService();
 
@@ -62,13 +62,6 @@ public class CommentRetriever implements Retriever{
 
 
 
-		} catch (GoogleJsonResponseException e) {
-			e.printStackTrace();
-			System.err.println("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-		return null;
 	}
 
 
@@ -76,22 +69,25 @@ public class CommentRetriever implements Retriever{
 
 	@Override
 	public ArrayList<String> retrieve(String fieldInput) throws JsonParseException, IOException {
-		CommentThreadListResponse response = getJson(fieldInput);
+		
 		ArrayList<String> comments = new ArrayList<String>();
 		try {
+			CommentThreadListResponse response = getJson(fieldInput);
 			for (CommentThread result : response.getItems()) {
 				String comment = result.getSnippet().getTopLevelComment().getSnippet().getTextDisplay();
 				comments.add(comment);
 			}
-
-			//System.out.print(videos);
 			return comments;
 		}
-		catch(Exception e){
-			e.printStackTrace();
+		catch(IOException e){
+			comments.add("Some Error:\t" +e.getMessage());
+			return comments;
 		}
-		comments.add("no comments");
-		return comments;
+		catch(NullPointerException e){
+			comments.add("Some Error:\t"+ e.getMessage());
+			return comments;
+		}
+		
 	}
 	
 	
