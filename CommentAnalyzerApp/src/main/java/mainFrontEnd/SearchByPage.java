@@ -44,6 +44,9 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 		top.add(Box.createRigidArea(new Dimension(0,20)));
 		retriever = createRetriever();
 		setInitialContent();
+		JPanel topPanel = new JPanel();
+		topPanel.add(top);
+		this.add(topPanel, BorderLayout.NORTH);
 	}
 
 

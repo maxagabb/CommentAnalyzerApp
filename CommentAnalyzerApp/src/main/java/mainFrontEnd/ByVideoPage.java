@@ -52,12 +52,8 @@ public class ByVideoPage extends SearchByPage{
 
 	@Override
 	protected void setInitialContent() {
-		JPanel topPanel = new JPanel();
-		topPanel.add(top);
-		this.add(topPanel, BorderLayout.NORTH);
-		if(channelName == null) {
+		if(channelName == null) 
 			createJTextFields();
-		}
 		else {
 			try {
 				retrieverInput = retriever.retrieveFromChannel(channelName);

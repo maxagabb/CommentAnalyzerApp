@@ -72,9 +72,6 @@ public class CommentPage extends SearchByPage{
 		}
 		createPanels(retrieverInput);
 		createJTextFields();
-		JPanel topPanel = new JPanel();
-		topPanel.add(top);
-		this.add(topPanel, BorderLayout.NORTH);
 	}
 	@Override
 	protected JLabel getTitle() {
