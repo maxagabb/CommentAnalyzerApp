@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 
 import api.Retriever;
 
-public abstract class SearchByPage<T> extends JPanel{
+public abstract class SearchByPage<T> extends JPanel implements Runnable{
 
 	public SearchByPage(JFrame frame, TaskBar bar) {
 		this.bar = bar;
@@ -48,23 +48,27 @@ public abstract class SearchByPage<T> extends JPanel{
 
 
 	protected void createJTextFields() {
-		final JTextField field = new JTextField();
 		field.addActionListener(e ->{
-			try {
-				retrieverInput = retriever.retrieve(field.getText());
-			} catch (JsonParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			createPanels(retrieverInput);
-			this.revalidate();
-			this.repaint();
+			Thread thread = new Thread(this);
+			thread.start();
 		});
 		top.add(field);
 		top.add(Box.createRigidArea(new Dimension(0,40)));
+	}
+	
+	public void run() {
+		try {
+			retrieverInput = retriever.retrieve(field.getText());
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		createPanels(retrieverInput);
+		this.revalidate();
+		this.repaint();
 	}
 	protected abstract JLabel getTitle();
 	protected abstract void setInitialContent();
@@ -75,4 +79,5 @@ public abstract class SearchByPage<T> extends JPanel{
 	protected ArrayList<T> retrieverInput;
 	protected TaskBar bar;
 	protected JPanel top = new JPanel();
+	final JTextField field = new JTextField();
 }
