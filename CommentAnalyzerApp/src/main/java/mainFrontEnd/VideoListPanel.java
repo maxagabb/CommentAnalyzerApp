@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 
 import analysisFrontEnd.CommentPage;
 
-public class VideoListPanel extends JPanel{
+public class VideoListPanel extends JPanel implements Runnable{
 	public VideoListPanel(JFrame frame) {
 		this.frame = frame;
 	}
@@ -30,22 +30,21 @@ public class VideoListPanel extends JPanel{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		for(VideoPanel panel: panels) {
-			
+			this.panel = panel;
 			panel.setPanel();
 			panel.setAlignmentX(LEFT_ALIGNMENT);
+			VideoListPanel self  = this;
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					JFrame nextFrame = new JFrame();
-					nextFrame.setBounds(frame.getX(), frame.getY(), 
-							frame.getWidth(), frame.getHeight());
-					frame.dispose();
-					CommentPage page = new CommentPage(nextFrame, new TaskBar(nextFrame), panel.getVideoID());
-					page.setPage();
-					JScrollPane pane = new JScrollPane(page);
-					nextFrame.add(pane);
-					nextFrame.setVisible(true);
-					nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					Thread thread = new Thread(self);
+					thread.start();
+					try {
+						thread.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				@Override
 				public void mouseEntered(MouseEvent arg0) {}
@@ -63,7 +62,20 @@ public class VideoListPanel extends JPanel{
 	public void addPanel(VideoPanel videoPanel) {
 		panels.add(videoPanel);
 	}
+	@Override
+	public void run() {
+		CommentPage page = new CommentPage(frame, new TaskBar(frame), panel.getVideoID());
+		page.setPage();
+		JScrollPane pane = new JScrollPane(page);
+		frame.getContentPane().removeAll();
+		frame.getContentPane().revalidate();
+		frame.add(pane);
+		frame.repaint();
+		
+	}
+	private VideoPanel panel;
 	private JFrame frame;
 	private ArrayList<VideoPanel> panels = new ArrayList<VideoPanel>();
+
 
 }
