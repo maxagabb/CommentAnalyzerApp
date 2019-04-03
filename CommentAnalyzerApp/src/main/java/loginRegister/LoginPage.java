@@ -11,8 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
-import mainFrontEnd.MainPage;
-import mainFrontEnd.TaskBar;
+import byVideoFrontEnd.MainPage;
+import byVideoFrontEnd.TaskBar;
 
 public class LoginPage extends InputPage{
 

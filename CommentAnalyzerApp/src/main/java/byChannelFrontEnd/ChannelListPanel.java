@@ -1,4 +1,4 @@
-package business;
+package byChannelFrontEnd;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,20 +7,20 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import analysisFrontEnd.CommentPage;
-import byVideoFrontEnd.SearchByPage;
+import business.Content;
+import business.ContentListPanel;
+import business.ContentPanel;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 
-public abstract class ContentListPanel extends JPanel implements Runnable{
+public class ChannelListPanel extends ContentListPanel implements Runnable{
 
-	public ContentListPanel(JFrame frame) {
-		this.frame = frame;}
-	public void emptyList() {};
+	public ChannelListPanel(JFrame frame) {
+		super(frame);
+	}
 
 	@SuppressWarnings("unchecked")
 	public void setPanel(){
@@ -33,7 +33,7 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 			this.panel = panel;
 			panel.setPanel();
 			panel.setAlignmentX(LEFT_ALIGNMENT);
-			ContentListPanel self  = this;
+			ChannelListPanel self  = this;
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -59,21 +59,21 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 			gbc.gridy++;
 		}
 	}
-	
-	public void run() {
-		makeSearchByPage(frame, new TaskBar(frame), panel.getVideoID());
-		page.setPage();
-		JScrollPane pane = new JScrollPane(page);
-		frame.getContentPane().removeAll();
-		frame.getContentPane().revalidate();
-		frame.add(pane);
-		frame.repaint();
+
+	@Override
+	public void addPanel(Content content) {
+		// TODO Auto-generated method stub
+
 	}
-	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID);
-	public abstract void addPanel(Content content);
-	protected ArrayList panels = new ArrayList();
-	protected JFrame frame;
-	protected ContentPanel panel;
-	protected SearchByPage page;
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID) {
+	}
 
 }
