@@ -12,6 +12,6 @@ public  abstract  class Content {
 
 	public String getComment() {return null;}
 
-	public String getChannel() {return null;}
+	public String getName() {return null;}
 
 }

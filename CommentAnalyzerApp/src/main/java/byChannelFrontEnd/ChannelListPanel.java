@@ -35,6 +35,7 @@ public class ChannelListPanel extends ContentListPanel implements Runnable{
 
 	@Override
 	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String channelID) {
+		System.out.print(channelID);
 		this.page = new ByVideoPage(frame2,taskBar,channelID);
 	}
 

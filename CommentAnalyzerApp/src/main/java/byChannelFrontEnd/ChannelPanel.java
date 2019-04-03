@@ -11,9 +11,12 @@ public class ChannelPanel extends ContentPanel{
 	public ChannelPanel(Channel content) {
 		super(content);
 	}
+	public String getName() {
+		return content.getName();
+	}
 	
 	public void setPanel() {
-		JLabel label = new JLabel(String.format(html, 400,content.getChannel()));
+		JLabel label = new JLabel(String.format(html, 400,content.getName()));
 		this.add(label);
 		this.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 	}

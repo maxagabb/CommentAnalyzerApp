@@ -1,6 +1,7 @@
 package byVideoFrontEnd;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ import api.Retriever;
 import api.VideoRetriever;
 import business.ContentListPanel;
 import business.Video1;
+import byChannelFrontEnd.Channel;
 
 public class ByVideoPage extends SearchByPage{
 	public ByVideoPage(JFrame frame,TaskBar bar) {
@@ -23,7 +25,7 @@ public class ByVideoPage extends SearchByPage{
 	}
 	public ByVideoPage(JFrame frame,TaskBar bar, String channelName) {
 		super(frame,bar);
-		this.channelName = channelName;
+		this.channelName = "Videos from:\t" + channelName;
 		//this.panel = new VideoListPanel(frame);
 	}
 
@@ -40,7 +42,10 @@ public class ByVideoPage extends SearchByPage{
 		else {
 			try {
 				retrieverInput = retriever.retrieveFromChannel(channelName);
+				addContentListPanel(panel);
 				createPanels(retrieverInput, panel);
+				this.revalidate();
+				this.repaint();
 			} catch (JsonParseException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

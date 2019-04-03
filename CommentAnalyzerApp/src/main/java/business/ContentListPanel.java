@@ -39,6 +39,7 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 				public void mouseClicked(MouseEvent arg0) {
 					Thread thread = new Thread(self);
 					thread.start();
+					channelID = panel.getName();
 					try {
 						thread.join();
 					} catch (InterruptedException e) {

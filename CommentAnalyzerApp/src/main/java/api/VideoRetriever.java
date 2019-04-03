@@ -100,7 +100,42 @@ public class VideoRetriever extends Retriever{
             return response;
         
     }
+    public SearchListResponse getJson2(String searchTerm) throws IOException{
 
+        // This OAuth 2.0 access scope allows for full read/write access to the
+        // authenticated user's account.
+        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
+
+      
+            // Authorize the request.
+
+        Credential credential = Auth.authorize(scopes, "localizations");
+        YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+                .setApplicationName("youtube-cmdline-localizations-sample").build();
+
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("part", "snippet");
+            parameters.put("maxResults", "10");
+            parameters.put("channelId", searchTerm);
+            parameters.put("type", "video");
+
+            YouTube.Search.List searchListByKeywordRequest = youtube.search().list(parameters.get("part").toString());
+            if (parameters.containsKey("maxResults")) {
+                searchListByKeywordRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
+            }
+
+            if (parameters.containsKey("q") && parameters.get("q") != "") {
+                searchListByKeywordRequest.setQ(parameters.get("q").toString());
+            }
+
+            if (parameters.containsKey("type") && parameters.get("type") != "") {
+                searchListByKeywordRequest.setType(parameters.get("type").toString());
+            }
+
+            SearchListResponse response = searchListByKeywordRequest.execute();
+            return response;
+        
+    }
 
 
     /*
@@ -125,6 +160,22 @@ public class VideoRetriever extends Retriever{
 		ArrayList<Video1> videos = new ArrayList<Video1>();
 		try {
 		SearchListResponse response = getJson(fieldInput);
+	    for (SearchResult result : response.getItems()) {
+	        Video1 video = new Video1(result);
+	        videos.add(video);
+	    }
+		return videos;
+		}
+		catch(IOException e){
+			videos.add(new Video1(e.getMessage()));
+			return videos;
+		}
+	}
+	
+	public ArrayList<Video1> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
+		ArrayList<Video1> videos = new ArrayList<Video1>();
+		try {
+		SearchListResponse response = getJson2(fieldInput);
 	    for (SearchResult result : response.getItems()) {
 	        Video1 video = new Video1(result);
 	        videos.add(video);
