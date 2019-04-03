@@ -61,7 +61,7 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 	}
 	
 	public void run() {
-		makeSearchByPage(frame, new TaskBar(frame), panel.getVideoID());
+		makeSearchByPage(frame, new TaskBar(frame), panel.getVideoID(),channelID);
 		page.setPage();
 		JScrollPane pane = new JScrollPane(page);
 		frame.getContentPane().removeAll();
@@ -69,11 +69,12 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 		frame.add(pane);
 		frame.repaint();
 	}
-	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID);
+	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String ChannelID);
 	public abstract void addPanel(Content content);
 	protected ArrayList panels = new ArrayList();
 	protected JFrame frame;
 	protected ContentPanel panel;
 	protected SearchByPage page;
+	protected String channelID;
 
 }

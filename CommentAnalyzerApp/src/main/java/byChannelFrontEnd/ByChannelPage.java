@@ -32,7 +32,6 @@ public class ByChannelPage extends SearchByPage{
 
 	@Override
 	protected void setInitialContent() {
-		if(channelName == null) 
 			createJTextFields();
 	}
 	@Override
