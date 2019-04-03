@@ -30,6 +30,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.common.collect.Lists;
 
+import business.Comment;
 import business.Video1;
 
 public class CommentRetriever extends Retriever{
@@ -68,23 +69,23 @@ public class CommentRetriever extends Retriever{
 
 
 	@Override
-	public ArrayList<String> retrieve(String fieldInput) throws JsonParseException, IOException {
+	public ArrayList<Comment> retrieve(String fieldInput) throws JsonParseException, IOException {
 		
-		ArrayList<String> comments = new ArrayList<String>();
+		ArrayList<Comment> comments = new ArrayList<Comment>();
 		try {
 			CommentThreadListResponse response = getJson(fieldInput);
 			for (CommentThread result : response.getItems()) {
-				String comment = result.getSnippet().getTopLevelComment().getSnippet().getTextDisplay();
+				Comment comment = new Comment(result.getSnippet().getTopLevelComment().getSnippet().getTextDisplay());
 				comments.add(comment);
 			}
 			return comments;
 		}
 		catch(IOException e){
-			comments.add("Some Error:\t" +e.getMessage());
+			comments.add(new Comment("Some Error:\t" +e.getMessage()));
 			return comments;
 		}
 		catch(NullPointerException e){
-			comments.add("Some Error:\t"+ e.getMessage());
+			comments.add(new Comment("Some Error:\t" +e.getMessage()));
 			return comments;
 		}
 		

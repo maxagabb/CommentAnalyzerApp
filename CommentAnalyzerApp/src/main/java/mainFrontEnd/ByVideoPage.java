@@ -13,35 +13,18 @@ import com.fasterxml.jackson.core.JsonParseException;
 
 import api.Retriever;
 import api.VideoRetriever;
+import business.ContentListPanel;
 import business.Video1;
 
 public class ByVideoPage extends SearchByPage{
 	public ByVideoPage(JFrame frame,TaskBar bar) {
 		super(frame,bar);
+		//this.panel = new VideoListPanel(frame);
 	}
 	public ByVideoPage(JFrame frame,TaskBar bar, String channelName) {
 		super(frame,bar);
 		this.channelName = channelName;
-	}
-
-	@Override
-	protected void createPanels(ArrayList retrieverInput) {
-		if(panel != null) {
-			panel.removeAll();
-			panel.validate();
-			panel.emptyList();
-		}
-		else {
-			panel = new VideoListPanel(frame);
-			panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		}
-		for (Video1 video: (ArrayList<Video1>)retrieverInput) {
-			panel.addPanel(new VideoPanel(video));
-		}
-
-		panel.setPanel();
-		this.add(panel);
-
+		//this.panel = new VideoListPanel(frame);
 	}
 
 	@Override
@@ -57,7 +40,7 @@ public class ByVideoPage extends SearchByPage{
 		else {
 			try {
 				retrieverInput = retriever.retrieveFromChannel(channelName);
-				createPanels(retrieverInput);
+				createPanels(retrieverInput, panel);
 			} catch (JsonParseException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -78,7 +61,15 @@ public class ByVideoPage extends SearchByPage{
 		label.setHorizontalAlignment(JLabel.CENTER);
 		return label;
 	}
-	private VideoListPanel panel;
+	protected void addContentListPanel(ContentListPanel panel) {
+		if(panel != null) {
+			panel.removeAll();
+			panel.validate();
+			panel.emptyList();
+		}
+		else 
+			this.panel = new VideoListPanel(frame);
+	}
 	private String channelName;
-
 }
+

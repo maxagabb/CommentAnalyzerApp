@@ -13,23 +13,67 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import analysisFrontEnd.CommentPage;
+import business.Content;
+import business.ContentListPanel;
+import business.ContentPanel;
+import business.Video1;
 
-public class VideoListPanel extends JPanel implements Runnable{
+public class VideoListPanel extends ContentListPanel implements Runnable{
 	public VideoListPanel(JFrame frame) {
-		this.frame = frame;
+		super(frame);
 	}
-	
+
 	public void emptyList() {
 		panels.removeAll(panels);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setPanel(){
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		for(VideoPanel panel: panels) {
+		/*
+		ArrayList<Thread>threads = new ArrayList();
+		panels.stream()
+		.forEach(e  ->{
+			Thread t = new Thread(()-> {
+			this.panel = (ContentPanel) e;
+			panel.setPanel();
+			panel.setAlignmentX(LEFT_ALIGNMENT);
+			VideoListPanel self  = this;
+			panel.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					Thread thread = new Thread(self);
+					thread.start();
+					try {
+						thread.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				@Override
+				public void mouseEntered(MouseEvent arg0) {}
+				@Override
+				public void mouseExited(MouseEvent arg0) {}
+				@Override
+				public void mousePressed(MouseEvent arg0) {}
+				@Override
+				public void mouseReleased(MouseEvent arg0) {}
+			});
+			this.add(panel, gbc);
+			gbc.gridy++;
+
+		});
+			threads.add(t);
+			});
+
+		threads.stream().forEach(Thread::run);*/
+
+		for(ContentPanel panel: (ArrayList<VideoPanel>)panels) {
 			this.panel = panel;
 			panel.setPanel();
 			panel.setAlignmentX(LEFT_ALIGNMENT);
@@ -59,8 +103,9 @@ public class VideoListPanel extends JPanel implements Runnable{
 			gbc.gridy++;
 		}
 	}
-	public void addPanel(VideoPanel videoPanel) {
-		panels.add(videoPanel);
+	@Override
+	public void addPanel(Content content) {
+		panels.add(new VideoPanel((Video1) content));
 	}
 	@Override
 	public void run() {
@@ -71,11 +116,5 @@ public class VideoListPanel extends JPanel implements Runnable{
 		frame.getContentPane().revalidate();
 		frame.add(pane);
 		frame.repaint();
-		
 	}
-	private VideoPanel panel;
-	private JFrame frame;
-	private ArrayList<VideoPanel> panels = new ArrayList<VideoPanel>();
-
-
 }

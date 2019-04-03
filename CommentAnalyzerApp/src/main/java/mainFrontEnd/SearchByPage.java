@@ -23,7 +23,12 @@ import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import analysisFrontEnd.CommentListPanel;
+import analysisFrontEnd.CommentPanel;
 import api.Retriever;
+import business.Content;
+import business.ContentListPanel;
+import business.ContentPanel;
 
 public abstract class SearchByPage<T> extends JPanel implements Runnable{
 
@@ -35,7 +40,6 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 	public void setPage() {
 		this.setLayout(new BorderLayout());
 		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
-		//top.setBorder(new EmptyBorder(0, 50, 0, 50));
 		top.add(bar);
 		top.add(Box.createRigidArea(new Dimension(0,20)));
 		JLabel title = getTitle();
@@ -48,8 +52,16 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 		topPanel.add(top);
 		this.add(topPanel, BorderLayout.NORTH);
 	}
-
-
+	
+	protected void createPanels(ArrayList<T> retrieverInput, ContentListPanel panel) {
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		for (Content content: (ArrayList<Content>)retrieverInput) {
+			panel.addPanel(content);
+		}
+		panel.setPanel();
+		this.add(panel);
+	}
+	
 	protected void createJTextFields() {
 		field.addActionListener(e ->{
 			Thread thread = new Thread(this);
@@ -73,15 +85,17 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		createPanels(retrieverInput);
+		addContentListPanel(panel);
+		createPanels(retrieverInput,panel);
 		this.revalidate();
 		this.repaint();
 	}
+	protected  void addContentListPanel(ContentListPanel panel) {};
 	protected abstract JLabel getTitle();
 	protected abstract void setInitialContent();
-	protected abstract void createPanels(ArrayList<T> retrieverInput);
 	protected abstract Retriever createRetriever();
 	protected JFrame frame;
+	protected ContentListPanel panel;
 	protected Retriever retriever;
 	protected ArrayList<T> retrieverInput;
 	protected TaskBar bar;

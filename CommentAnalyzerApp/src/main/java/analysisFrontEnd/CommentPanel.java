@@ -20,30 +20,32 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
+import business.Comment;
+import business.Content;
+import business.ContentPanel;
 import business.Video1;
 
-public class CommentPanel extends JPanel implements Cloneable{
-	public CommentPanel(String comment) {
-		this.comment= comment;
+public class CommentPanel extends ContentPanel implements Cloneable{
+	public CommentPanel(Content comment) {
+		super(comment);
 		//this.setPanel();
 	}
 	
 	public String toString() {
-		return comment + "\n";
+		return content.getComment() + "\n";
 	}
 	
 	public boolean contains(String input) {
-		return comment.contains(input);
+		return content.getComment().contains(input);
 	}
 	
 	public void setPanel() {
-		JLabel label = new JLabel(String.format(html, 400,comment));
+		JLabel label = new JLabel(String.format(html, 400,content.getComment()));
 		this.add(label);
 		this.setBorder(new EtchedBorder(EtchedBorder.RAISED));
 	}
 	public CommentPanel clone() {
-		return new CommentPanel(comment);
+		return new CommentPanel(content);
 	}
-	private String comment;
 	private final String html = "<html><body style='width: %1spx'>%1s";
 }

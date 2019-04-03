@@ -3,7 +3,7 @@ package business;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 
-public class Video1 {
+public class Video1 extends Content{
 
 	public Video1(String ID, String name) {
 		this.ID = ID;

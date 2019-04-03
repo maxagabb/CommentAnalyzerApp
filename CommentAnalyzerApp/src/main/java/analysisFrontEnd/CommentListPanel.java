@@ -12,8 +12,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class CommentListPanel extends JPanel{
+import business.Comment;
+import business.Content;
+import business.ContentListPanel;
+import business.ContentPanel;
+
+public class CommentListPanel extends ContentListPanel{
 	public CommentListPanel(JFrame frame) {
+		super(frame);
 		gbc = new GridBagConstraints();
 		gbc.insets = new Insets(20, 0, 20, 0);
 		gbc.ipady = 10;
@@ -33,9 +39,9 @@ public class CommentListPanel extends JPanel{
 		}
 	}
 	
-	public void addPanel(CommentPanel commentPanel) {
-		panels.add(commentPanel);
-		allPanels.add(commentPanel);
+	public void addPanel(Content content) {
+		panels.add(new CommentPanel((Comment) content));
+		allPanels.add(new CommentPanel((Comment) content));
 	}
 	
 	public void parseComments(String text) {

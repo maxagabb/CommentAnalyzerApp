@@ -19,12 +19,14 @@ import api.CommentRetriever;
 import api.Retriever;
 import mainFrontEnd.SearchByPage;
 import mainFrontEnd.TaskBar;
+import mainFrontEnd.VideoListPanel;
 
 public class CommentPage extends SearchByPage{
 
 	public CommentPage(JFrame frame, TaskBar bar, String videoID) {
 		super(frame, bar);
 		this.videoID = videoID;
+		this.panel = new CommentListPanel(frame);
 	}
 
 	protected void createJTextFields() {
@@ -39,18 +41,6 @@ public class CommentPage extends SearchByPage{
 		top.add(fieldPanel);
 		top.add(Box.createRigidArea(new Dimension(0,40)));
 		
-	}
-
-	@Override
-	protected void createPanels(ArrayList retrieverInput) {
-		panel = new CommentListPanel(frame);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-		for (String comment: (ArrayList<String>)retrieverInput) {
-			panel.addPanel(new CommentPanel(comment));
-		}
-		panel.setPanel();
-		this.add(panel);
 	}
 
 	@Override
@@ -70,7 +60,7 @@ public class CommentPage extends SearchByPage{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		createPanels(retrieverInput);
+		createPanels(retrieverInput, panel);
 		createJTextFields();
 	}
 	@Override
@@ -80,5 +70,5 @@ public class CommentPage extends SearchByPage{
 		return label;
 	}
 	private String videoID;
-	private CommentListPanel panel;
+	private CommentListPanel panel = new CommentListPanel(frame);
 }
