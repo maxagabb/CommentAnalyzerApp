@@ -17,9 +17,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 
 import api.CommentRetriever;
 import api.Retriever;
-import mainFrontEnd.SearchByPage;
-import mainFrontEnd.TaskBar;
-import mainFrontEnd.VideoListPanel;
+import byVideoFrontEnd.SearchByPage;
+import byVideoFrontEnd.TaskBar;
+import byVideoFrontEnd.VideoListPanel;
 
 public class CommentPage extends SearchByPage{
 

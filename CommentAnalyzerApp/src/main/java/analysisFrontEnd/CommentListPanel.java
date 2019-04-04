@@ -16,6 +16,7 @@ import business.Comment;
 import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
+import byVideoFrontEnd.TaskBar;
 
 public class CommentListPanel extends ContentListPanel{
 	public CommentListPanel(JFrame frame) {
@@ -61,9 +62,12 @@ public class CommentListPanel extends ContentListPanel{
 		this.repaint();
 		setPanel();
 	}
+	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String channelID) {}
 	private GridBagConstraints gbc;
 	private JFrame frame;
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();
 	ArrayList<CommentPanel> allPanels= new ArrayList<CommentPanel>();
+	
+	
 
 }

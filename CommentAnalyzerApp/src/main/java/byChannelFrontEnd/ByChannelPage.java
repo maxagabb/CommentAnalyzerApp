@@ -1,4 +1,4 @@
-package mainFrontEnd;
+package byChannelFrontEnd;
 
 import java.awt.BorderLayout;
 import java.io.IOException;
@@ -11,53 +11,32 @@ import javax.swing.JPanel;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import api.ChannelRetriever;
 import api.Retriever;
 import api.VideoRetriever;
 import business.ContentListPanel;
 import business.Video1;
+import byVideoFrontEnd.SearchByPage;
+import byVideoFrontEnd.TaskBar;
+import byVideoFrontEnd.VideoListPanel;
 
-public class ByVideoPage extends SearchByPage{
-	public ByVideoPage(JFrame frame,TaskBar bar) {
+public class ByChannelPage extends SearchByPage{
+	public ByChannelPage(JFrame frame,TaskBar bar) {
 		super(frame,bar);
-		//this.panel = new VideoListPanel(frame);
 	}
-	public ByVideoPage(JFrame frame,TaskBar bar, String channelName) {
-		super(frame,bar);
-		this.channelName = channelName;
-		//this.panel = new VideoListPanel(frame);
-	}
-
 	@Override
 	protected Retriever createRetriever() {
 		// TODO Auto-generated method stub
-		return new VideoRetriever();
+		return new ChannelRetriever();
 	}
 
 	@Override
 	protected void setInitialContent() {
-		if(channelName == null) 
 			createJTextFields();
-		else {
-			try {
-				retrieverInput = retriever.retrieveFromChannel(channelName);
-				createPanels(retrieverInput, panel);
-			} catch (JsonParseException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
 	}
 	@Override
 	protected JLabel getTitle() {
-		JLabel label;
-		if(channelName ==null) {
-			label = new JLabel("Video Selection Page");
-		}
-		else {
-			label = new JLabel(channelName+"\tvideos");
-		}
+		JLabel label = new JLabel("Channel Selection Page");
 		label.setHorizontalAlignment(JLabel.CENTER);
 		return label;
 	}
@@ -68,7 +47,7 @@ public class ByVideoPage extends SearchByPage{
 			panel.emptyList();
 		}
 		else 
-			this.panel = new VideoListPanel(frame);
+			this.panel = new ChannelListPanel(frame);
 	}
 	private String channelName;
 }

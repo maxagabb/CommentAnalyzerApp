@@ -1,4 +1,4 @@
-package mainFrontEnd;
+package byVideoFrontEnd;
 
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EtchedBorder;
 
+import byChannelFrontEnd.ByChannelPage;
 import loginRegister.WelcomePage;
 
 public class TaskBar extends JPanel{
@@ -50,6 +51,11 @@ public class TaskBar extends JPanel{
 			return new WelcomePage(frame);
 		else if(name.equals("By Video")) {
 			ByVideoPage page = new ByVideoPage(frame, new TaskBar(frame));
+			page.setPage();
+			return page;
+		}
+		else if(name.equals("By Channel")) {
+			ByChannelPage page = new ByChannelPage(frame, new TaskBar(frame));
 			page.setPage();
 			return page;
 		}

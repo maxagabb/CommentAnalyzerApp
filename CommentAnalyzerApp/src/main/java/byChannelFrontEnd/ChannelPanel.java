@@ -1,9 +1,6 @@
-package mainFrontEnd;
+package byChannelFrontEnd;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,29 +8,27 @@ import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import business.Content;
 import business.ContentPanel;
-import business.Video1;
 
-public class VideoPanel extends ContentPanel{
-	public VideoPanel(Video1 content) {
+public class ChannelPanel extends ContentPanel{
+	public ChannelPanel(Channel1 content) {
 		super(content);
 	}
-
-	public String getVideoID() {
+	public String getName() {
+		return content.getName();
+	}
+	public String getChannelID() {
 		return content.getID();
 	}
-	
 	public void setPanel() {
 		this.setLayout(new FlowLayout());
 		BufferedImage image = null;
-		JLabel name = new JLabel(String.format(html, 200, content.getname()));
+		JLabel name = new JLabel(String.format(html, 200, getName()));
 		name.setVerticalAlignment(JLabel.CENTER);
 		
 		try {

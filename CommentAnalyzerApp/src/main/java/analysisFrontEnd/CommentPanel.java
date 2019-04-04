@@ -40,6 +40,7 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 	}
 	
 	public void setPanel() {
+		String html = "<html><body style='width: %1spx'>%1s";
 		JLabel label = new JLabel(String.format(html, 400,content.getComment()));
 		this.add(label);
 		this.setBorder(new EtchedBorder(EtchedBorder.RAISED));
@@ -47,5 +48,4 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 	public CommentPanel clone() {
 		return new CommentPanel(content);
 	}
-	private final String html = "<html><body style='width: %1spx'>%1s";
 }
