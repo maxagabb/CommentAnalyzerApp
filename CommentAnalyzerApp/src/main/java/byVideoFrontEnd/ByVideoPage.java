@@ -16,7 +16,7 @@ import api.Retriever;
 import api.VideoRetriever;
 import business.ContentListPanel;
 import business.Video1;
-import byChannelFrontEnd.Channel;
+import byChannelFrontEnd.Channel1;
 
 public class ByVideoPage extends SearchByPage{
 	public ByVideoPage(JFrame frame,TaskBar bar) {
@@ -25,8 +25,7 @@ public class ByVideoPage extends SearchByPage{
 	}
 	public ByVideoPage(JFrame frame,TaskBar bar, String channelName) {
 		super(frame,bar);
-		this.channelName = "Videos from:\t" + channelName;
-		//this.panel = new VideoListPanel(frame);
+		this.channelName = channelName + "\t\t";
 	}
 
 	@Override

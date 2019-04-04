@@ -34,7 +34,7 @@ import com.google.api.services.youtube.model.VideoLocalization;
 import com.google.common.collect.Lists;
 
 import business.Video1;
-import byChannelFrontEnd.Channel;
+import byChannelFrontEnd.Channel1;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -122,18 +122,18 @@ public class ChannelRetriever extends Retriever{
 
 
 	@Override
-	public ArrayList<Channel> retrieve(String fieldInput) throws JsonParseException, IOException {
-		ArrayList<Channel> channels = new ArrayList<Channel>();
+	public ArrayList<Channel1> retrieve(String fieldInput) throws JsonParseException, IOException {
+		ArrayList<Channel1> channels = new ArrayList<Channel1>();
 		try {
 		SearchListResponse response = getJson(fieldInput);
 	    for (SearchResult result : response.getItems()) {
-	        Channel channel = new Channel(result.toPrettyString());
+	        Channel1 channel = new Channel1(result);
 	        channels.add(channel);
 	    }
 		return channels;
 		}
 		catch(IOException e){
-			channels.add(new Channel(e.toString()));
+			channels.add(new Channel1("Some Error:\t"));
 			return channels;
 		}
 	}

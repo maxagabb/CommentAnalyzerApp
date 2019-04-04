@@ -24,6 +24,8 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.util.ArrayMap;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.Playlist;
+import com.google.api.services.youtube.model.PlaylistListResponse;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
@@ -50,108 +52,105 @@ import org.json.JSONObject;
 
 public class VideoRetriever extends Retriever{
 
-    /**
-     * Define a global instance of a YouTube object, which will be used to make
-     * YouTube Data API requests.
-     */
-    private static YouTube youtube;
+	/**
+	 * Define a global instance of a YouTube object, which will be used to make
+	 * YouTube Data API requests.
+	 */
+	private static YouTube youtube;
 
 
-    /**
-     * Set and retrieve localized metadata for a video.
-     *
-     * @param args command line args (not used).
-     * @return 
-     * @throws IOException 
-     */
-    public SearchListResponse getJson(String searchTerm) throws IOException{
+	/**
+	 * Set and retrieve localized metadata for a video.
+	 *
+	 * @param args command line args (not used).
+	 * @return 
+	 * @throws IOException 
+	 */
+	public SearchListResponse getJson(String searchTerm) throws IOException{
 
-        // This OAuth 2.0 access scope allows for full read/write access to the
-        // authenticated user's account.
-        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
-
-      
-            // Authorize the request.
-
-        Credential credential = Auth.authorize(scopes, "localizations");
-        YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-                .setApplicationName("youtube-cmdline-localizations-sample").build();
-
-            HashMap<String, String> parameters = new HashMap<>();
-            parameters.put("part", "snippet");
-            parameters.put("maxResults", "10");
-            parameters.put("q", searchTerm);
-            parameters.put("type", "video");
-
-            YouTube.Search.List searchListByKeywordRequest = youtube.search().list(parameters.get("part").toString());
-            if (parameters.containsKey("maxResults")) {
-                searchListByKeywordRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
-            }
-
-            if (parameters.containsKey("q") && parameters.get("q") != "") {
-                searchListByKeywordRequest.setQ(parameters.get("q").toString());
-            }
-
-            if (parameters.containsKey("type") && parameters.get("type") != "") {
-                searchListByKeywordRequest.setType(parameters.get("type").toString());
-            }
-
-            SearchListResponse response = searchListByKeywordRequest.execute();
-            return response;
-        
-    }
-    public SearchListResponse getJson2(String searchTerm) throws IOException{
-
-        // This OAuth 2.0 access scope allows for full read/write access to the
-        // authenticated user's account.
-        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
-
-      
-            // Authorize the request.
-
-        Credential credential = Auth.authorize(scopes, "localizations");
-        YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
-                .setApplicationName("youtube-cmdline-localizations-sample").build();
-
-            HashMap<String, String> parameters = new HashMap<>();
-            parameters.put("part", "snippet");
-            parameters.put("maxResults", "10");
-            parameters.put("channelId", searchTerm);
-            parameters.put("type", "video");
-
-            YouTube.Search.List searchListByKeywordRequest = youtube.search().list(parameters.get("part").toString());
-            if (parameters.containsKey("maxResults")) {
-                searchListByKeywordRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
-            }
-
-            if (parameters.containsKey("q") && parameters.get("q") != "") {
-                searchListByKeywordRequest.setQ(parameters.get("q").toString());
-            }
-
-            if (parameters.containsKey("type") && parameters.get("type") != "") {
-                searchListByKeywordRequest.setType(parameters.get("type").toString());
-            }
-
-            SearchListResponse response = searchListByKeywordRequest.execute();
-            return response;
-        
-    }
+		// This OAuth 2.0 access scope allows for full read/write access to the
+		// authenticated user's account.
+		List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
 
 
-    /*
-     * Prompt the user to enter a resource ID. Then return the ID.
-     */
-    private static String getId(String resource) throws IOException {
+		// Authorize the request.
 
-        String id = "";
+		Credential credential = Auth.authorize(scopes, "localizations");
+		YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+				.setApplicationName("youtube-cmdline-localizations-sample").build();
 
-        System.out.print("Please enter a " + resource + " id: ");
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-        id = bReader.readLine();
+		HashMap<String, String> parameters = new HashMap<>();
+		parameters.put("part", "snippet");
+		parameters.put("maxResults", "10");
+		parameters.put("q", searchTerm);
+		parameters.put("type", "video");
 
-        System.out.println("You chose " + id + " for localizations.");
-        return id;
-    }
+		YouTube.Search.List searchListByKeywordRequest = youtube.search().list(parameters.get("part").toString());
+		if (parameters.containsKey("maxResults")) {
+			searchListByKeywordRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
+		}
+
+		if (parameters.containsKey("q") && parameters.get("q") != "") {
+			searchListByKeywordRequest.setQ(parameters.get("q").toString());
+		}
+
+		if (parameters.containsKey("type") && parameters.get("type") != "") {
+			searchListByKeywordRequest.setType(parameters.get("type").toString());
+		}
+
+		SearchListResponse response = searchListByKeywordRequest.execute();
+		return response;
+
+	}
+	public PlaylistListResponse getJson2(String searchTerm) throws IOException{
+
+		// This OAuth 2.0 access scope allows for full read/write access to the
+		// authenticated user's account.
+		List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
+
+
+		// Authorize the request.
+
+		Credential credential = Auth.authorize(scopes, "localizations");
+		YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+				.setApplicationName("youtube-cmdline-localizations-sample").build();
+
+		HashMap<String, String> parameters = new HashMap<>();
+		parameters.put("part", "contentDetails");
+		parameters.put("maxResults", "10");
+		parameters.put("channelId", searchTerm);
+
+		YouTube.Playlists.List playlistsListByChannelIdRequest  = youtube.playlists().list(parameters.get("part").toString());
+
+		if (parameters.containsKey("channelId") && parameters.get("channelId") != "") {
+			playlistsListByChannelIdRequest.setChannelId(parameters.get("channelId").toString());
+		}
+
+		if (parameters.containsKey("maxResults")) {
+			playlistsListByChannelIdRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
+		}
+
+
+		return playlistsListByChannelIdRequest.execute();
+
+
+	}
+
+
+	/*
+	 * Prompt the user to enter a resource ID. Then return the ID.
+	 */
+	private static String getId(String resource) throws IOException {
+
+		String id = "";
+
+		System.out.print("Please enter a " + resource + " id: ");
+		BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
+		id = bReader.readLine();
+
+		System.out.println("You chose " + id + " for localizations.");
+		return id;
+	}
 
 
 
@@ -159,30 +158,33 @@ public class VideoRetriever extends Retriever{
 	public ArrayList<Video1> retrieve(String fieldInput) throws JsonParseException, IOException {
 		ArrayList<Video1> videos = new ArrayList<Video1>();
 		try {
-		SearchListResponse response = getJson(fieldInput);
-	    for (SearchResult result : response.getItems()) {
-	        Video1 video = new Video1(result);
-	        videos.add(video);
-	    }
-		return videos;
+			SearchListResponse response = getJson(fieldInput);
+			for (SearchResult result : response.getItems()) {
+				Video1 video = new Video1(result);
+				videos.add(video);
+			}
+			return videos;
 		}
 		catch(IOException e){
 			videos.add(new Video1(e.getMessage()));
 			return videos;
 		}
 	}
-	
+
 	public ArrayList<Video1> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
+		System.out.print("\n\n" +fieldInput+"\n\n");
 		ArrayList<Video1> videos = new ArrayList<Video1>();
 		try {
-		SearchListResponse response = getJson2(fieldInput);
-	    for (SearchResult result : response.getItems()) {
-	        Video1 video = new Video1(result);
-	        videos.add(video);
-	    }
-		return videos;
+			PlaylistListResponse response = getJson2(fieldInput);
+			List<Playlist> result = response.getItems();
+			for (Playlist videoList : result) {
+				Video1 video = new Video1(videoList);
+				videos.add(video);
+			}
+			//videos = result.get(0);
+			return videos;
 		}
-		catch(IOException e){
+		catch(Exception e){
 			videos.add(new Video1(e.getMessage()));
 			return videos;
 		}

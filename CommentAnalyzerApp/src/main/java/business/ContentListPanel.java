@@ -1,5 +1,6 @@
 package business;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
@@ -29,7 +30,7 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 		gbc.anchor = GridBagConstraints.WEST;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		for(ContentPanel panel: (ArrayList<VideoPanel>)panels) {
+		for(ContentPanel panel: (ArrayList<ContentPanel>)panels) {
 			this.panel = panel;
 			panel.setPanel();
 			panel.setAlignmentX(LEFT_ALIGNMENT);
@@ -39,18 +40,23 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 				public void mouseClicked(MouseEvent arg0) {
 					Thread thread = new Thread(self);
 					thread.start();
-					channelID = panel.getName();
-					try {
+					channelID = panel.getChannelID();
+					/*try {
 						thread.join();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}*/
 				}
 				@Override
-				public void mouseEntered(MouseEvent arg0) {}
+				public void mouseEntered(MouseEvent arg0) {
+					panelColor = panel.getBackground();
+					panel.setBackground(Color.WHITE);
+				}
 				@Override
-				public void mouseExited(MouseEvent arg0) {}
+				public void mouseExited(MouseEvent arg0) {
+					panel.setBackground(panelColor);
+				}
 				@Override
 				public void mousePressed(MouseEvent arg0) {}
 				@Override
@@ -77,5 +83,6 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 	protected ContentPanel panel;
 	protected SearchByPage page;
 	protected String channelID;
+	protected Color panelColor;
 
 }

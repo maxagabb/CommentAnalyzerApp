@@ -25,11 +25,12 @@ public class VideoPanel extends ContentPanel{
 	public VideoPanel(Video1 content) {
 		super(content);
 	}
-
+	public String getName() {
+		return content.getName();
+	}
 	public String getVideoID() {
 		return content.getID();
 	}
-	
 	public void setPanel() {
 		this.setLayout(new FlowLayout());
 		BufferedImage image = null;
@@ -52,6 +53,7 @@ public class VideoPanel extends ContentPanel{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		    this.setBorder(new EtchedBorder());
 		    this.add(new JLabel(new ImageIcon(image)));
 		    this.add(name);
 		}
