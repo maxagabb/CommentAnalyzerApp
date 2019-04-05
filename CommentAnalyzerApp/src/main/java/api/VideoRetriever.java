@@ -123,21 +123,25 @@ public class VideoRetriever extends Retriever{
 
 		YouTube.Channels.List request = youtube.channels()
 				.list("contentDetails");
+		
 		ChannelListResponse response = request.setId(searchTerm)
 				.setMaxResults(1L)
 				.execute();
+		
 		String uploadsID = response.getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
+		System.out.print(uploadsID);
 
 		/*credential = Auth.authorize(scopes, "localizations");
 		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
 				.setApplicationName("youtube-cmdline-localizations-sample").build();*/
 		
-		YouTube.PlaylistItems.List request2 = youtube.playlistItems().list("snippet");
-		
+		YouTube.PlaylistItems.List request2 = youtube.playlistItems()
+				.list("snippet");
 
-	    PlaylistItemListResponse response2 = request2.setId(uploadsID)
+	    PlaylistItemListResponse response2 = request2.setPlaylistId(uploadsID)
 	            .setMaxResults(10L)
 	            .execute();
+	    
 		return response2;
 
 

@@ -18,11 +18,6 @@ public class Video1 extends Content{
 		this.name = "Some Error:\t" + error;
 		this.thumbnailURL = "iconfinder_sign-error_299045.png";
 	}
-	public Video1(Playlist videos) {
-		this.ID = videos.getId();
-		this.name = videos.getSnippet().getTitle();
-		this.thumbnailURL = videos.getSnippet().getThumbnails().getDefault().getUrl();
-	}
 	public Video1(PlaylistItem item) {
 		try {
 			System.out.print(item.toPrettyString());
@@ -30,7 +25,7 @@ public class Video1 extends Content{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.ID = item.getContentDetails().getVideoId();
+		this.ID = item.getSnippet().getResourceId().getVideoId();
 		this.name = item.getSnippet().getTitle();
 		this.thumbnailURL = item.getSnippet().getThumbnails().getDefault().getUrl();
 	}
