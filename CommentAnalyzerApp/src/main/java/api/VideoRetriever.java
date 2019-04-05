@@ -24,7 +24,11 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.util.ArrayMap;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.YouTube.Channels;
+import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.api.services.youtube.model.Playlist;
+import com.google.api.services.youtube.model.PlaylistItem;
+import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.api.services.youtube.model.PlaylistListResponse;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
@@ -102,12 +106,11 @@ public class VideoRetriever extends Retriever{
 		return response;
 
 	}
-	public PlaylistListResponse getJson2(String searchTerm) throws IOException{
+	public PlaylistItemListResponse getJson2(String searchTerm) throws IOException{
 
 		// This OAuth 2.0 access scope allows for full read/write access to the
 		// authenticated user's account.
 		List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
-
 
 		// Authorize the request.
 
@@ -115,23 +118,27 @@ public class VideoRetriever extends Retriever{
 		YouTube youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
 				.setApplicationName("youtube-cmdline-localizations-sample").build();
 
-		HashMap<String, String> parameters = new HashMap<>();
-		parameters.put("part", "contentDetails");
-		parameters.put("maxResults", "10");
-		parameters.put("channelId", searchTerm);
-
-		YouTube.Playlists.List playlistsListByChannelIdRequest  = youtube.playlists().list(parameters.get("part").toString());
-
-		if (parameters.containsKey("channelId") && parameters.get("channelId") != "") {
-			playlistsListByChannelIdRequest.setChannelId(parameters.get("channelId").toString());
-		}
-
-		if (parameters.containsKey("maxResults")) {
-			playlistsListByChannelIdRequest.setMaxResults(Long.parseLong(parameters.get("maxResults").toString()));
-		}
 
 
-		return playlistsListByChannelIdRequest.execute();
+
+		YouTube.Channels.List request = youtube.channels()
+				.list("contentDetails");
+		ChannelListResponse response = request.setId(searchTerm)
+				.setMaxResults(1L)
+				.execute();
+		String uploadsID = response.getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
+
+		/*credential = Auth.authorize(scopes, "localizations");
+		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
+				.setApplicationName("youtube-cmdline-localizations-sample").build();*/
+		
+		YouTube.PlaylistItems.List request2 = youtube.playlistItems().list("snippet");
+		
+
+	    PlaylistItemListResponse response2 = request2.setId(uploadsID)
+	            .setMaxResults(10L)
+	            .execute();
+		return response2;
 
 
 	}
@@ -172,13 +179,12 @@ public class VideoRetriever extends Retriever{
 	}
 
 	public ArrayList<Video1> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
-		System.out.print("\n\n" +fieldInput+"\n\n");
 		ArrayList<Video1> videos = new ArrayList<Video1>();
 		try {
-			PlaylistListResponse response = getJson2(fieldInput);
-			List<Playlist> result = response.getItems();
-			for (Playlist videoList : result) {
-				Video1 video = new Video1(videoList);
+			PlaylistItemListResponse response = getJson2(fieldInput);
+			//List<PlaylistItem> result = response.getItems();
+			for (PlaylistItem item : response.getItems()) {
+				Video1 video = new Video1(item);
 				videos.add(video);
 			}
 			//videos = result.get(0);

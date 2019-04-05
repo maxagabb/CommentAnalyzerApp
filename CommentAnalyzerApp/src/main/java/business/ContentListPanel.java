@@ -42,7 +42,6 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 					self.panel = panel;
 					Thread thread = new Thread(self);
 					thread.start();
-					channelID = panel.getChannelID();
 					/*try {
 						thread.join();
 					} catch (InterruptedException e) {
@@ -87,7 +86,5 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 	protected JFrame frame;
 	protected ContentPanel panel;
 	protected SearchByPage page;
-	protected String channelID;
 	protected Color panelColor;
-
 }

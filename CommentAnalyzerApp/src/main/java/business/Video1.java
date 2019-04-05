@@ -1,6 +1,9 @@
 package business;
 
+import java.io.IOException;
+
 import com.google.api.services.youtube.model.Playlist;
+import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 
@@ -19,6 +22,17 @@ public class Video1 extends Content{
 		this.ID = videos.getId();
 		this.name = videos.getSnippet().getTitle();
 		this.thumbnailURL = videos.getSnippet().getThumbnails().getDefault().getUrl();
+	}
+	public Video1(PlaylistItem item) {
+		try {
+			System.out.print(item.toPrettyString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.ID = item.getContentDetails().getVideoId();
+		this.name = item.getSnippet().getTitle();
+		this.thumbnailURL = item.getSnippet().getThumbnails().getDefault().getUrl();
 	}
 	public String getID() {
 		return ID;
