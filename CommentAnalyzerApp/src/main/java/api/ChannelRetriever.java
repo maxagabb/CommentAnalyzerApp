@@ -133,7 +133,7 @@ public class ChannelRetriever extends Retriever{
 		return channels;
 		}
 		catch(IOException e){
-			channels.add(new Channel1("Some Error:\t"));
+			channels.add(new Channel1(e.toString()));
 			return channels;
 		}
 	}
