@@ -32,7 +32,7 @@ public class ChannelPanel extends ContentPanel{
 		name.setVerticalAlignment(JLabel.CENTER);
 		
 		try {
-			this.setBorder(new EtchedBorder());
+			//this.setBorder(new EtchedBorder());
 		    URL imageUrl = new URL(content.getthumbnailURL());
 		    InputStream in = imageUrl.openStream();
 		    image = ImageIO.read(in);

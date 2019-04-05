@@ -33,8 +33,8 @@ public class VideoListPanel extends ContentListPanel{
 	}
 
 	@Override
-	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String ChannelID) {
-		this.page = new CommentPage(frame, taskBar, videoID);
+	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {
+		this.page = new CommentPage(frame, taskBar, panel.getVideoID());
 	}
 }
 /*

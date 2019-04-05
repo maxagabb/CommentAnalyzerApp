@@ -53,7 +53,6 @@ public class VideoPanel extends ContentPanel{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		    this.setBorder(new EtchedBorder());
 		    this.add(new JLabel(new ImageIcon(image)));
 		    this.add(name);
 		}

@@ -62,12 +62,9 @@ public class CommentListPanel extends ContentListPanel{
 		this.repaint();
 		setPanel();
 	}
-	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String channelID) {}
+	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {}
 	private GridBagConstraints gbc;
 	private JFrame frame;
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();
 	ArrayList<CommentPanel> allPanels= new ArrayList<CommentPanel>();
-	
-	
-
 }

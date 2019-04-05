@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,13 +32,14 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		for(ContentPanel panel: (ArrayList<ContentPanel>)panels) {
-			this.panel = panel;
 			panel.setPanel();
+			panel.setBorder(BorderFactory.createRaisedBevelBorder());
 			panel.setAlignmentX(LEFT_ALIGNMENT);
 			ContentListPanel self  = this;
 			panel.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
+					self.panel = panel;
 					Thread thread = new Thread(self);
 					thread.start();
 					channelID = panel.getChannelID();
@@ -58,7 +60,10 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 					panel.setBackground(panelColor);
 				}
 				@Override
-				public void mousePressed(MouseEvent arg0) {}
+				public void mousePressed(MouseEvent arg0) {
+					panel.setBackground(panelColor);
+					panel.setBorder(BorderFactory.createLoweredBevelBorder());
+				}
 				@Override
 				public void mouseReleased(MouseEvent arg0) {}
 			});
@@ -68,7 +73,7 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 	}
 	
 	public void run() {
-		makeSearchByPage(frame, new TaskBar(frame), panel.getVideoID(),channelID);
+		makeSearchByPage(frame, new TaskBar(frame), panel);
 		page.setPage();
 		JScrollPane pane = new JScrollPane(page);
 		frame.getContentPane().removeAll();
@@ -76,7 +81,7 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 		frame.add(pane);
 		frame.repaint();
 	}
-	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String ChannelID);
+	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel);
 	public abstract void addPanel(Content content);
 	protected ArrayList panels = new ArrayList();
 	protected JFrame frame;

@@ -15,17 +15,20 @@ import com.fasterxml.jackson.core.JsonParseException;
 import api.Retriever;
 import api.VideoRetriever;
 import business.ContentListPanel;
+import business.ContentPanel;
 import business.Video1;
 import byChannelFrontEnd.Channel1;
+import byChannelFrontEnd.ChannelPanel;
 
 public class ByVideoPage extends SearchByPage{
 	public ByVideoPage(JFrame frame,TaskBar bar) {
 		super(frame,bar);
 		//this.panel = new VideoListPanel(frame);
 	}
-	public ByVideoPage(JFrame frame,TaskBar bar, String channelName) {
+	public ByVideoPage(JFrame frame,TaskBar bar, ContentPanel panel) {
 		super(frame,bar);
-		this.channelName = channelName + "\t\t";
+		this.channelName = panel.getName();
+		this.channelID = panel.getChannelID();
 	}
 
 	@Override
@@ -40,7 +43,7 @@ public class ByVideoPage extends SearchByPage{
 			createJTextFields();
 		else {
 			try {
-				retrieverInput = retriever.retrieveFromChannel(channelName);
+				retrieverInput = retriever.retrieveFromChannel(channelID);
 				addContentListPanel(panel);
 				createPanels(retrieverInput, panel);
 				this.revalidate();
@@ -60,7 +63,7 @@ public class ByVideoPage extends SearchByPage{
 			label = new JLabel("Video Selection Page");
 		}
 		else {
-			label = new JLabel(channelName+"\tvideos");
+			label = new JLabel(channelName+": videos");
 		}
 		label.setHorizontalAlignment(JLabel.CENTER);
 		return label;
@@ -75,5 +78,6 @@ public class ByVideoPage extends SearchByPage{
 			this.panel = new VideoListPanel(frame);
 	}
 	private String channelName;
+	private String channelID;
 }
 

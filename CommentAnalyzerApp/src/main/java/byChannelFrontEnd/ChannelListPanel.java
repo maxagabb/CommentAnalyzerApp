@@ -34,9 +34,8 @@ public class ChannelListPanel extends ContentListPanel{
 	}
 
 	@Override
-	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, String videoID, String channelID) {
-		System.out.print(channelID + "\n\n\n\n");
-		this.page = new ByVideoPage(frame2,taskBar,channelID);
+	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {
+		this.page = new ByVideoPage(frame2,taskBar,panel);
 	}
 
 }
