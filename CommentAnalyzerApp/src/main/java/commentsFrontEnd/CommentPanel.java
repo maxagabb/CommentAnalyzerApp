@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -43,7 +44,8 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 		String html = "<html><body style='width: %1spx'>%1s";
 		JLabel label = new JLabel(String.format(html, 400,content.getComment()));
 		this.add(label);
-		this.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+		this.setBackground(Color.WHITE);
+		this.setBorder(BorderFactory.createRaisedBevelBorder());
 	}
 	public CommentPanel clone() {
 		return new CommentPanel(content);
