@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EtchedBorder;
 
-import analysisFrontEnd.CommentPage;
 import byVideoFrontEnd.SearchByPage;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
+import commentsFrontEnd.CommentPage;
 
 public abstract class ContentListPanel extends JPanel implements Runnable{
 

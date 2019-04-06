@@ -1,4 +1,4 @@
-package analysisFrontEnd;
+package commentsFrontEnd;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

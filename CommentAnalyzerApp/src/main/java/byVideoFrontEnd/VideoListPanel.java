@@ -12,11 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import analysisFrontEnd.CommentPage;
 import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
 import business.Video1;
+import commentsFrontEnd.CommentPage;
 
 public class VideoListPanel extends ContentListPanel{
 	public VideoListPanel(JFrame frame) {

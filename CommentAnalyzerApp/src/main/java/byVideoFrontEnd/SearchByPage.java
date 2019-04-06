@@ -25,12 +25,12 @@ import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-import analysisFrontEnd.CommentListPanel;
-import analysisFrontEnd.CommentPanel;
 import api.Retriever;
 import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
+import commentsFrontEnd.CommentListPanel;
+import commentsFrontEnd.CommentPanel;
 
 public abstract class SearchByPage<T> extends JPanel implements Runnable{
 

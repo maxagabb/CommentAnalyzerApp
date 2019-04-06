@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import analysisFrontEnd.CommentPage;
 import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
@@ -17,6 +16,7 @@ import byVideoFrontEnd.ByVideoPage;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
+import commentsFrontEnd.CommentPage;
 
 public class ChannelListPanel extends ContentListPanel{
 
