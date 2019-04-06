@@ -32,12 +32,12 @@ public class ChannelPanel extends ContentPanel{
 		name.setVerticalAlignment(JLabel.CENTER);
 		
 		try {
-			//this.setBorder(new EtchedBorder());
 		    URL imageUrl = new URL(content.getthumbnailURL());
 		    InputStream in = imageUrl.openStream();
 		    image = ImageIO.read(in);
 		    in.close();
-		    this.add(new JLabel(new ImageIcon(image)));
+		    this.imageIcon = new ImageIcon(image);
+		    this.add(new JLabel(imageIcon));
 		    this.add(name);
 		}
 		catch (IOException ioe) {
@@ -47,9 +47,15 @@ public class ChannelPanel extends ContentPanel{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		    this.add(new JLabel(new ImageIcon(image)));
+		    imageLabel = new JLabel(new ImageIcon(image));
+		    this.add(imageLabel);
 		    this.add(name);
 		}
 	}
+	public ImageIcon getImageIcon() {
+		
+		return imageIcon;
+	}
+	private JLabel imageLabel;
 	private final String html = "<html><body style='width: %1spx'>%1s";
 }

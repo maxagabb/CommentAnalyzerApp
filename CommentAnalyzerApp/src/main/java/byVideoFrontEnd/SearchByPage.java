@@ -9,9 +9,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,11 +44,11 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
 		top.add(bar);
 		top.add(Box.createRigidArea(new Dimension(0,20)));
-		JLabel title = getTitle();
+		youtubeRetrieverSetup();
+		JPanel title = getTitle();
 		title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		top.add(title);
 		top.add(Box.createRigidArea(new Dimension(0,20)));
-		retriever = createRetriever();
 		setInitialContent();
 		JPanel topPanel = new JPanel();
 		topPanel.add(top);
@@ -77,7 +79,9 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 	
 	public void run() {
 		try {
-			retrieverInput = retriever.retrieve(field.getText());
+			HashMap<String, Object> map = new HashMap();
+			map.put("content", retriever.retrieve(field.getText()));
+			retrieverInput =  map;
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -86,19 +90,21 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 			e1.printStackTrace();
 		}
 		addContentListPanel(panel);
-		createPanels(retrieverInput,panel);
+		createPanels((ArrayList<T>) retrieverInput.get("content"),panel);
 		this.revalidate();
 		this.repaint();
 	}
+	
+	protected abstract void youtubeRetrieverSetup();
 	protected  void addContentListPanel(ContentListPanel panel) {};
-	protected abstract JLabel getTitle();
+	protected abstract JPanel getTitle();
 	protected abstract void setInitialContent();
-	protected abstract Retriever createRetriever();
 	protected JFrame frame;
 	protected ContentListPanel panel;
 	protected Retriever retriever;
-	protected ArrayList<T> retrieverInput;
+	protected HashMap<String, Object> retrieverInput;
 	protected TaskBar bar;
 	protected JPanel top = new JPanel();
 	final JTextField field = new JTextField();
+	protected ImageIcon imageIcon;
 }

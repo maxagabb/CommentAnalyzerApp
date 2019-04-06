@@ -3,6 +3,7 @@ package business;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EtchedBorder;
 
 import analysisFrontEnd.CommentPage;
 import byVideoFrontEnd.SearchByPage;
@@ -74,7 +76,13 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 	public void run() {
 		makeSearchByPage(frame, new TaskBar(frame), panel);
 		page.setPage();
-		JScrollPane pane = new JScrollPane(page);
+		JPanel borderPage = new JPanel();
+		page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+		borderPage.add(page);
+		borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
+		JPanel finalPage = new JPanel();
+		finalPage.add(borderPage);
+		JScrollPane pane = new JScrollPane(finalPage);
 		frame.getContentPane().removeAll();
 		frame.getContentPane().revalidate();
 		frame.add(pane);

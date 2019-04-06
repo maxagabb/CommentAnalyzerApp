@@ -106,7 +106,7 @@ public class VideoRetriever extends Retriever{
 		return response;
 
 	}
-	public PlaylistItemListResponse getJson2(String searchTerm) throws IOException{
+	public HashMap<String,Object> getJson2(String searchTerm) throws IOException{
 
 		// This OAuth 2.0 access scope allows for full read/write access to the
 		// authenticated user's account.
@@ -122,27 +122,31 @@ public class VideoRetriever extends Retriever{
 
 
 		YouTube.Channels.List request = youtube.channels()
-				.list("contentDetails");
-		
+				.list("contentDetails, brandingSettings");
+
 		ChannelListResponse response = request.setId(searchTerm)
 				.setMaxResults(1L)
 				.execute();
-		
+		String bannerURL = response.getItems().get(0).getBrandingSettings().getImage().getBannerMobileMediumHdImageUrl();
+
 		String uploadsID = response.getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
 		System.out.print(uploadsID);
 
 		/*credential = Auth.authorize(scopes, "localizations");
 		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential)
 				.setApplicationName("youtube-cmdline-localizations-sample").build();*/
-		
+
 		YouTube.PlaylistItems.List request2 = youtube.playlistItems()
 				.list("snippet");
 
-	    PlaylistItemListResponse response2 = request2.setPlaylistId(uploadsID)
-	            .setMaxResults(10L)
-	            .execute();
-	    
-		return response2;
+		PlaylistItemListResponse response2 = request2.setPlaylistId(uploadsID)
+				.setMaxResults(10L)
+				.execute();
+		HashMap<String,Object> result = new HashMap<>();;
+		result.put("searchResult", response2);
+		result.put("bannerURL", bannerURL );
+
+		return result;
 
 
 	}
@@ -182,21 +186,25 @@ public class VideoRetriever extends Retriever{
 		}
 	}
 
-	public ArrayList<Video1> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
+	public HashMap<String,Object> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
+		HashMap<String,Object> result = new HashMap<>();;
 		ArrayList<Video1> videos = new ArrayList<Video1>();
 		try {
-			PlaylistItemListResponse response = getJson2(fieldInput);
+			HashMap<String,Object> response =  getJson2(fieldInput);
+			PlaylistItemListResponse responseItems = (PlaylistItemListResponse) response.get("searchResult");
 			//List<PlaylistItem> result = response.getItems();
-			for (PlaylistItem item : response.getItems()) {
+			for (PlaylistItem item : responseItems.getItems()) {
 				Video1 video = new Video1(item);
 				videos.add(video);
 			}
-			//videos = result.get(0);
-			return videos;
+			result.put("videos", videos);
+			result.put("bannerURL", response.get("bannerURL"));
+			return result;
 		}
 		catch(Exception e){
 			videos.add(new Video1(e.getMessage()));
-			return videos;
+			result.put("videos", videos);
+			return result;
 		}
 	}
 

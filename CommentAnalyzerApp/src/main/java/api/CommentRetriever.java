@@ -60,9 +60,6 @@ public class CommentRetriever extends Retriever{
 			}
 
 			return(commentThreadsListByVideoIdRequest.execute());
-
-
-
 	}
 
 
@@ -167,13 +164,4 @@ public class CommentRetriever extends Retriever{
             .setApplicationName(APPLICATION_NAME)
             .build();
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

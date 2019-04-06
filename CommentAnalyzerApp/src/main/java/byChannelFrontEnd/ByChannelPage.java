@@ -24,21 +24,18 @@ public class ByChannelPage extends SearchByPage{
 	public ByChannelPage(JFrame frame,TaskBar bar) {
 		super(frame,bar);
 	}
-	@Override
-	protected Retriever createRetriever() {
-		// TODO Auto-generated method stub
-		return new ChannelRetriever();
-	}
 
 	@Override
 	protected void setInitialContent() {
 			createJTextFields();
 	}
 	@Override
-	protected JLabel getTitle() {
+	protected JPanel getTitle() {
 		JLabel label = new JLabel("Channel Selection Page");
 		label.setHorizontalAlignment(JLabel.CENTER);
-		return label;
+		JPanel panel = new JPanel();
+		panel.add(label);
+		return panel;
 	}
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
@@ -49,6 +46,12 @@ public class ByChannelPage extends SearchByPage{
 		else 
 			this.panel = new ChannelListPanel(frame);
 	}
+	
+	@Override
+	protected void youtubeRetrieverSetup() {
+		retriever = new ChannelRetriever();
+	}
 	private String channelName;
+
 }
 

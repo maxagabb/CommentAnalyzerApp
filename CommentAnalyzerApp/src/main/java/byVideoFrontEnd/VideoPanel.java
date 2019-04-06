@@ -22,6 +22,7 @@ import business.ContentPanel;
 import business.Video1;
 
 public class VideoPanel extends ContentPanel{
+	
 	public VideoPanel(Video1 content) {
 		super(content);
 	}
@@ -41,8 +42,10 @@ public class VideoPanel extends ContentPanel{
 		    URL imageUrl = new URL(content.getthumbnailURL());
 		    InputStream in = imageUrl.openStream();
 		    image = ImageIO.read(in);
+		    
 		    in.close();
-		    this.add(new JLabel(new ImageIcon(image)));
+		    this.imageIcon = new ImageIcon(image);
+		    this.add(new JLabel(imageIcon));
 		    this.add(name);
 		    this.setBorder(new EtchedBorder());
 		}
@@ -53,9 +56,11 @@ public class VideoPanel extends ContentPanel{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		    this.add(new JLabel(new ImageIcon(image)));
+		    JLabel label = new JLabel(new ImageIcon(image));
+		    this.add(label);
 		    this.add(name);
 		}
 	}
+	
 	private final String html = "<html><body style='width: %1spx'>%1s";
 }

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -46,20 +47,30 @@ public class TaskBar extends JPanel{
 			this.add(button);
 		}
 	}
+	
 	private JPanel getPage(String name, JFrame frame) {
+		JPanel page = null;
 		if(name.equals("Manage Favorites"))
 			return new WelcomePage(frame);
 		else if(name.equals("By Video")) {
-			ByVideoPage page = new ByVideoPage(frame, new TaskBar(frame));
-			page.setPage();
-			return page;
+			ByVideoPage videoPage = new ByVideoPage(frame, new TaskBar(frame));
+			videoPage.setPage();
+			page = videoPage;
 		}
 		else if(name.equals("By Channel")) {
-			ByChannelPage page = new ByChannelPage(frame, new TaskBar(frame));
-			page.setPage();
-			return page;
+			ByChannelPage channelPage = new ByChannelPage(frame, new TaskBar(frame));
+			channelPage.setPage();
+			page = channelPage;
 		}
 		else return new JPanel();
+		
+		JPanel borderPage = new JPanel();
+		page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+		borderPage.add(page);
+		borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
+		JPanel finalPage = new JPanel();
+		finalPage.add(borderPage);
+		return finalPage;
 		
 		
 	}
