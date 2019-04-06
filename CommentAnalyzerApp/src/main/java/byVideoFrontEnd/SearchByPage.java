@@ -55,9 +55,9 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 		this.add(topPanel, BorderLayout.NORTH);
 	}
 	
-	protected void createPanels(ArrayList<T> retrieverInput, ContentListPanel panel) {
+	protected void createPanels(ArrayList<Content> retrieverInput, ContentListPanel panel) {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		for (Content content: (ArrayList<Content>)retrieverInput) {
+		for (Content content: retrieverInput) {
 			panel.addPanel(content);
 		}
 		panel.setPanel();
@@ -90,7 +90,7 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 			e1.printStackTrace();
 		}
 		addContentListPanel(panel);
-		createPanels((ArrayList<T>) retrieverInput.get("content"),panel);
+		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
 		this.revalidate();
 		this.repaint();
 	}

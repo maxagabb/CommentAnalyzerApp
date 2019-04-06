@@ -27,7 +27,7 @@ public class VideoPanel extends ContentPanel{
 		super(content);
 	}
 	public String getName() {
-		return content.getName();
+		return String.format("<html><body>%1s",content.getName() );
 	}
 	public String getVideoID() {
 		return content.getID();
