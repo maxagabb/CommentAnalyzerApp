@@ -63,7 +63,7 @@ public class ByVideoPage extends SearchByPage{
 			label = new JLabel("Video Selection Page");
 		}
 		else {
-			label = new JLabel(channelName+": videos");
+			label = new JLabel(channelName);
 		}
 		label.setHorizontalAlignment(JLabel.CENTER);
 		return label;

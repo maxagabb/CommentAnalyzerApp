@@ -34,7 +34,7 @@ public class VideoPanel extends ContentPanel{
 	public void setPanel() {
 		this.setLayout(new FlowLayout());
 		BufferedImage image = null;
-		JLabel name = new JLabel(String.format(html, 200, content.getname()));
+		JLabel name = new JLabel(String.format(html, 200, content.getName()));
 		name.setVerticalAlignment(JLabel.CENTER);
 		
 		try {

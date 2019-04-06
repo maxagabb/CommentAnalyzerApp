@@ -32,7 +32,7 @@ public class Video1 extends Content{
 	public String getID() {
 		return ID;
 	}
-	public String getname() {
+	public String getName() {
 		return name;
 	}
 	public String getthumbnailURL() {

@@ -36,7 +36,7 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 	}
 	
 	public boolean contains(String input) {
-		return content.getComment().contains(input);
+		return content.getComment().toLowerCase().contains(input.toLowerCase());
 	}
 	
 	public void setPanel() {

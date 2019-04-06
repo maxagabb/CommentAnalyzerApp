@@ -23,10 +23,11 @@ import byVideoFrontEnd.VideoListPanel;
 
 public class CommentPage extends SearchByPage{
 
-	public CommentPage(JFrame frame, TaskBar bar, String videoID) {
+	public CommentPage(JFrame frame, TaskBar bar, String videoID, String videoName) {
 		super(frame, bar);
 		this.videoID = videoID;
 		this.panel = new CommentListPanel(frame);
+		this.videoName = videoName;
 	}
 
 	protected void createJTextFields() {
@@ -65,10 +66,11 @@ public class CommentPage extends SearchByPage{
 	}
 	@Override
 	protected JLabel getTitle() {
-		JLabel label = new JLabel("Comment Page");
+		JLabel label = new JLabel(videoName);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		return label;
 	}
 	private String videoID;
+	private String videoName;
 	private CommentListPanel panel = new CommentListPanel(frame);
 }
