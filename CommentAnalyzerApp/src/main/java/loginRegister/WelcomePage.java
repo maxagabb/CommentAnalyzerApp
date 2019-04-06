@@ -1,10 +1,10 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,7 +15,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-public class WelcomePage extends JPanel{
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+
+public class WelcomePage extends BorderPane{
 	/**
 	 * @invariant this != null
 	 * @precondition frame != null
@@ -33,12 +45,12 @@ public class WelcomePage extends JPanel{
 	 * @postcondition frame = null
 	 */
 	private void setPage() {
-		this.setLayout(new BorderLayout());
-		JLabel welcome = new JLabel("Welcome Screen");
-		welcome.setHorizontalAlignment(JLabel.CENTER);
-		this.add(welcome, BorderLayout.NORTH);
-		JButton login = new JButton("login");
-		login.addActionListener(e ->{
+		String cssLayout = "-fx-border-color: grey;\n" +
+                "-fx-border-insets: 5;\n" +
+                "-fx-border-width: 2;\n";
+		
+		Button login = new Button("login");
+		login.setOnAction(e ->{
 			JFrame nextFrame = new JFrame();
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
@@ -47,8 +59,8 @@ public class WelcomePage extends JPanel{
 			nextFrame.setVisible(true);
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
-		JButton register = new JButton("register");
-		register.addActionListener(e ->{
+		Button register = new Button("register");
+		register.setOnAction(e ->{
 			JFrame nextFrame = new JFrame();
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
@@ -58,23 +70,24 @@ public class WelcomePage extends JPanel{
 			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		});
 		
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.PAGE_AXIS));
-		login.setPreferredSize(register.getPreferredSize());
-		JPanel pane2 = new JPanel();pane2.add(register);
-		JPanel pane = new JPanel();pane.add(login);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,20)));
-		buttonPanel.add(pane);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,40)));
-		buttonPanel.add(pane2);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,20)));
-		JPanel buttonPanel2 = new JPanel();
-		buttonPanel2.add(buttonPanel);
-		buttonPanel.setBorder(new EtchedBorder());
-		JPanel buttonPanel3 = new JPanel();
-		buttonPanel3.setLayout(new GridBagLayout());
-		buttonPanel3.add(buttonPanel2);
-		this.add(buttonPanel3);
+		Label welcome = new Label("Welcome Screen");
+		HBox titleBox = new HBox();
+		titleBox.getChildren().add(welcome);
+		this.setTop(titleBox);
+		titleBox.setAlignment(Pos.CENTER);
+		
+		VBox buttonBox = new VBox();
+		buttonBox.setPadding(new Insets(50));
+		buttonBox.setSpacing(30);
+		login.setMaxWidth(100);
+		register.setMaxWidth(100);
+		buttonBox.getChildren().add(login);
+		buttonBox.getChildren().add(register);
+		buttonBox.setStyle(cssLayout);
+		GridPane  buttonBox2 = new GridPane ();
+		buttonBox2.getChildren().add(buttonBox);
+		this.setCenter(buttonBox2);
+		buttonBox2.setAlignment(Pos.CENTER);
 	}
 	private JFrame frame;
 }
