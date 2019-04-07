@@ -41,7 +41,7 @@ public class WelcomePage extends BorderPane{
 		this.primaryStage = primaryStage;
 		setPage();
 	}
-	/**
+	/*
 	 * sets buttons redirecting to login and 
 	 * register pages
 	 * @precondition this != null
@@ -55,7 +55,8 @@ public class WelcomePage extends BorderPane{
 		
 		Button login = new Button("login");
 		login.setOnAction(e ->{
-			primaryStage.close();
+			primaryStage.setWidth(1200);primaryStage.setHeight(800);
+			primaryStage.centerOnScreen();
 			JFrame nextFrame = new JFrame();
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
@@ -66,7 +67,8 @@ public class WelcomePage extends BorderPane{
 		});
 		Button register = new Button("register");
 		register.setOnAction(e ->{
-			primaryStage.close();
+			primaryStage.setWidth(1200);primaryStage.setHeight(800);
+			primaryStage.centerOnScreen();
 			JFrame nextFrame = new JFrame();
 			nextFrame.setBounds(frame.getX(), frame.getY(), 
 					frame.getWidth(), frame.getHeight());
@@ -85,7 +87,7 @@ public class WelcomePage extends BorderPane{
 		titleBox.setAlignment(Pos.CENTER);
 		
 		VBox buttonBox = new VBox();
-		buttonBox.getStyleClass().add("vbox");
+		buttonBox.getStyleClass().add("raisedBorder");
 		buttonBox.setPadding(new Insets(50));
 		buttonBox.setSpacing(30);
 		login.setMaxWidth(100);
