@@ -3,7 +3,9 @@ package business;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public abstract class ContentPanel extends JPanel {
+import javafx.scene.layout.HBox;
+
+public abstract class ContentPanel extends HBox {
 	public ContentPanel(Content content) {
 		this.content = content;
 	}

@@ -17,6 +17,7 @@ import javax.swing.border.EtchedBorder;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -36,8 +37,7 @@ public class WelcomePage extends BorderPane{
 	 * @postcondition this != null
 	 * @param frame
 	 */
-	public WelcomePage(JFrame frame, Stage primaryStage) {
-		this.frame = frame;
+	public WelcomePage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		setPage();
 	}
@@ -48,38 +48,35 @@ public class WelcomePage extends BorderPane{
 	 * @postcondition frame = null
 	 */
 	private void setPage() {
-		String cssLayout = "-fx-border-color: grey;\n" +
-                "-fx-border-insets: 5;\n" +
-                "-fx-border-width: 2;\n" +
-                "-fx-background-color: white;" ;
-		
 		Button login = new Button("login");
 		login.setOnAction(e ->{
-			primaryStage.setWidth(1200);primaryStage.setHeight(800);
-			primaryStage.centerOnScreen();
-			JFrame nextFrame = new JFrame();
-			nextFrame.setBounds(frame.getX(), frame.getY(), 
-					frame.getWidth(), frame.getHeight());
-			frame.dispose();
-			nextFrame.add(new LoginPage(nextFrame));
-			nextFrame.setVisible(true);
-			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			//primaryStage.setWidth(1200);primaryStage.setHeight(800);
+			//primaryStage.centerOnScreen();
+			StackPane root = new StackPane();
+			root.getChildren().add(new LoginPage(primaryStage));
+			
+			Scene scene = new Scene(root, primaryStage.getWidth(), 
+					primaryStage.getHeight());
+			scene.getStylesheets().add
+			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+			
+			primaryStage.setScene(scene);
+
 		});
 		Button register = new Button("register");
 		register.setOnAction(e ->{
-			primaryStage.setWidth(1200);primaryStage.setHeight(800);
-			primaryStage.centerOnScreen();
-			JFrame nextFrame = new JFrame();
-			nextFrame.setBounds(frame.getX(), frame.getY(), 
-					frame.getWidth(), frame.getHeight());
-			frame.dispose();
-			nextFrame.add(new RegisterPage(nextFrame));
-			nextFrame.setVisible(true);
-			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			StackPane root = new StackPane();
+			root.getChildren().add(new RegisterPage(primaryStage));
+			
+			Scene scene = new Scene(root, primaryStage.getWidth(), 
+					primaryStage.getHeight());
+			scene.getStylesheets().add
+			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+			
+			primaryStage.setScene(scene);
 		});
 		
 		Text welcome = new Text("Welcome Screen");
-		//Label welcome = new Label(scenetitle);
 		welcome.setId("welcome-text");
 		HBox titleBox = new HBox();
 		titleBox.getChildren().add(welcome);
@@ -88,7 +85,6 @@ public class WelcomePage extends BorderPane{
 		
 		VBox buttonBox = new VBox();
 		buttonBox.getStyleClass().add("raisedBorder");
-		buttonBox.setPadding(new Insets(50));
 		buttonBox.setSpacing(30);
 		login.setMaxWidth(100);
 		register.setMaxWidth(100);
@@ -100,6 +96,5 @@ public class WelcomePage extends BorderPane{
 		this.setCenter(buttonBox2);
 		buttonBox2.setAlignment(Pos.CENTER);
 	}
-	private JFrame frame;
 	private Stage primaryStage;
 }

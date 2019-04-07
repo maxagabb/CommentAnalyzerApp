@@ -16,15 +16,11 @@ public class JavaFXStart extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
-		JFrame frame = new JFrame();
-		frame.setLayout(new BorderLayout());
-		frame.setBounds(800, 400, 1200, 800);
 		primaryStage.setTitle("Comment Analyzer");
 		
 		StackPane root = new StackPane();
-		root.getChildren().add(new WelcomePage(frame,primaryStage));
-		Scene scene = new Scene(root, 300, 250);
+		root.getChildren().add(new WelcomePage(primaryStage));
+		Scene scene = new Scene(root, 300, 500);
 				
 		primaryStage.setScene(scene);
 		

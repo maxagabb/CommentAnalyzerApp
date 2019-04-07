@@ -13,6 +13,16 @@ import javax.swing.border.Border;
 
 import byVideoFrontEnd.MainPage;
 import byVideoFrontEnd.TaskBar;
+import javafx.beans.binding.Bindings;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class LoginPage extends InputPage{
 
@@ -22,8 +32,8 @@ public class LoginPage extends InputPage{
 	 * @param frame
 	 * @invariant this != null
 	 */
-	public LoginPage(JFrame frame) {
-		super(frame);
+	public LoginPage(Stage primaryStage) {
+		super(primaryStage);
 	}
 
 	@Override
@@ -38,19 +48,24 @@ public class LoginPage extends InputPage{
 		input.add(inputName);
 		input.add(inputPassword);
 		if(list.validate(input)) {
-			System.out.print("success");
+			StackPane root = new StackPane(new MainPage(stage, new TaskBar(stage)));
+			ScrollPane pane = new ScrollPane(root);
+			GridPane grid = new GridPane();
+
+			root.minWidthProperty().bind(Bindings.createDoubleBinding(() -> 
+			pane.getViewportBounds().getWidth(), pane.viewportBoundsProperty()));
+			grid.getChildren().add(pane);
+
+			Scene scene = new Scene(grid, 800, 
+					stage.getHeight());
 			
-			JFrame nextFrame = new JFrame();
-			nextFrame.setBounds(frame.getX(), frame.getY(), 
-					frame.getWidth(), frame.getHeight());
-			frame.dispose();
-			JScrollPane pane = new JScrollPane(new MainPage(nextFrame,
-					new TaskBar(nextFrame)));
-			nextFrame.add(pane);
-			nextFrame.setVisible(true);
-			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			grid.setAlignment(Pos.TOP_CENTER);
+
+			scene.getStylesheets().add
+			(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+			stage.setScene(scene);
 		}
-		
+
 		else
 			JOptionPane.showMessageDialog(frame, "Login failed");
 	}
@@ -62,8 +77,11 @@ public class LoginPage extends InputPage{
 	 * @postcondition this != null
 	 */
 	protected void setPageName() {
-		JLabel login = new JLabel("Login Screen");
-		login.setHorizontalAlignment(JLabel.CENTER);
-		this.add(login, BorderLayout.NORTH);
+		Text login = new Text("Login Screen");
+		login.setId("welcome-text");
+		HBox titleBox = new HBox();
+		titleBox.getChildren().add(login);
+		this.setTop(titleBox);
+		titleBox.setAlignment(Pos.CENTER);
 	}
 }

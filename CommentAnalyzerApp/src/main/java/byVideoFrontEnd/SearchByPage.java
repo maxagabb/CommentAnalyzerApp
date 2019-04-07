@@ -31,50 +31,61 @@ import business.ContentListPanel;
 import business.ContentPanel;
 import commentsFrontEnd.CommentListPanel;
 import commentsFrontEnd.CommentPanel;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public abstract class SearchByPage<T> extends JPanel implements Runnable{
+public abstract class SearchByPage<T> extends BorderPane implements Runnable{
 
-	public SearchByPage(JFrame frame, TaskBar bar) {
+	public SearchByPage(Stage stage, TaskBar bar) {
 		this.bar = bar;
-		this.frame = frame;
+		this.stage = stage;
 	}
 
 	public void setPage() {
-		this.setLayout(new BorderLayout());
-		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
-		top.add(bar);
-		top.add(Box.createRigidArea(new Dimension(0,20)));
+		//this.setLayout(new BorderLayout());
+		//top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
+		top.getChildren().add(bar);
+		//top.add(Box.createRigidArea(new Dimension(0,20)));
 		youtubeRetrieverSetup();
-		JPanel title = getTitle();
-		title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		top.add(title);
-		top.add(Box.createRigidArea(new Dimension(0,20)));
+		HBox title = getTitle();
+		//title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		top.getChildren().add(title);
+		title.setAlignment(Pos.CENTER);
+		//top.add(Box.createRigidArea(new Dimension(0,20)));
 		setInitialContent();
-		JPanel topPanel = new JPanel();
-		topPanel.add(top);
-		this.add(topPanel, BorderLayout.NORTH);
+		//JPanel topPanel = new JPanel();
+		//topPanel.add(top);
+		this.setTop(top);
 	}
 	
 	protected void createPanels(ArrayList<Content> retrieverInput, ContentListPanel panel) {
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		for (Content content: retrieverInput) {
 			panel.addPanel(content);
 		}
 		panel.setPanel();
-		this.add(panel);
+		this.getChildren().add(panel);
 	}
 	
 	protected void createJTextFields() {
-		field.addActionListener(e ->{
+		field.setOnAction(e->{
 			Thread thread = new Thread(this);
 			thread.start();
 		});
-		JPanel fieldPanel = new JPanel();
-		field.setColumns(15);
-		fieldPanel.add(field);
-		fieldPanel.setBorder(new EtchedBorder());
-		top.add(fieldPanel);
-		top.add(Box.createRigidArea(new Dimension(0,40)));
+		VBox fieldPanel = new VBox();
+		field.setMaxWidth(250);
+		fieldPanel.getChildren().add(field);
+		fieldPanel.getStyleClass().add("fieldBorder");
+		
+		top.getChildren().add(fieldPanel);
+		top.setSpacing(30);
+		//top.add(Box.createRigidArea(new Dimension(0,40)));
 	}
 	
 	public void run() {
@@ -91,20 +102,20 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 		}
 		addContentListPanel(panel);
 		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
-		this.revalidate();
-		this.repaint();
+		//this.revalidate();
+		//this.repaint();
 	}
 	
+	protected Stage stage;
 	protected abstract void youtubeRetrieverSetup();
 	protected  void addContentListPanel(ContentListPanel panel) {};
-	protected abstract JPanel getTitle();
+	protected abstract HBox getTitle();
 	protected abstract void setInitialContent();
-	protected JFrame frame;
 	protected ContentListPanel panel;
 	protected Retriever retriever;
 	protected HashMap<String, Object> retrieverInput;
 	protected TaskBar bar;
-	protected JPanel top = new JPanel();
-	final JTextField field = new JTextField();
-	protected ImageIcon imageIcon;
+	protected VBox top = new VBox();
+	final TextField field = new TextField();
+	protected Image imageIcon;
 }

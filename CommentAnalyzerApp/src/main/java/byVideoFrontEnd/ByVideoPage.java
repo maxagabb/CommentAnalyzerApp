@@ -25,17 +25,24 @@ import business.ContentPanel;
 import business.Video1;
 import byChannelFrontEnd.Channel1;
 import byChannelFrontEnd.ChannelPanel;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class ByVideoPage extends SearchByPage{
-	public ByVideoPage(JFrame frame,TaskBar bar) {
-		super(frame,bar);
+	public ByVideoPage(Stage stage,TaskBar bar) {
+		super(stage,bar);
 		//this.panel = new VideoListPanel(frame);
 	}
-	public ByVideoPage(JFrame frame,TaskBar bar, ChannelPanel panel) {
-		super(frame,bar);
+	public ByVideoPage(Stage stage,TaskBar bar, ChannelPanel panel) {
+		super(stage,bar);
 		this.channelName = panel.getName();
 		this.channelID = panel.getChannelID();
-		this.imageIcon = panel.getImageIcon();
 	}
 
 
@@ -47,44 +54,41 @@ public class ByVideoPage extends SearchByPage{
 		else {
 			addContentListPanel(panel);
 			createPanels((ArrayList) retrieverInput.get("videos"), panel);
-			this.revalidate();
-			this.repaint();
+			//this.revalidate();
+			//this.repaint();
 		}
 	}
 	@Override
-	protected JPanel getTitle() {
-		JPanel panel = new JPanel();
+	protected HBox getTitle() {
+		HBox panel = new HBox();
+		Image image = null;
 
 		if(channelName ==null) {
-			JLabel nameLabel = new JLabel("Video Selection Page");
-			nameLabel.setHorizontalAlignment(JLabel.CENTER);
-			panel.add(nameLabel);
+			Text nameLabel = new Text("Video Selection Page");
+			panel.getChildren().add(nameLabel);
 		}
 		else {
 			try {
 				URL imageUrl = new URL((String) retrieverInput.get("bannerURL"));
 				InputStream in = imageUrl.openStream();
-				BufferedImage image = ImageIO.read(in);
+				this.imageIcon = new Image(in);
 				in.close();
-				this.imageIcon = new ImageIcon(image);
 			}
 			catch(Exception e) {e.printStackTrace();}
-
-			JLabel imageLabel = new JLabel(imageIcon);
-			panel.add(imageLabel);
+			ImageView imageView = new ImageView(image);
+			panel.getChildren().add(imageView);
 		}
-		panel.setAlignmentX(CENTER_ALIGNMENT);
 
 		return panel;
 	}
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
-			panel.removeAll();
-			panel.validate();
+			//panel.removeAll();
+			//panel.validate();
 			panel.emptyList();
 		}
 		else 
-			this.panel = new VideoListPanel(frame);
+			this.panel = new VideoListPanel(stage);
 	}
 
 	@Override

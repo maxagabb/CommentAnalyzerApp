@@ -13,6 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
 public class RegisterPage extends InputPage{
 
 	/**
@@ -22,8 +30,8 @@ public class RegisterPage extends InputPage{
 	 * @param frame
 	 * @invariant this != null
 	 */
-	public RegisterPage(JFrame frame ) {
-		super(frame);
+	public RegisterPage(Stage primaryStage ) {
+		super(primaryStage);
 	}
 
 	@Override
@@ -41,13 +49,15 @@ public class RegisterPage extends InputPage{
 			input.add(inputEmail);
 			list.printToFile(input);
 			
-			JFrame nextFrame = new JFrame();
-			nextFrame.setBounds(frame.getX(), frame.getY(), 
-					frame.getWidth(), frame.getHeight());
-			frame.dispose();
-			nextFrame.add(new LoginPage(nextFrame));
-			nextFrame.setVisible(true);
-			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			StackPane root = new StackPane();
+			root.getChildren().add(new LoginPage(stage));
+			
+			Scene scene = new Scene(root, stage.getWidth(), 
+					stage.getHeight());
+			scene.getStylesheets().add
+			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+			
+			stage.setScene(scene);
 			
 		}
 		catch(Exception E) {
@@ -61,18 +71,11 @@ public class RegisterPage extends InputPage{
 	 * @precondition none
 	 * @postcondition returns emailField
 	 */
-	protected JTextField getEmailField() {
-		final JTextField emailField = new JTextField();
-		emailField.addKeyListener(
-				new KeyListener() {
-					@Override
-					public void keyPressed(KeyEvent e) {}
-					@Override
-					public void keyReleased(KeyEvent e) {
-						inputEmail = emailField.getText();}
-					@Override
-					public void keyTyped(KeyEvent e) {}
-				});
+	protected TextField getEmailField() {
+		final TextField emailField = new TextField();
+		emailField.setOnKeyReleased(e->{
+			inputEmail = emailField.getText();
+		});
 		return emailField;
 	}
 
@@ -83,9 +86,12 @@ public class RegisterPage extends InputPage{
 	 * @postcondition this != null
 	 */
 	protected void setPageName() {
-		JLabel register = new JLabel("Register Screen");
-		register.setHorizontalAlignment(JLabel.CENTER);
-		this.add(register, BorderLayout.NORTH);
+		Text login = new Text("Register Screen");
+		login.setId("welcome-text");
+		HBox titleBox = new HBox();
+		titleBox.getChildren().add(login);
+		this.setTop(titleBox);
+		titleBox.setAlignment(Pos.CENTER);
 	}
 	
 	private String inputEmail;

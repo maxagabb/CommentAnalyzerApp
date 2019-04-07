@@ -28,14 +28,15 @@ import byVideoFrontEnd.SearchByPage;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
+import javafx.stage.Stage;
 
 public class CommentPage extends SearchByPage{
 
 
-	public CommentPage(JFrame frame, TaskBar bar, VideoPanel videoPanel) {
-		super(frame, bar);
+	public CommentPage(Stage stage, TaskBar bar, VideoPanel videoPanel) {
+		super(stage, bar);
 		this.videoID = videoPanel.getVideoID();
-		this.panel = new CommentListPanel(frame);
+		this.panel = new CommentListPanel(stage);
 		this.videoName = videoPanel.getName();
 		this.imageIcon = videoPanel.getImageIcon();
 

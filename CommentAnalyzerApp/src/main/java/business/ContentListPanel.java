@@ -19,62 +19,47 @@ import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 import commentsFrontEnd.CommentPage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public abstract class ContentListPanel extends JPanel implements Runnable{
-
-	public ContentListPanel(JFrame frame) {
-		this.frame = frame;}
+public abstract class ContentListPanel extends GridPane implements Runnable{
 	public void emptyList() {};
+	public ContentListPanel(Stage stage) {
+		this.stage = stage;
+		}
 
 	@SuppressWarnings("unchecked")
 	public void setPanel(){
-		this.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		int rowIndex = 0;
 		for(ContentPanel panel: (ArrayList<ContentPanel>)panels) {
 			panel.setPanel();
-			panel.setBorder(BorderFactory.createRaisedBevelBorder());
-			panel.setAlignmentX(LEFT_ALIGNMENT);
+			panel.getStyleClass().add("raisedBorder");
 			ContentListPanel self  = this;
-			panel.addMouseListener(new MouseListener() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					self.panel = panel;
-					Thread thread = new Thread(self);
-					thread.start();
-					/*try {
-						thread.join();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-				}
-				@Override
-				public void mouseEntered(MouseEvent arg0) {
-					panelColor = panel.getBackground();
-					panel.setBackground(Color.WHITE);
-				}
-				@Override
-				public void mouseExited(MouseEvent arg0) {
-					panel.setBackground(panelColor);
-				}
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					panel.setBackground(panelColor);
-					panel.setBorder(BorderFactory.createLoweredBevelBorder());
-				}
-				@Override
-				public void mouseReleased(MouseEvent arg0) {}
+			
+			panel.setOnMouseClicked(e->{
+				panel.setStyle("-fx-background-color: #f2f2f2;");
+				panel.getStyleClass().add("etchedBorder");
+				self.panel = panel;
+				Thread thread = new Thread(self);
+				thread.start();
 			});
-			this.add(panel, gbc);
-			gbc.gridy++;
+			
+			panel.setOnMouseEntered(e->{
+				panel.setStyle("-fx-background-color: white;");
+			});
+			
+			panel.setOnMouseExited(e->{
+				panel.setStyle("-fx-background-color: #f2f2f2;");
+			});
+			this.add(panel, 1, rowIndex, 400, 300);
+			rowIndex++;
 		}
+
 	}
-	
+
 	public void run() {
-		makeSearchByPage(frame, new TaskBar(frame), panel);
+		/*makeSearchByPage(frame, new TaskBar(stage), panel);
 		page.setPage();
 		JPanel borderPage = new JPanel();
 		page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
@@ -86,13 +71,12 @@ public abstract class ContentListPanel extends JPanel implements Runnable{
 		frame.getContentPane().removeAll();
 		frame.getContentPane().revalidate();
 		frame.add(pane);
-		frame.repaint();
+		frame.repaint();*/
 	}
 	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel);
 	public abstract void addPanel(Content content);
 	protected ArrayList panels = new ArrayList();
-	protected JFrame frame;
+	protected Stage stage;
 	protected ContentPanel panel;
 	protected SearchByPage page;
-	protected Color panelColor;
 }

@@ -17,10 +17,11 @@ import business.ContentListPanel;
 import business.ContentPanel;
 import business.Video1;
 import commentsFrontEnd.CommentPage;
+import javafx.stage.Stage;
 
 public class VideoListPanel extends ContentListPanel{
-	public VideoListPanel(JFrame frame) {
-		super(frame);
+	public VideoListPanel(Stage stage) {
+		super(stage);
 	}
 
 	public void emptyList() {
@@ -34,7 +35,7 @@ public class VideoListPanel extends ContentListPanel{
 
 	@Override
 	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {
-		this.page = new CommentPage(frame, taskBar,(VideoPanel)panel);
+		this.page = new CommentPage(stage, taskBar,(VideoPanel)panel);
 	}
 }
 /*
