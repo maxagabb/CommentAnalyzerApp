@@ -28,6 +28,11 @@ import byVideoFrontEnd.SearchByPage;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
+import javafx.geometry.Pos;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class CommentPage extends SearchByPage{
@@ -43,16 +48,27 @@ public class CommentPage extends SearchByPage{
 	}
 
 	protected void createJTextFields() {
-		final JTextField field2 = new JTextField();
-		field2.addActionListener(e ->{
+		final TextField field2 = new TextField();
+		field2.setOnAction(e ->{
 			panel.parseComments(field2.getText());
 		});
-		JPanel fieldPanel = new JPanel();
-		field2.setColumns(15);
-		fieldPanel.add(field2);
-		fieldPanel.setBorder(new EtchedBorder());
-		top.add(fieldPanel);
-		top.add(Box.createRigidArea(new Dimension(0,40)));
+		//JPanel fieldPanel = new JPanel();
+		//field2.setMaxWidth(250);
+		//fieldPanel.add(field2);
+		//fieldPanel.setBorder(new EtchedBorder());
+		//top.add(fieldPanel);
+		//top.add(Box.createRigidArea(new Dimension(0,40)));
+		
+		
+		HBox fieldBox = new HBox(field2);
+		VBox fieldPanel = new VBox();
+		field2.setMaxWidth(250);
+		fieldPanel.getChildren().add(fieldBox);
+		fieldPanel.getStyleClass().add("fieldBorder");
+		
+		top.getChildren().add(fieldPanel);
+		fieldBox.setAlignment(Pos.CENTER);
+		top.setSpacing(30);
 
 	}
 
@@ -62,16 +78,18 @@ public class CommentPage extends SearchByPage{
 		createJTextFields();
 	}
 	@Override
-	protected JPanel getTitle() {
-		JLabel nameLabel = new JLabel(videoName);
-		nameLabel.setHorizontalAlignment(JLabel.CENTER);
-
-
-		JPanel panel = new JPanel();
-		panel.setAlignmentX(CENTER_ALIGNMENT);
-		panel.add(nameLabel);
-
+	protected HBox getTitle() {
+		Text nameLabel = new Text(videoName);
+		HBox panel = new HBox(nameLabel);
 		return panel;
+		//nameLabel.setHorizontalAlignment(JLabel.CENTER);
+
+
+		//JPanel panel = new JPanel();
+		//panel.setAlignmentX(CENTER_ALIGNMENT);
+		//panel.add(nameLabel);
+
+		//return panel;
 	}
 	@Override
 	protected void youtubeRetrieverSetup() {
@@ -91,7 +109,7 @@ public class CommentPage extends SearchByPage{
 	}
 	private String videoID;
 	private String videoName;
-	private CommentListPanel panel = new CommentListPanel(frame);
+	private CommentListPanel panel = new CommentListPanel(stage);
 
 
 }

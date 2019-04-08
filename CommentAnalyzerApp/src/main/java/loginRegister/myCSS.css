@@ -24,7 +24,6 @@
     -fx-border-width: 2px;
     -fx-border-color: white grey grey white;
     -fx-background-color: #f2f2f2;
-    -fx-padding: 50;
 }
 
 
@@ -36,7 +35,6 @@
     -fx-border-insets: 0 1 1 0;
     -fx-background-color: -fx-border-shadow, -fx-background;
     -fx-background-insets: 1 0 0 1, 2;
-    -fx-padding: 50;
 }
 
 .fieldBorder {
@@ -48,4 +46,10 @@
     -fx-background-color: -fx-border-shadow, -fx-background;
     -fx-background-insets: 1 0 0 1, 2;
     -fx-padding: 10;
+}
+.commentBorder {
+    -fx-border-insets: 0;
+    -fx-border-width: 2px;
+    -fx-border-color: white grey grey white;
+    -fx-background-color: white;
 }

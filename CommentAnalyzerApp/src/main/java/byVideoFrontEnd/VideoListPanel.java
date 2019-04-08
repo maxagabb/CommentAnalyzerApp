@@ -34,7 +34,7 @@ public class VideoListPanel extends ContentListPanel{
 	}
 
 	@Override
-	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {
+	protected void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel) {
 		this.page = new CommentPage(stage, taskBar,(VideoPanel)panel);
 	}
 }

@@ -3,6 +3,7 @@ package business;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 public abstract class ContentPanel extends HBox {
@@ -14,9 +15,9 @@ public abstract class ContentPanel extends HBox {
 	public String getVideoID() {return null;}
 	public String getChannelID() {return null;}
 	public String getName() {return "default name";}
-	public ImageIcon getImageIcon() {
+	public Image getImageIcon() {
 		return imageIcon;
 	}
-	protected ImageIcon imageIcon;
+	protected Image imageIcon;
 	protected Content content;
 }

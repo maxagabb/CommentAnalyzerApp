@@ -85,6 +85,7 @@ public class WelcomePage extends BorderPane{
 		
 		VBox buttonBox = new VBox();
 		buttonBox.getStyleClass().add("raisedBorder");
+		buttonBox.setPadding(new Insets(50));
 		buttonBox.setSpacing(30);
 		login.setMaxWidth(100);
 		register.setMaxWidth(100);

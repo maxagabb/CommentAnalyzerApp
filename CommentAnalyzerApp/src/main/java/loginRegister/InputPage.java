@@ -1,11 +1,11 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -84,6 +85,7 @@ public abstract class InputPage extends BorderPane{
 		VBox fieldPanel = new VBox();
 		fieldPanel.setSpacing(30);
 		fieldPanel.getStyleClass().add("etchedBorder");
+		fieldPanel.setPadding(new Insets(50));
 		fieldPanel.getChildren().add(makeInputPanel("username", nameField));
 		fieldPanel.getChildren().add(makeInputPanel("password", passwordField));
 		if (getEmailField()!=null) {

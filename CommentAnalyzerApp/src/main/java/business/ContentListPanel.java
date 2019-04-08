@@ -19,11 +19,18 @@ import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 import commentsFrontEnd.CommentPage;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import loginRegister.JavaFXStart;
 
-public abstract class ContentListPanel extends GridPane implements Runnable{
+public abstract class ContentListPanel extends VBox implements Runnable{
 	public void emptyList() {};
 	public ContentListPanel(Stage stage) {
 		this.stage = stage;
@@ -31,18 +38,19 @@ public abstract class ContentListPanel extends GridPane implements Runnable{
 
 	@SuppressWarnings("unchecked")
 	public void setPanel(){
-		int rowIndex = 0;
+		ContentListPanel self  = this;
 		for(ContentPanel panel: (ArrayList<ContentPanel>)panels) {
 			panel.setPanel();
 			panel.getStyleClass().add("raisedBorder");
-			ContentListPanel self  = this;
+			panel.setPadding(new Insets(25));
+			//ContentListPanel self  = this;
 			
 			panel.setOnMouseClicked(e->{
 				panel.setStyle("-fx-background-color: #f2f2f2;");
 				panel.getStyleClass().add("etchedBorder");
 				self.panel = panel;
 				Thread thread = new Thread(self);
-				thread.start();
+				Platform.runLater(thread);
 			});
 			
 			panel.setOnMouseEntered(e->{
@@ -52,28 +60,44 @@ public abstract class ContentListPanel extends GridPane implements Runnable{
 			panel.setOnMouseExited(e->{
 				panel.setStyle("-fx-background-color: #f2f2f2;");
 			});
-			this.add(panel, 1, rowIndex, 400, 300);
-			rowIndex++;
+			this.getChildren().add(panel);
 		}
 
 	}
 
 	public void run() {
-		/*makeSearchByPage(frame, new TaskBar(stage), panel);
+		makeSearchByPage(stage, new TaskBar(stage), panel);
 		page.setPage();
-		JPanel borderPage = new JPanel();
-		page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-		borderPage.add(page);
-		borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
-		JPanel finalPage = new JPanel();
-		finalPage.add(borderPage);
-		JScrollPane pane = new JScrollPane(finalPage);
-		frame.getContentPane().removeAll();
-		frame.getContentPane().revalidate();
-		frame.add(pane);
-		frame.repaint();*/
+		//JPanel borderPage = new JPanel();
+		page.setPadding(new Insets(40));
+		//page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+		//borderPage.add(page);
+		//borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
+		page.getStyleClass().add("raisedBorder");
+		//VBox finalPage = new VBox();
+		//finalPage.getChildren().add(page);
+		//ScrollPane pane = new ScrollPane(finalPage);
+		
+		
+		ScrollPane root = new ScrollPane(page);
+		GridPane grid = new GridPane();
+		grid.getChildren().add(root);
+		//ScrollPane pane = new ScrollPane(grid);
+		
+		Scene scene = new Scene(grid, stage.getWidth(), 
+				stage.getHeight());
+		grid.setAlignment(Pos.TOP_CENTER);
+		
+		scene.getStylesheets().add
+		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+		stage.setScene(scene);
+
+		//frame.getContentPane().removeAll();
+		//frame.getContentPane().revalidate();
+		//frame.add(pane);
+		//frame.repaint();
 	}
-	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel);
+	protected abstract void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel);
 	public abstract void addPanel(Content content);
 	protected ArrayList panels = new ArrayList();
 	protected Stage stage;

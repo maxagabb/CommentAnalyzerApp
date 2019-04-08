@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.sun.javafx.tk.Toolkit.Task;
 
 import api.Retriever;
 import business.Content;
@@ -31,7 +32,11 @@ import business.ContentListPanel;
 import business.ContentPanel;
 import commentsFrontEnd.CommentListPanel;
 import commentsFrontEnd.CommentPanel;
+import javafx.application.Platform;
+import javafx.concurrent.Worker;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -40,9 +45,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public abstract class SearchByPage<T> extends BorderPane implements Runnable{
+public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
 	public SearchByPage(Stage stage, TaskBar bar) {
+		stage.setWidth(800);
 		this.bar = bar;
 		this.stage = stage;
 	}
@@ -70,21 +76,24 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable{
 			panel.addPanel(content);
 		}
 		panel.setPanel();
-		this.getChildren().add(panel);
+		this.setCenter(panel);
 	}
 	
 	protected void createJTextFields() {
 		field.setOnAction(e->{
 			Thread thread = new Thread(this);
-			thread.start();
+			Platform.runLater(thread);
 		});
+		HBox fieldBox = new HBox(field);
 		VBox fieldPanel = new VBox();
 		field.setMaxWidth(250);
-		fieldPanel.getChildren().add(field);
+		fieldPanel.getChildren().add(fieldBox);
 		fieldPanel.getStyleClass().add("fieldBorder");
 		
 		top.getChildren().add(fieldPanel);
+		fieldBox.setAlignment(Pos.CENTER);
 		top.setSpacing(30);
+		
 		//top.add(Box.createRigidArea(new Dimension(0,40)));
 	}
 	
@@ -101,6 +110,7 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable{
 			e1.printStackTrace();
 		}
 		addContentListPanel(panel);
+		panel.setPadding(new Insets(30));
 		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
 		//this.revalidate();
 		//this.repaint();

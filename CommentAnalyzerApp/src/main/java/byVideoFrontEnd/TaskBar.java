@@ -51,14 +51,14 @@ public class TaskBar extends HBox{
 			Button button = iterator.next();
 			
 			button.setOnAction(e ->{
-				StackPane root = getPane(button.getText());
+				ScrollPane root = getPane(button.getText());
 				GridPane grid = new GridPane();
 				grid.getChildren().add(root);
 				//ScrollPane pane = new ScrollPane(grid);
 				
-				Scene scene = new Scene(grid, 800, 
-						500);
-				grid.setAlignment(Pos.CENTER);
+				Scene scene = new Scene(grid, stage.getWidth(), 
+						stage.getHeight());
+				grid.setAlignment(Pos.TOP_CENTER);
 				
 				scene.getStylesheets().add
 				(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
@@ -70,10 +70,10 @@ public class TaskBar extends HBox{
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	private StackPane getPane(String name) {
+	private ScrollPane getPane(String name) {
 		Pane page = null;
 		if(name.equals("Manage Favorites"))
-			return new StackPane();
+			return new ScrollPane();
 		else if(name.equals("By Video")) {
 			ByVideoPage videoPage = new ByVideoPage(stage, new TaskBar(stage));
 			videoPage.setPage();
@@ -84,7 +84,7 @@ public class TaskBar extends HBox{
 			//channelPage.setPage();
 			//page = channelPage;
 		}
-		else return new StackPane();
+		else return new ScrollPane();
 		StackPane centeredPage = new StackPane(page);
 		centeredPage.getStyleClass().add("raisedBorder");
 		
@@ -95,7 +95,7 @@ public class TaskBar extends HBox{
 		//Pane finalPage = new Pane();
 		//finalPage.getChildren().add(borderPage);
 		//centeredPage.setAlignment(Pos.CENTER);
-		return centeredPage;
+		return new ScrollPane(centeredPage);
 	}
 	
 	private Stage stage;
