@@ -17,14 +17,17 @@ import byChannelFrontEnd.ByChannelPage;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import loginRegister.JavaFXStart;
 import loginRegister.WelcomePage;
@@ -48,19 +51,15 @@ public class TaskBar extends HBox{
 			Button button = iterator.next();
 			
 			button.setOnAction(e ->{
-				StackPane root = new StackPane(getPane(button.getText()));
-				ScrollPane pane = new ScrollPane(root);
+				StackPane root = getPane(button.getText());
 				GridPane grid = new GridPane();
-
-				root.minWidthProperty().bind(Bindings.createDoubleBinding(() -> 
-				pane.getViewportBounds().getWidth(), pane.viewportBoundsProperty()));
 				grid.getChildren().add(root);
-
-				Scene scene = new Scene(grid, 800, 
-						stage.getHeight());
+				//ScrollPane pane = new ScrollPane(grid);
 				
-				grid.setAlignment(Pos.TOP_CENTER);
-
+				Scene scene = new Scene(grid, 800, 
+						500);
+				grid.setAlignment(Pos.CENTER);
+				
 				scene.getStylesheets().add
 				(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
 				stage.setScene(scene);
@@ -71,10 +70,10 @@ public class TaskBar extends HBox{
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	private Pane getPane(String name) {
+	private StackPane getPane(String name) {
 		Pane page = null;
 		if(name.equals("Manage Favorites"))
-			return new Pane();
+			return new StackPane();
 		else if(name.equals("By Video")) {
 			ByVideoPage videoPage = new ByVideoPage(stage, new TaskBar(stage));
 			videoPage.setPage();
@@ -85,19 +84,19 @@ public class TaskBar extends HBox{
 			//channelPage.setPage();
 			//page = channelPage;
 		}
-		else return new Pane();
+		else return new StackPane();
+		StackPane centeredPage = new StackPane(page);
+		centeredPage.getStyleClass().add("raisedBorder");
 		
-		Pane borderPage = new Pane();
+		//Pane borderPage = new Pane();
 		page.setPadding(new Insets(40));
-		borderPage.getChildren().add(page);
-		
-
-		borderPage.getStyleClass().add("raisedBorder");
-		Pane finalPage = new Pane();
-		finalPage.getChildren().add(borderPage);
-		return finalPage;
-		
-		
+		//borderPage.getChildren().add(centeredPage);
+		//borderPage.getStyleClass().add("raisedBorder");
+		//Pane finalPage = new Pane();
+		//finalPage.getChildren().add(borderPage);
+		//centeredPage.setAlignment(Pos.CENTER);
+		return centeredPage;
 	}
+	
 	private Stage stage;
 }
