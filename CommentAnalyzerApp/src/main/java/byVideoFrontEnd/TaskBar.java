@@ -38,9 +38,10 @@ public class TaskBar extends HBox{
 			Button button = iterator.next();
 			
 			button.setOnAction(e ->{
-				ScrollPane root = getPane(button.getText());
+				Pane root = getPane(button.getText());
 				GridPane grid = new GridPane();
 				grid.getChildren().add(root);
+				//grid.getChildren().add(root);
 				//ScrollPane pane = new ScrollPane(grid);
 				
 				Scene scene = new Scene(grid, stage.getWidth(), 
@@ -57,10 +58,10 @@ public class TaskBar extends HBox{
 		this.setAlignment(Pos.CENTER);
 	}
 	
-	private ScrollPane getPane(String name) {
+	private Pane getPane(String name) {
 		Pane page = null;
 		if(name.equals("Manage Favorites"))
-			return new ScrollPane();
+			return new Pane();
 		else if(name.equals("By Video")) {
 			ByVideoPage videoPage = new ByVideoPage(stage, new TaskBar(stage));
 			videoPage.setPage();
@@ -71,13 +72,13 @@ public class TaskBar extends HBox{
 			channelPage.setPage();
 			page = channelPage;
 		}
-		else return new ScrollPane();
+		else return new Pane();
 		StackPane centeredPage = new StackPane(page);
-		//centeredPage.getStyleClass().add("raisedBorder");
+		centeredPage.getStyleClass().add("raisedBorder");
 		
 		//Pane borderPage = new Pane();
 		page.setPadding(new Insets(40));
-		return new ScrollPane(centeredPage);
+		return centeredPage;
 	}
 	
 	private Stage stage;

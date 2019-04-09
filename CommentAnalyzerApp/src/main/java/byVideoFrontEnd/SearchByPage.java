@@ -67,9 +67,15 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		setInitialContent();
 		//JPanel topPanel = new JPanel();
 		//topPanel.add(top);
+		top.setPadding(new Insets(25));
 		this.setTop(top);
 	}
-	
+	/**
+	 * Sets a contentListPanel with data from API, 
+	 * then adds it to the SearchByPage
+	 * @param retrieverInput
+	 * @param panel
+	 */
 	protected void createPanels(ArrayList<Content> retrieverInput, ContentListPanel panel) {
 		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		for (Content content: retrieverInput) {
@@ -77,7 +83,13 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		}
 		panel.getChildren().clear();
 		panel.setPanel();
-		this.setCenter(panel);
+		ScrollPane list = new ScrollPane(panel);
+		GridPane pane = new GridPane();
+		pane.getChildren().add(list);
+		this.setCenter(pane);
+		pane.setAlignment(Pos.CENTER);
+		panel.setAlignment(Pos.CENTER);
+		panel.setPadding(new Insets(20));
 	}
 	
 	protected void createJTextFields() {
@@ -88,7 +100,6 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		         @Override protected Void call() {
 		        	 self.run();
 					return null;
-					
 		         }
 		     };
 		     Platform.runLater(task);
@@ -121,7 +132,7 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 			e1.printStackTrace();
 		}
 		addContentListPanel(panel);
-		panel.setPadding(new Insets(30));
+		panel.setPadding(new Insets(20));
 		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
 		/*Platform.runLater(() -> {
             temp.getPanes().add(tp);

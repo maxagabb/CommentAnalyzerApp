@@ -37,6 +37,16 @@
     -fx-background-insets: 1 0 0 1, 2;
 }
 
+.pressedBorder {
+    -fx-border-base: gray;
+    -fx-border-shadow: white;
+    -fx-light-border: derive(-fx-border-base, 25%);
+    -fx-border-color: -fx-light-border -fx-border-base -fx-border-base -fx-light-border;
+    -fx-border-insets: 0 1 1 0;
+	-fx-background-color: #f2f2f2;
+    -fx-background-insets: 1 0 0 1, 2;
+}
+
 .fieldBorder {
     -fx-border-base: gray;
     -fx-border-shadow: white;
