@@ -89,7 +89,7 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		this.setCenter(pane);
 		pane.setAlignment(Pos.CENTER);
 		panel.setAlignment(Pos.CENTER);
-		panel.setPadding(new Insets(20));
+		panel.setPadding(new Insets(100));
 	}
 	
 	protected void createJTextFields() {
@@ -115,8 +115,6 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		top.getChildren().add(fieldPanel);
 		fieldBox.setAlignment(Pos.CENTER);
 		top.setSpacing(30);
-		
-		//top.add(Box.createRigidArea(new Dimension(0,40)));
 	}
 	
 	public void run() {
@@ -134,11 +132,6 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		addContentListPanel(panel);
 		panel.setPadding(new Insets(20));
 		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
-		/*Platform.runLater(() -> {
-            temp.getPanes().add(tp);
-        });*/
-		//this.revalidate();
-		//this.repaint();
 	}
 	
 	protected Stage stage;

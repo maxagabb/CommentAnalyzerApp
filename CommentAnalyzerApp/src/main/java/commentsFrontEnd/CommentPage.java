@@ -43,7 +43,6 @@ public class CommentPage extends SearchByPage{
 		this.videoID = videoPanel.getVideoID();
 		this.panel = new CommentListPanel(stage);
 		this.videoName = videoPanel.getName();
-		this.image = videoPanel.getImageIcon();
 
 	}
 
@@ -52,13 +51,6 @@ public class CommentPage extends SearchByPage{
 		field2.setOnAction(e ->{
 			panel.parseComments(field2.getText());
 		});
-		//JPanel fieldPanel = new JPanel();
-		//field2.setMaxWidth(250);
-		//fieldPanel.add(field2);
-		//fieldPanel.setBorder(new EtchedBorder());
-		//top.add(fieldPanel);
-		//top.add(Box.createRigidArea(new Dimension(0,40)));
-		
 		
 		HBox fieldBox = new HBox(field2);
 		VBox fieldPanel = new VBox();
@@ -82,14 +74,6 @@ public class CommentPage extends SearchByPage{
 		Text nameLabel = new Text(videoName);
 		HBox panel = new HBox(nameLabel);
 		return panel;
-		//nameLabel.setHorizontalAlignment(JLabel.CENTER);
-
-
-		//JPanel panel = new JPanel();
-		//panel.setAlignmentX(CENTER_ALIGNMENT);
-		//panel.add(nameLabel);
-
-		//return panel;
 	}
 	@Override
 	protected void youtubeRetrieverSetup() {

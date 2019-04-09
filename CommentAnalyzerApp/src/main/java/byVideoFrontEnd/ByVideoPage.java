@@ -40,13 +40,11 @@ public class ByVideoPage extends SearchByPage{
 		super(stage,bar);
 		//this.panel = new VideoListPanel(frame);
 	}
-	public ByVideoPage(Stage stage,TaskBar bar, ChannelPanel panel) {
+	public ByVideoPage(Stage stage,TaskBar bar, ChannelPanel channelPanel) {
 		super(stage,bar);
-		this.channelName = panel.getName();
-		this.channelID = panel.getChannelID();
+		this.channelName = channelPanel.getName();
+		this.channelID = channelPanel.getChannelID();
 	}
-
-
 
 	@Override
 	protected void setInitialContent() {
@@ -55,8 +53,6 @@ public class ByVideoPage extends SearchByPage{
 		else {
 			addContentListPanel(panel);
 			createPanels((ArrayList) retrieverInput.get("videos"), panel);
-			//this.revalidate();
-			//this.repaint();
 		}
 	}
 	@Override

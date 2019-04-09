@@ -45,8 +45,9 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 			panel.setPadding(new Insets(25));
 			
 			panel.setOnMouseClicked(e->{
-				panel.setStyle("-fx-background-color: #f2f2f2;");
 				self.panel = panel;
+				self.panel.setStyle("-fx-background-color: #f2f2f2;");
+				self.panel.getStyleClass().add("etchedBorder");
 				Thread thread = new Thread(self);
 				Platform.runLater(thread);
 			});
@@ -68,15 +69,12 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		page.setPage();
 		page.setPadding(new Insets(20));
 		page.getStyleClass().add("raisedBorder");
-		
-		//ScrollPane root = new ScrollPane(page);
 		GridPane grid = new GridPane();
 		grid.getChildren().add(page);
 		
 		Scene scene = new Scene(grid, stage.getWidth(), 
 				stage.getHeight());
 		grid.setAlignment(Pos.TOP_CENTER);
-		
 		scene.getStylesheets().add
 		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
 		stage.setScene(scene);

@@ -53,15 +53,8 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 		commentBox.getStyleClass().add("commentBorder");
 		
 		this.getChildren().add(commentBox);
-		//HBox.setHgrow(comment, Priority.ALWAYS);
 		commentBox.setAlignment(Pos.CENTER_LEFT);
 		
-		
-		//String html = "<html><body style='width: %1spx'>%1s";
-		//JLabel label = new JLabel(String.format(html, 400,content.getComment()));
-		//this.add(label);
-		//this.setBackground(Color.WHITE);
-		//this.setBorder(BorderFactory.createRaisedBevelBorder());
 	}
 	public CommentPanel clone() {
 		return new CommentPanel(content);

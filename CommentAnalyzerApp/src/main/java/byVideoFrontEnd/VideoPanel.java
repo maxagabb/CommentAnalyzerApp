@@ -38,44 +38,4 @@ public class VideoPanel extends ContentPanel{
 	public String getVideoID() {
 		return content.getID();
 	}
-	public void setPanel() {
-		Label name = new Label(content.getName());
-		name.setWrapText(true);
-		name.setPrefWidth(200);
-		//name.wrappingWidthProperty().bind(tabPane.widthProperty());
-		//name.setVerticalAlignment(JLabel.CENTER);
-		
-		try {
-		    URL imageUrl = new URL(content.getthumbnailURL());
-		    InputStream in = imageUrl.openStream();
-		    this.image = new Image(in);
-		    in.close();
-		    ImageView imageView = new ImageView(image);
-		    HBox imageBox = new HBox(imageView);
-		    imageBox.getChildren().add(name);
-		    
-		    this.getChildren().add(imageBox);
-		    imageBox.setAlignment(Pos.CENTER_LEFT);
-		   // name.setAlignment(Pos.CENTER_RIGHT);
-		    imageBox.setSpacing(20);
-		   // this.setBorder(new EtchedBorder());
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-			/*
-		    try {
-				image = ImageIO.read(new File(content.getthumbnailURL()));
-				ImageView imageView = new ImageView(image);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		    
-		    JLabel label = new JLabel(new ImageIcon(image));
-		    this.getChildren().add(label);
-		    this.getChildren().add(name);*/
-		}
-	}
-	
-	private final String html = "<html><body style='width: %1spx'>%1s";
 }
