@@ -1,36 +1,23 @@
 package byVideoFrontEnd;
 
-import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EtchedBorder;
 
 import byChannelFrontEnd.ByChannelPage;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import loginRegister.JavaFXStart;
-import loginRegister.WelcomePage;
 
 public class TaskBar extends HBox{
 	public TaskBar(Stage stage) {
@@ -80,21 +67,16 @@ public class TaskBar extends HBox{
 			page = videoPage;
 		}
 		else if(name.equals("By Channel")) {
-			//ByChannelPage channelPage = new ByChannelPage(stage, new TaskBar(stage));
-			//channelPage.setPage();
-			//page = channelPage;
+			ByChannelPage channelPage = new ByChannelPage(stage, new TaskBar(stage));
+			channelPage.setPage();
+			page = channelPage;
 		}
 		else return new ScrollPane();
 		StackPane centeredPage = new StackPane(page);
-		centeredPage.getStyleClass().add("raisedBorder");
+		//centeredPage.getStyleClass().add("raisedBorder");
 		
 		//Pane borderPage = new Pane();
 		page.setPadding(new Insets(40));
-		//borderPage.getChildren().add(centeredPage);
-		//borderPage.getStyleClass().add("raisedBorder");
-		//Pane finalPage = new Pane();
-		//finalPage.getChildren().add(borderPage);
-		//centeredPage.setAlignment(Pos.CENTER);
 		return new ScrollPane(centeredPage);
 	}
 	

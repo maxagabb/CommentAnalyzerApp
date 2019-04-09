@@ -17,11 +17,12 @@ import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 import commentsFrontEnd.CommentPage;
+import javafx.stage.Stage;
 
 public class ChannelListPanel extends ContentListPanel{
 
-	public ChannelListPanel(JFrame frame) {
-		super(frame);
+	public ChannelListPanel(Stage stage) {
+		super(stage);
 	}
 	
 	public void emptyList() {
@@ -34,8 +35,8 @@ public class ChannelListPanel extends ContentListPanel{
 	}
 
 	@Override
-	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {
-		this.page = new ByVideoPage(frame2,taskBar,(ChannelPanel)panel);
+	protected void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel) {
+		this.page = new ByVideoPage(stage,taskBar,(ChannelPanel)panel);
 	}
 
 }

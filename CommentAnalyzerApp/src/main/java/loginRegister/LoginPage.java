@@ -56,7 +56,7 @@ public class LoginPage extends InputPage{
 			pane.getViewportBounds().getWidth(), pane.viewportBoundsProperty()));
 			grid.getChildren().add(pane);
 
-			Scene scene = new Scene(grid, 800, 
+			Scene scene = new Scene(root, 800, 
 					stage.getHeight());
 			
 			grid.setAlignment(Pos.TOP_CENTER);

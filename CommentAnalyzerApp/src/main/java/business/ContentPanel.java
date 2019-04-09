@@ -16,8 +16,8 @@ public abstract class ContentPanel extends HBox {
 	public String getChannelID() {return null;}
 	public String getName() {return "default name";}
 	public Image getImageIcon() {
-		return imageIcon;
+		return image;
 	}
-	protected Image imageIcon;
+	protected Image image;
 	protected Content content;
 }

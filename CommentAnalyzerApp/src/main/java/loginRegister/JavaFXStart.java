@@ -1,8 +1,5 @@
 package loginRegister;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

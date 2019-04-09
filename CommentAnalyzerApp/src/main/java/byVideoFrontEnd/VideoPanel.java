@@ -48,9 +48,9 @@ public class VideoPanel extends ContentPanel{
 		try {
 		    URL imageUrl = new URL(content.getthumbnailURL());
 		    InputStream in = imageUrl.openStream();
-		    this.imageIcon = new Image(in);
+		    this.image = new Image(in);
 		    in.close();
-		    ImageView imageView = new ImageView(imageIcon);
+		    ImageView imageView = new ImageView(image);
 		    HBox imageBox = new HBox(imageView);
 		    imageBox.getChildren().add(name);
 		    

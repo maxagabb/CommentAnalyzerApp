@@ -24,7 +24,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.sun.javafx.tk.Toolkit.Task;
 
 import api.Retriever;
 import business.Content;
@@ -33,6 +32,7 @@ import business.ContentPanel;
 import commentsFrontEnd.CommentListPanel;
 import commentsFrontEnd.CommentPanel;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -75,14 +75,25 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		for (Content content: retrieverInput) {
 			panel.addPanel(content);
 		}
+		panel.getChildren().clear();
 		panel.setPanel();
 		this.setCenter(panel);
 	}
 	
 	protected void createJTextFields() {
+
 		field.setOnAction(e->{
-			Thread thread = new Thread(this);
-			Platform.runLater(thread);
+			SearchByPage<T> self = this;
+			Task<Void> task = new Task<Void>() {
+		         @Override protected Void call() {
+		        	 self.run();
+					return null;
+					
+		         }
+		     };
+		     Platform.runLater(task);
+			//Thread thread = new Thread(this);
+			//Platform.runLater(thread);
 		});
 		HBox fieldBox = new HBox(field);
 		VBox fieldPanel = new VBox();
@@ -112,6 +123,9 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		addContentListPanel(panel);
 		panel.setPadding(new Insets(30));
 		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
+		/*Platform.runLater(() -> {
+            temp.getPanes().add(tp);
+        });*/
 		//this.revalidate();
 		//this.repaint();
 	}
@@ -127,5 +141,5 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 	protected TaskBar bar;
 	protected VBox top = new VBox();
 	final TextField field = new TextField();
-	protected Image imageIcon;
+	protected Image image;
 }

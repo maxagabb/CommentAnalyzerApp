@@ -43,7 +43,6 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 			panel.setPanel();
 			panel.getStyleClass().add("raisedBorder");
 			panel.setPadding(new Insets(25));
-			//ContentListPanel self  = this;
 			
 			panel.setOnMouseClicked(e->{
 				panel.setStyle("-fx-background-color: #f2f2f2;");
@@ -68,21 +67,12 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 	public void run() {
 		makeSearchByPage(stage, new TaskBar(stage), panel);
 		page.setPage();
-		//JPanel borderPage = new JPanel();
 		page.setPadding(new Insets(40));
-		//page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-		//borderPage.add(page);
-		//borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
-		page.getStyleClass().add("raisedBorder");
-		//VBox finalPage = new VBox();
-		//finalPage.getChildren().add(page);
-		//ScrollPane pane = new ScrollPane(finalPage);
-		
+		//page.getStyleClass().add("raisedBorder");
 		
 		ScrollPane root = new ScrollPane(page);
 		GridPane grid = new GridPane();
 		grid.getChildren().add(root);
-		//ScrollPane pane = new ScrollPane(grid);
 		
 		Scene scene = new Scene(grid, stage.getWidth(), 
 				stage.getHeight());
@@ -92,10 +82,6 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
 		stage.setScene(scene);
 
-		//frame.getContentPane().removeAll();
-		//frame.getContentPane().revalidate();
-		//frame.add(pane);
-		//frame.repaint();
 	}
 	protected abstract void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel);
 	public abstract void addPanel(Content content);

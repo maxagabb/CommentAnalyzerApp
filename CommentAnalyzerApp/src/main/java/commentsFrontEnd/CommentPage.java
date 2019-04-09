@@ -43,7 +43,7 @@ public class CommentPage extends SearchByPage{
 		this.videoID = videoPanel.getVideoID();
 		this.panel = new CommentListPanel(stage);
 		this.videoName = videoPanel.getName();
-		this.imageIcon = videoPanel.getImageIcon();
+		this.image = videoPanel.getImageIcon();
 
 	}
 

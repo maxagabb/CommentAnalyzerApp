@@ -25,6 +25,7 @@ import business.ContentPanel;
 import business.Video1;
 import byChannelFrontEnd.Channel1;
 import byChannelFrontEnd.ChannelPanel;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -61,8 +62,6 @@ public class ByVideoPage extends SearchByPage{
 	@Override
 	protected HBox getTitle() {
 		HBox panel = new HBox();
-		Image image = null;
-
 		if(channelName ==null) {
 			Text nameLabel = new Text("Video Selection Page");
 			panel.getChildren().add(nameLabel);
@@ -71,12 +70,14 @@ public class ByVideoPage extends SearchByPage{
 			try {
 				URL imageUrl = new URL((String) retrieverInput.get("bannerURL"));
 				InputStream in = imageUrl.openStream();
-				this.imageIcon = new Image(in);
+				this.image = new Image(in);
 				in.close();
 			}
 			catch(Exception e) {e.printStackTrace();}
 			ImageView imageView = new ImageView(image);
 			panel.getChildren().add(imageView);
+			panel.setPadding(new Insets(25));
+			panel.setSpacing(25);
 		}
 
 		return panel;
