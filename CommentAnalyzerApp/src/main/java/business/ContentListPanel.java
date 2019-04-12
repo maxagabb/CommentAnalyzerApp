@@ -7,6 +7,9 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -21,6 +24,8 @@ import byVideoFrontEnd.VideoPanel;
 import commentsFrontEnd.CommentPage;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -46,10 +51,35 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 			
 			panel.setOnMouseClicked(e->{
 				self.panel = panel;
+				self.panel.getStyleClass().remove("raisedBorder");
+				self.panel.getStyleClass().add("pressedBorder");
 				self.panel.setStyle("-fx-background-color: #f2f2f2;");
-				self.panel.getStyleClass().add("etchedBorder");
-				Thread thread = new Thread(self);
-				Platform.runLater(thread);
+				//self.panel.getStyleClass().add("etchedBorder");
+				Service<Void> backgroundThread = new Service<Void>() {
+		            @Override
+		            protected Task<Void> createTask() {
+		                return new Task<Void>() {
+		                    @Override
+		                    protected Void call() throws Exception {
+		                        self.run();
+		                        return null;
+		                    }
+		                };
+		            }
+		        };
+
+		        backgroundThread.setOnSucceeded((evt) -> {
+		        	GridPane grid = new GridPane();
+		    		grid.getChildren().add(self.page);
+		    		
+		    		Scene scene = new Scene(grid, self.stage.getWidth(), 
+		    				self.stage.getHeight());
+		    		grid.setAlignment(Pos.TOP_CENTER);
+		    		scene.getStylesheets().add
+		    		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+		    		self.stage.setScene(scene);
+		        });
+		        backgroundThread.start();
 			});
 			
 			panel.setOnMouseEntered(e->{
@@ -69,16 +99,6 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		page.setPage();
 		page.setPadding(new Insets(20));
 		page.getStyleClass().add("raisedBorder");
-		GridPane grid = new GridPane();
-		grid.getChildren().add(page);
-		
-		Scene scene = new Scene(grid, stage.getWidth(), 
-				stage.getHeight());
-		grid.setAlignment(Pos.TOP_CENTER);
-		scene.getStylesheets().add
-		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-		stage.setScene(scene);
-
 	}
 	protected abstract void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel);
 	public abstract void addPanel(Content content);

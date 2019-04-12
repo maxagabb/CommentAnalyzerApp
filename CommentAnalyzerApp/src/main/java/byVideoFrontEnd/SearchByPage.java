@@ -32,10 +32,12 @@ import business.ContentPanel;
 import commentsFrontEnd.CommentListPanel;
 import commentsFrontEnd.CommentPanel;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -44,6 +46,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import loginRegister.JavaFXStart;
 
 public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
@@ -91,32 +94,39 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		panel.setAlignment(Pos.CENTER);
 		panel.setPadding(new Insets(100));
 	}
-	
-	protected void createJTextFields() {
 
+	protected void createJTextFields() {
 		field.setOnAction(e->{
 			SearchByPage<T> self = this;
-			Task<Void> task = new Task<Void>() {
-		         @Override protected Void call() {
-		        	 self.run();
-					return null;
-		         }
-		     };
-		     Platform.runLater(task);
-			//Thread thread = new Thread(this);
-			//Platform.runLater(thread);
+			Service<Void> backgroundThread = new Service<Void>() {
+				@Override
+				protected Task<Void> createTask() {
+					return new Task<Void>() {
+						@Override
+						protected Void call() throws Exception {
+							self.run();
+							return null;
+						}
+					};
+				}
+			};
+			backgroundThread.setOnSucceeded((evt) -> {
+				createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
+			});
+			backgroundThread.start();
 		});
+
 		HBox fieldBox = new HBox(field);
 		VBox fieldPanel = new VBox();
 		field.setMaxWidth(250);
 		fieldPanel.getChildren().add(fieldBox);
 		fieldPanel.getStyleClass().add("fieldBorder");
-		
+
 		top.getChildren().add(fieldPanel);
 		fieldBox.setAlignment(Pos.CENTER);
 		top.setSpacing(30);
 	}
-	
+
 	public void run() {
 		try {
 			HashMap<String, Object> map = new HashMap();
@@ -131,9 +141,8 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		}
 		addContentListPanel(panel);
 		panel.setPadding(new Insets(20));
-		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
 	}
-	
+
 	protected Stage stage;
 	protected abstract void youtubeRetrieverSetup();
 	protected  void addContentListPanel(ContentListPanel panel) {};
