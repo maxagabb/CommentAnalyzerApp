@@ -69,7 +69,7 @@ public class CommentListPanel extends ContentListPanel{
 		//this.repaint();
 		setPanel();
 	}
-	protected void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel) {}
+	protected void makeSearchByPage(ContentPanel panel) {}
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();
 	ArrayList<CommentPanel> allPanels= new ArrayList<CommentPanel>();
 }

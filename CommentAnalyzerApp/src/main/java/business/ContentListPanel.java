@@ -72,12 +72,14 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		        	GridPane grid = new GridPane();
 		    		grid.getChildren().add(self.page);
 		    		
-		    		Scene scene = new Scene(grid, self.stage.getWidth(), 
+		    		/*Scene scene = new Scene(grid, self.stage.getWidth(), 
 		    				self.stage.getHeight());
 		    		grid.setAlignment(Pos.TOP_CENTER);
 		    		scene.getStylesheets().add
 		    		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-		    		self.stage.setScene(scene);
+		    		self.stage.setScene(scene);*/
+		    		grid.setAlignment(Pos.TOP_CENTER);
+		    		self.stage.getScene().setRoot(grid);
 		        });
 		        backgroundThread.start();
 			});
@@ -95,12 +97,12 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 	}
 
 	public void run() {
-		makeSearchByPage(stage, new TaskBar(stage), panel);
+		makeSearchByPage(panel);
 		page.setPage();
 		page.setPadding(new Insets(20));
 		page.getStyleClass().add("raisedBorder");
 	}
-	protected abstract void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel);
+	protected abstract void makeSearchByPage(ContentPanel panel);
 	public abstract void addPanel(Content content);
 	protected ArrayList panels = new ArrayList();
 	protected Stage stage;

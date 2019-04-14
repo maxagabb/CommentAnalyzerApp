@@ -35,8 +35,8 @@ public class ChannelListPanel extends ContentListPanel{
 	}
 
 	@Override
-	protected void makeSearchByPage(Stage stage, TaskBar taskBar, ContentPanel panel) {
-		this.page = new ByVideoPage(stage,taskBar,(ChannelPanel)panel);
+	protected void makeSearchByPage(ContentPanel panel) {
+		this.page = new ByVideoPage(stage,new TaskBar(stage),(ChannelPanel)panel);
 	}
 
 }

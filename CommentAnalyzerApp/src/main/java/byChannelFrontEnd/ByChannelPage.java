@@ -42,7 +42,7 @@ public class ByChannelPage extends SearchByPage{
 	}
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
-			panel.getChildren().clear();
+			//panel.getChildren().clear();
 			panel.emptyList();
 		}
 		else 
