@@ -21,6 +21,8 @@ import loginRegister.JavaFXStart;
 
 public class TaskBar extends HBox{
 	public TaskBar(Stage stage) {
+		this.setSpacing(25);
+		this.getStyleClass().add("taskBar");
 		this.stage = stage;
 		setBar();
 	}
@@ -38,14 +40,16 @@ public class TaskBar extends HBox{
 			Button button = iterator.next();
 			
 			button.setOnAction(e ->{
+				Scene savedScene = this.stage.getScene();
+				
 				Pane root = getPane(button.getText());
 				GridPane grid = new GridPane();
 				grid.getChildren().add(root);
 				//grid.getChildren().add(root);
 				//ScrollPane pane = new ScrollPane(grid);
 				
-				Scene scene = new Scene(grid, stage.getWidth(), 
-						stage.getHeight());
+				Scene scene = new Scene(grid, savedScene.getWidth(), 
+						savedScene.getHeight());
 				grid.setAlignment(Pos.TOP_CENTER);
 				
 				scene.getStylesheets().add

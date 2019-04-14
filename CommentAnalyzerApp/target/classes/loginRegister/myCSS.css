@@ -60,3 +60,11 @@
     -fx-border-color: white grey grey white;
     -fx-background-color: white;
 }
+.taskBar {
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-border-width: 2px;
+    -fx-border-color: grey white white grey;
+    -fx-background-color: grey;
+}

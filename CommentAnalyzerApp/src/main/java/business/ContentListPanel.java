@@ -71,15 +71,18 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		        backgroundThread.setOnSucceeded((evt) -> {
 		        	GridPane grid = new GridPane();
 		    		grid.getChildren().add(self.page);
-		    		
-		    		/*Scene scene = new Scene(grid, self.stage.getWidth(), 
+
+		    		grid.setMinWidth(self.stage.getWidth());
+		    		Scene scene = new Scene(grid, self.stage.getWidth(), 
 		    				self.stage.getHeight());
+		 
 		    		grid.setAlignment(Pos.TOP_CENTER);
 		    		scene.getStylesheets().add
 		    		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-		    		self.stage.setScene(scene);*/
-		    		grid.setAlignment(Pos.TOP_CENTER);
-		    		self.stage.getScene().setRoot(grid);
+		    		self.stage.setScene(scene);
+		    		grid.setMinWidth(self.stage.getWidth());
+		    		//grid.setAlignment(Pos.TOP_CENTER);
+		    		//self.stage.getScene().setRoot(grid);
 		        });
 		        backgroundThread.start();
 			});

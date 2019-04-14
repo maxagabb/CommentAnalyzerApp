@@ -48,6 +48,12 @@ public class LoginPage extends InputPage{
 		input.add(inputName);
 		input.add(inputPassword);
 		if(list.validate(input)) {
+			GridPane grid = new GridPane();
+    		grid.getChildren().add(new MainPage(stage, new TaskBar(stage)));
+    		grid.setAlignment(Pos.TOP_CENTER);
+    		this.stage.getScene().setRoot(grid);
+			
+			/*
 			StackPane root = new StackPane(new MainPage(stage, new TaskBar(stage)));
 			ScrollPane pane = new ScrollPane(root);
 			GridPane grid = new GridPane();
@@ -63,7 +69,8 @@ public class LoginPage extends InputPage{
 
 			scene.getStylesheets().add
 			(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-			stage.setScene(scene);
+			stage.setScene(scene);*/
+			
 		}
 
 		else

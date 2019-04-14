@@ -51,7 +51,6 @@ import loginRegister.JavaFXStart;
 public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
 	public SearchByPage(Stage stage, TaskBar bar) {
-		stage.setWidth(800);
 		this.bar = bar;
 		this.stage = stage;
 	}

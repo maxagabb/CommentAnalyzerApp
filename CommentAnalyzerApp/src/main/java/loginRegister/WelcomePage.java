@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
+import byVideoFrontEnd.MainPage;
+import byVideoFrontEnd.TaskBar;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -50,9 +52,13 @@ public class WelcomePage extends BorderPane{
 	private void setPage() {
 		Button login = new Button("login");
 		login.setOnAction(e ->{
+			StackPane root = new StackPane();
+			root.getChildren().add(new LoginPage(primaryStage));
+			root.setAlignment(Pos.TOP_CENTER);
+    		this.primaryStage.getScene().setRoot(root);
 			//primaryStage.setWidth(1200);primaryStage.setHeight(800);
 			//primaryStage.centerOnScreen();
-			StackPane root = new StackPane();
+			/*StackPane root = new StackPane();
 			root.getChildren().add(new LoginPage(primaryStage));
 			
 			Scene scene = new Scene(root, primaryStage.getWidth(), 
@@ -60,11 +66,16 @@ public class WelcomePage extends BorderPane{
 			scene.getStylesheets().add
 			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
 			
-			primaryStage.setScene(scene);
+			primaryStage.setScene(scene);*/
 
 		});
 		Button register = new Button("register");
 		register.setOnAction(e ->{
+			StackPane root = new StackPane();
+			root.getChildren().add(new RegisterPage(primaryStage));
+			root.setAlignment(Pos.TOP_CENTER);
+    		this.primaryStage.getScene().setRoot(root);
+			/*
 			StackPane root = new StackPane();
 			root.getChildren().add(new RegisterPage(primaryStage));
 			
@@ -73,7 +84,7 @@ public class WelcomePage extends BorderPane{
 			scene.getStylesheets().add
 			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
 			
-			primaryStage.setScene(scene);
+			primaryStage.setScene(scene);*/
 		});
 		
 		Text welcome = new Text("Welcome Screen");

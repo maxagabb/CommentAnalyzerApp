@@ -17,7 +17,7 @@ public class JavaFXStart extends Application{
 		
 		StackPane root = new StackPane();
 		root.getChildren().add(new WelcomePage(primaryStage));
-		Scene scene = new Scene(root, 300, 500);
+		Scene scene = new Scene(root, 600, 500);
 				
 		primaryStage.setScene(scene);
 		
