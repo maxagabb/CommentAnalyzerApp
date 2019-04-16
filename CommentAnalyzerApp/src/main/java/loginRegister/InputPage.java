@@ -84,7 +84,7 @@ public abstract class InputPage extends BorderPane{
 
 		VBox fieldPanel = new VBox();
 		fieldPanel.setSpacing(30);
-		fieldPanel.getStyleClass().add("etchedBorder");
+		fieldPanel.getStyleClass().add("raisedBorder");
 		fieldPanel.setPadding(new Insets(50));
 		fieldPanel.getChildren().add(makeInputPanel("username", nameField));
 		fieldPanel.getChildren().add(makeInputPanel("password", passwordField));
