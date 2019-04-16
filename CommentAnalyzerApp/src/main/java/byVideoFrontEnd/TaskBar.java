@@ -1,25 +1,29 @@
 package byVideoFrontEnd;
 
-import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EtchedBorder;
 
 import byChannelFrontEnd.ByChannelPage;
-import loginRegister.WelcomePage;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import loginRegister.JavaFXStart;
 
-public class TaskBar extends JPanel{
-	public TaskBar(JFrame frame) {
-		this.setLayout(new GridBagLayout());
-		this.frame = frame;
+public class TaskBar extends HBox{
+	public TaskBar(Stage stage) {
+		this.setSpacing(25);
+		this.getStyleClass().add("taskBar");
+		this.stage = stage;
 		setBar();
 	}
 
@@ -27,52 +31,52 @@ public class TaskBar extends JPanel{
 		ArrayList<String> buttonNames = new ArrayList<String>();
 		buttonNames.add("Manage Favorites");buttonNames.add("By Video");
 		buttonNames.add("By Channel");buttonNames.add("By Favorites");
-		Stream<JButton> stream = buttonNames.stream().map( JButton::new);
+		Stream<Button> stream = buttonNames.stream().map( Button::new);
 
-		ArrayList<JButton> buttons = (ArrayList<JButton>) stream.collect(Collectors.toList());
-		Iterator<JButton> iterator = buttons.iterator();
+		ArrayList<Button> buttons = (ArrayList<Button>) stream.collect(Collectors.toList());
+		Iterator<Button> iterator = buttons.iterator();
+		
 		while(iterator.hasNext()) {
-			JButton button = iterator.next();
-			button.addActionListener(e->{
-				
-				JFrame nextFrame = new JFrame();
-				nextFrame.setBounds(frame.getX(), frame.getY(), 
-						frame.getWidth(), frame.getHeight());
-				frame.dispose();
-				JScrollPane pane = new JScrollPane(getPage(button.getText(), nextFrame));
-				nextFrame.add(pane);
-				nextFrame.setVisible(true);
-				nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			Button button = iterator.next();
+			
+			button.setOnAction(e ->{
+				GridPane root = new GridPane();
+				root.add(this, 0, 0);
+				root.add(getPane(button.getText()),0, 1);
+				root.setAlignment(Pos.TOP_CENTER);
+				root.getStyleClass().add("raisedBorder");
+				GridPane root2 = new GridPane();
+				root2.getChildren().add(root);
+				root2.setAlignment(Pos.TOP_CENTER);
+				this.stage.getScene().setRoot(root2);
 			});
-			this.add(button);
+			this.getChildren().add(button);
 		}
+		this.setAlignment(Pos.CENTER);
 	}
 	
-	private JPanel getPage(String name, JFrame frame) {
-		JPanel page = null;
+	private Pane getPane(String name) {
+		Pane page = null;
 		if(name.equals("Manage Favorites"))
-			return new WelcomePage(frame);
+			return new Pane();
 		else if(name.equals("By Video")) {
-			ByVideoPage videoPage = new ByVideoPage(frame, new TaskBar(frame));
+			ByVideoPage videoPage = new ByVideoPage(stage, new TaskBar(stage));
 			videoPage.setPage();
 			page = videoPage;
 		}
 		else if(name.equals("By Channel")) {
-			ByChannelPage channelPage = new ByChannelPage(frame, new TaskBar(frame));
+			ByChannelPage channelPage = new ByChannelPage(stage, new TaskBar(stage));
 			channelPage.setPage();
 			page = channelPage;
 		}
-		else return new JPanel();
+		else return new Pane();
+		StackPane centeredPage = new StackPane(page);
+		//centeredPage.getStyleClass().add("raisedBorder");
 		
-		JPanel borderPage = new JPanel();
-		page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-		borderPage.add(page);
-		borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
-		JPanel finalPage = new JPanel();
-		finalPage.add(borderPage);
-		return finalPage;
-		
-		
+		//Pane borderPage = new Pane();
+		page.setPadding(new Insets(40));
+		return centeredPage;
 	}
-	private JFrame frame;
+	
+	private Stage stage;
 }

@@ -1,10 +1,10 @@
 package loginRegister;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,66 +15,98 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-public class WelcomePage extends JPanel{
+import byVideoFrontEnd.MainPage;
+import byVideoFrontEnd.TaskBar;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+public class WelcomePage extends BorderPane{
 	/**
 	 * @invariant this != null
 	 * @precondition frame != null
 	 * @postcondition this != null
 	 * @param frame
 	 */
-	public WelcomePage(JFrame frame) {
-		this.frame = frame;
+	public WelcomePage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 		setPage();
 	}
-	/**
+	/*
 	 * sets buttons redirecting to login and 
 	 * register pages
 	 * @precondition this != null
 	 * @postcondition frame = null
 	 */
 	private void setPage() {
-		this.setLayout(new BorderLayout());
-		JLabel welcome = new JLabel("Welcome Screen");
-		welcome.setHorizontalAlignment(JLabel.CENTER);
-		this.add(welcome, BorderLayout.NORTH);
-		JButton login = new JButton("login");
-		login.addActionListener(e ->{
-			JFrame nextFrame = new JFrame();
-			nextFrame.setBounds(frame.getX(), frame.getY(), 
-					frame.getWidth(), frame.getHeight());
-			frame.dispose();
-			nextFrame.add(new LoginPage(nextFrame));
-			nextFrame.setVisible(true);
-			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		Button login = new Button("login");
+		login.setOnAction(e ->{
+			StackPane root = new StackPane();
+			root.getChildren().add(new LoginPage(primaryStage));
+			root.setAlignment(Pos.TOP_CENTER);
+    		this.primaryStage.getScene().setRoot(root);
+			//primaryStage.setWidth(1200);primaryStage.setHeight(800);
+			//primaryStage.centerOnScreen();
+			/*StackPane root = new StackPane();
+			root.getChildren().add(new LoginPage(primaryStage));
+			
+			Scene scene = new Scene(root, primaryStage.getWidth(), 
+					primaryStage.getHeight());
+			scene.getStylesheets().add
+			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+			
+			primaryStage.setScene(scene);*/
+
 		});
-		JButton register = new JButton("register");
-		register.addActionListener(e ->{
-			JFrame nextFrame = new JFrame();
-			nextFrame.setBounds(frame.getX(), frame.getY(), 
-					frame.getWidth(), frame.getHeight());
-			frame.dispose();
-			nextFrame.add(new RegisterPage(nextFrame));
-			nextFrame.setVisible(true);
-			nextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		Button register = new Button("register");
+		register.setOnAction(e ->{
+			StackPane root = new StackPane();
+			root.getChildren().add(new RegisterPage(primaryStage));
+			root.setAlignment(Pos.TOP_CENTER);
+    		this.primaryStage.getScene().setRoot(root);
+			/*
+			StackPane root = new StackPane();
+			root.getChildren().add(new RegisterPage(primaryStage));
+			
+			Scene scene = new Scene(root, primaryStage.getWidth(), 
+					primaryStage.getHeight());
+			scene.getStylesheets().add
+			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
+			
+			primaryStage.setScene(scene);*/
 		});
 		
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.PAGE_AXIS));
-		login.setPreferredSize(register.getPreferredSize());
-		JPanel pane2 = new JPanel();pane2.add(register);
-		JPanel pane = new JPanel();pane.add(login);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,20)));
-		buttonPanel.add(pane);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,40)));
-		buttonPanel.add(pane2);
-		buttonPanel.add(Box.createRigidArea(new Dimension(120,20)));
-		JPanel buttonPanel2 = new JPanel();
-		buttonPanel2.add(buttonPanel);
-		buttonPanel.setBorder(new EtchedBorder());
-		JPanel buttonPanel3 = new JPanel();
-		buttonPanel3.setLayout(new GridBagLayout());
-		buttonPanel3.add(buttonPanel2);
-		this.add(buttonPanel3);
+		Text welcome = new Text("Welcome Screen");
+		welcome.setId("welcome-text");
+		HBox titleBox = new HBox();
+		titleBox.getChildren().add(welcome);
+		this.setTop(titleBox);
+		titleBox.setAlignment(Pos.CENTER);
+		
+		VBox buttonBox = new VBox();
+		buttonBox.getStyleClass().add("raisedBorder");
+		buttonBox.setPadding(new Insets(50));
+		buttonBox.setSpacing(30);
+		login.setMaxWidth(100);
+		register.setMaxWidth(100);
+		buttonBox.getChildren().add(login);
+		buttonBox.getChildren().add(register);
+		//buttonBox.setStyle(cssLayout);
+		GridPane  buttonBox2 = new GridPane ();
+		buttonBox2.getChildren().add(buttonBox);
+		this.setCenter(buttonBox2);
+		buttonBox2.setAlignment(Pos.CENTER);
 	}
-	private JFrame frame;
+	private Stage primaryStage;
 }

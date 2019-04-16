@@ -1,9 +1,9 @@
 package commentsFrontEnd;
 
 import java.awt.GridBagConstraints;
+
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -17,26 +17,32 @@ import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
 import byVideoFrontEnd.TaskBar;
+import javafx.geometry.Insets;
+import javafx.stage.Stage;
 
 public class CommentListPanel extends ContentListPanel{
-	public CommentListPanel(JFrame frame) {
-		super(frame);
-		gbc = new GridBagConstraints();
-		gbc.insets = new Insets(20, 0, 20, 0);
-		gbc.ipady = 10;
-		this.frame = frame;
+	public CommentListPanel(Stage stage) {
+		super(stage);
+		//gbc = new GridBagConstraints();
+		//gbc.insets = new Insets(20, 0, 20, 0);
+		//gbc.ipady = 10;
+		//this.frame = frame;
 	}
 
 	public void setPanel(){
-		this.setLayout(new GridBagLayout());
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		//this.setLayout(new GridBagLayout());
+		//gbc.anchor = GridBagConstraints.WEST;
+		//gbc.gridx = 0;
+		//gbc.gridy = 0;
+		
+		this.setPadding(new Insets(25));
 		for(CommentPanel panel: panels) {
 			panel.setPanel();
-			panel.setAlignmentX(LEFT_ALIGNMENT);
-			this.add(panel, gbc);
-			gbc.gridy++;
+			panel.setPadding(new Insets(20));
+			//panel.setAlignmentX(LEFT_ALIGNMENT);
+			this.getChildren().add(panel);
+			
+			//gbc.gridy++;
 		}
 	}
 	
@@ -57,14 +63,13 @@ public class CommentListPanel extends ContentListPanel{
 			}
 		}
 		panels.removeAll(panelsToRemove);
-		this.removeAll();
-		this.revalidate();
-		this.repaint();
+		this.getChildren().clear();
+		//this.removeAll();
+		//this.revalidate();
+		//this.repaint();
 		setPanel();
 	}
-	protected void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel) {}
-	private GridBagConstraints gbc;
-	private JFrame frame;
+	protected void makeSearchByPage(ContentPanel panel) {}
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();
 	ArrayList<CommentPanel> allPanels= new ArrayList<CommentPanel>();
 }

@@ -31,52 +31,99 @@ import business.ContentListPanel;
 import business.ContentPanel;
 import commentsFrontEnd.CommentListPanel;
 import commentsFrontEnd.CommentPanel;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import loginRegister.JavaFXStart;
 
-public abstract class SearchByPage<T> extends JPanel implements Runnable{
+public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
-	public SearchByPage(JFrame frame, TaskBar bar) {
+	public SearchByPage(Stage stage, TaskBar bar) {
+		//this.getStyleClass().add("raisedBorder");
 		this.bar = bar;
-		this.frame = frame;
+		this.stage = stage;
 	}
 
 	public void setPage() {
-		this.setLayout(new BorderLayout());
-		top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
-		top.add(bar);
-		top.add(Box.createRigidArea(new Dimension(0,20)));
+		//top.getChildren().add(bar);
 		youtubeRetrieverSetup();
-		JPanel title = getTitle();
-		title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		top.add(title);
-		top.add(Box.createRigidArea(new Dimension(0,20)));
+		HBox title = getTitle();
+		title.getChildren().get(0).setId("title-text");
+		top.getChildren().add(title);
+		title.setAlignment(Pos.CENTER);
 		setInitialContent();
-		JPanel topPanel = new JPanel();
-		topPanel.add(top);
-		this.add(topPanel, BorderLayout.NORTH);
+		//top.setPadding(new Insets(25));
+		this.setTop(top);
 	}
-	
+	/**
+	 * Sets a contentListPanel with data from API, 
+	 * then adds it to the SearchByPage
+	 * @param retrieverInput
+	 * @param panel
+	 */
 	protected void createPanels(ArrayList<Content> retrieverInput, ContentListPanel panel) {
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		for (Content content: retrieverInput) {
 			panel.addPanel(content);
 		}
+		panel.getChildren().clear();
 		panel.setPanel();
-		this.add(panel);
+		ScrollPane list = new ScrollPane(panel);
+		GridPane grid = new GridPane();
+		VBox pane = new VBox(grid);
+		grid.getChildren().add(list);
+		this.setCenter(pane);
+		grid.setAlignment(Pos.CENTER);
+		pane.setAlignment(Pos.CENTER);
+		panel.setAlignment(Pos.CENTER);
+		panel.setPadding(new Insets(100));
+		pane.setPadding(new Insets(25));
 	}
-	
+
 	protected void createJTextFields() {
-		field.addActionListener(e ->{
-			Thread thread = new Thread(this);
-			thread.start();
+		field.setOnAction(e->{
+			SearchByPage<T> self = this;
+			Service<Void> backgroundThread = new Service<Void>() {
+				@Override
+				protected Task<Void> createTask() {
+					return new Task<Void>() {
+						@Override
+						protected Void call() throws Exception {
+							self.run();
+							return null;
+						}
+					};
+				}
+			};
+			backgroundThread.setOnSucceeded((evt) -> {
+				createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
+			});
+			backgroundThread.start();
 		});
-		JPanel fieldPanel = new JPanel();
-		field.setColumns(15);
-		fieldPanel.add(field);
-		fieldPanel.setBorder(new EtchedBorder());
-		top.add(fieldPanel);
-		top.add(Box.createRigidArea(new Dimension(0,40)));
+
+		HBox fieldBox = new HBox(field);
+		VBox fieldPanel = new VBox();
+		field.setMaxWidth(250);
+		fieldPanel.getChildren().add(fieldBox);
+		fieldPanel.getStyleClass().add("fieldBorder");
+
+		top.getChildren().add(fieldPanel);
+		fieldBox.setAlignment(Pos.CENTER);
+		top.setSpacing(30);
 	}
-	
+
 	public void run() {
 		try {
 			HashMap<String, Object> map = new HashMap();
@@ -90,21 +137,19 @@ public abstract class SearchByPage<T> extends JPanel implements Runnable{
 			e1.printStackTrace();
 		}
 		addContentListPanel(panel);
-		createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
-		this.revalidate();
-		this.repaint();
+		panel.setPadding(new Insets(20));
 	}
-	
+
+	protected Stage stage;
 	protected abstract void youtubeRetrieverSetup();
 	protected  void addContentListPanel(ContentListPanel panel) {};
-	protected abstract JPanel getTitle();
+	protected abstract HBox getTitle();
 	protected abstract void setInitialContent();
-	protected JFrame frame;
 	protected ContentListPanel panel;
 	protected Retriever retriever;
 	protected HashMap<String, Object> retrieverInput;
 	protected TaskBar bar;
-	protected JPanel top = new JPanel();
-	final JTextField field = new JTextField();
-	protected ImageIcon imageIcon;
+	protected VBox top = new VBox();
+	final TextField field = new TextField();
+	protected Image image;
 }

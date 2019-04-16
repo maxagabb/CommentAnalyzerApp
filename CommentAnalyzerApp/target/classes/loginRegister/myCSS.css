@@ -1,0 +1,75 @@
+
+.label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian, rgba(255,255,255,0.5), 0,0,0,1 );
+}
+
+#welcome-text {
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0, 2 );
+}
+
+#title-text {
+    -fx-font-size: 16px;
+    -fx-font-family: "Arial Black";
+}
+
+#actiontarget {
+    -fx-fill: FIREBRICK;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian, rgba(255,255,255,0.5), 0,0,0,1 );
+}
+
+.raisedBorder {
+    -fx-border-insets: 0;
+    -fx-border-width: 2px;
+    -fx-border-color: white grey grey white;
+    -fx-background-color: #f2f2f2;
+}
+
+
+.etchedBorder {
+    -fx-border-base: gray;
+    -fx-border-shadow: white;
+    -fx-light-border: derive(-fx-border-base, 25%);
+    -fx-border-color: -fx-light-border -fx-border-base -fx-border-base -fx-light-border;
+    -fx-border-insets: 0 1 1 0;
+    -fx-background-color: -fx-border-shadow, -fx-background;
+    -fx-background-insets: 1 0 0 1, 2;
+}
+
+.pressedBorder {
+    -fx-border-insets: 0;
+    -fx-border-width: 2px;
+    -fx-border-color: grey white white grey;
+    -fx-background-color: #f2f2f2;
+}
+
+.fieldBorder {
+    -fx-border-base: gray;
+    -fx-border-shadow: white;
+    -fx-light-border: derive(-fx-border-base, 25%);
+    -fx-border-color: -fx-light-border -fx-border-base -fx-border-base -fx-light-border;
+    -fx-border-insets: 0 1 1 0;
+    -fx-background-color: -fx-border-shadow, -fx-background;
+    -fx-background-insets: 1 0 0 1, 2;
+    -fx-padding: 10;
+}
+.commentBorder {
+    -fx-border-insets: 0;
+    -fx-border-width: 2px;
+    -fx-border-color: white grey grey white;
+    -fx-background-color: white;
+}
+.taskBar {
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-border-width: 2px;
+    -fx-border-color: grey;
+    -fx-background-color: grey;
+}

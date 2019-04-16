@@ -6,20 +6,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class MainPage extends JPanel{
+import javafx.geometry.Pos;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-	public MainPage(JFrame frame, TaskBar bar) {
+public class MainPage extends BorderPane{
+
+	public MainPage(Stage stage, TaskBar bar) {
 		this.bar = bar;
-		this.frame = frame;
+		this.stage = stage;
 		setPage();
 	}
 	
 	private void setPage() {
-		this.setLayout(new BorderLayout());
-		this.setBorder(new EmptyBorder(0, 50, 0, 50));
-		add(bar,BorderLayout.NORTH);
+		setTop(bar);
 	}
 
-	private JFrame frame;
+	private Stage stage;
 	private TaskBar bar;
 }

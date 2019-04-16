@@ -19,10 +19,13 @@ import business.Video1;
 import byVideoFrontEnd.SearchByPage;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class ByChannelPage extends SearchByPage{
-	public ByChannelPage(JFrame frame,TaskBar bar) {
-		super(frame,bar);
+	public ByChannelPage(Stage stage,TaskBar bar) {
+		super(stage, bar);
 	}
 
 	@Override
@@ -30,21 +33,20 @@ public class ByChannelPage extends SearchByPage{
 			createJTextFields();
 	}
 	@Override
-	protected JPanel getTitle() {
-		JLabel label = new JLabel("Channel Selection Page");
-		label.setHorizontalAlignment(JLabel.CENTER);
-		JPanel panel = new JPanel();
-		panel.add(label);
+	protected HBox getTitle() {
+		HBox panel = new HBox();
+		Text label = new Text("Channel Selection Page");
+		//JLabel label = new JLabel("Channel Selection Page");
+		panel.getChildren().add(label);
 		return panel;
 	}
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
-			panel.removeAll();
-			panel.validate();
+			//panel.getChildren().clear();
 			panel.emptyList();
 		}
 		else 
-			this.panel = new ChannelListPanel(frame);
+			this.panel = new ChannelListPanel(stage);
 	}
 	
 	@Override

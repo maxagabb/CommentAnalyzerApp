@@ -7,6 +7,9 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -19,80 +22,88 @@ import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 import commentsFrontEnd.CommentPage;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import loginRegister.JavaFXStart;
 
-public abstract class ContentListPanel extends JPanel implements Runnable{
-
-	public ContentListPanel(JFrame frame) {
-		this.frame = frame;}
+public abstract class ContentListPanel extends VBox implements Runnable{
 	public void emptyList() {};
+	public ContentListPanel(Stage stage) {
+		this.stage = stage;
+		}
 
 	@SuppressWarnings("unchecked")
 	public void setPanel(){
-		this.setLayout(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
+		ContentListPanel self  = this;
 		for(ContentPanel panel: (ArrayList<ContentPanel>)panels) {
 			panel.setPanel();
-			panel.setBorder(BorderFactory.createRaisedBevelBorder());
-			panel.setAlignmentX(LEFT_ALIGNMENT);
-			ContentListPanel self  = this;
-			panel.addMouseListener(new MouseListener() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					self.panel = panel;
-					Thread thread = new Thread(self);
-					thread.start();
-					/*try {
-						thread.join();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
-				}
-				@Override
-				public void mouseEntered(MouseEvent arg0) {
-					panelColor = panel.getBackground();
-					panel.setBackground(Color.WHITE);
-				}
-				@Override
-				public void mouseExited(MouseEvent arg0) {
-					panel.setBackground(panelColor);
-				}
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					panel.setBackground(panelColor);
-					panel.setBorder(BorderFactory.createLoweredBevelBorder());
-				}
-				@Override
-				public void mouseReleased(MouseEvent arg0) {}
+			panel.getStyleClass().add("raisedBorder");
+			panel.setPadding(new Insets(25));
+			
+			panel.setOnMouseClicked(e->{
+				self.panel = panel;
+				self.panel.getStyleClass().remove("raisedBorder");
+				self.panel.getStyleClass().add("pressedBorder");
+				self.panel.setStyle("-fx-background-color: #f2f2f2;");
+				//self.panel.getStyleClass().add("etchedBorder");
+				Service<Void> backgroundThread = new Service<Void>() {
+		            @Override
+		            protected Task<Void> createTask() {
+		                return new Task<Void>() {
+		                    @Override
+		                    protected Void call() throws Exception {
+		                        self.run();
+		                        return null;
+		                    }
+		                };
+		            }
+		        };
+
+		        backgroundThread.setOnSucceeded((evt) -> {
+		    		GridPane root = new GridPane();
+					root.add(new TaskBar(stage), 0, 0);
+					root.add(self.page,0, 1);
+					root.setAlignment(Pos.TOP_CENTER);
+					root.getStyleClass().add("raisedBorder");
+					GridPane root2 = new GridPane();
+					root2.getChildren().add(root);
+					root2.setAlignment(Pos.TOP_CENTER);
+					this.stage.getScene().setRoot(root2);
+		        });
+		        backgroundThread.start();
 			});
-			this.add(panel, gbc);
-			gbc.gridy++;
+			
+			panel.setOnMouseEntered(e->{
+				panel.setStyle("-fx-background-color: white;");
+			});
+			
+			panel.setOnMouseExited(e->{
+				panel.setStyle("-fx-background-color: #f2f2f2;");
+			});
+			this.getChildren().add(panel);
 		}
+
 	}
-	
+
 	public void run() {
-		makeSearchByPage(frame, new TaskBar(frame), panel);
+		makeSearchByPage(panel);
 		page.setPage();
-		JPanel borderPage = new JPanel();
-		page.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-		borderPage.add(page);
-		borderPage.setBorder(BorderFactory.createRaisedBevelBorder());
-		JPanel finalPage = new JPanel();
-		finalPage.add(borderPage);
-		JScrollPane pane = new JScrollPane(finalPage);
-		frame.getContentPane().removeAll();
-		frame.getContentPane().revalidate();
-		frame.add(pane);
-		frame.repaint();
+		page.setPadding(new Insets(20));
+		//page.getStyleClass().add("raisedBorder");
 	}
-	protected abstract void makeSearchByPage(JFrame frame2, TaskBar taskBar, ContentPanel panel);
+	protected abstract void makeSearchByPage(ContentPanel panel);
 	public abstract void addPanel(Content content);
 	protected ArrayList panels = new ArrayList();
-	protected JFrame frame;
+	protected Stage stage;
 	protected ContentPanel panel;
 	protected SearchByPage page;
-	protected Color panelColor;
 }
