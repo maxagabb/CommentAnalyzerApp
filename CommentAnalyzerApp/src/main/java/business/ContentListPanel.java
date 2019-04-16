@@ -69,20 +69,15 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		        };
 
 		        backgroundThread.setOnSucceeded((evt) -> {
-		        	GridPane grid = new GridPane();
-		    		grid.getChildren().add(self.page);
-
-		    		grid.setMinWidth(self.stage.getWidth());
-		    		Scene scene = new Scene(grid, self.stage.getWidth(), 
-		    				self.stage.getHeight());
-		 
-		    		grid.setAlignment(Pos.TOP_CENTER);
-		    		scene.getStylesheets().add
-		    		(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-		    		self.stage.setScene(scene);
-		    		grid.setMinWidth(self.stage.getWidth());
-		    		//grid.setAlignment(Pos.TOP_CENTER);
-		    		//self.stage.getScene().setRoot(grid);
+		    		GridPane root = new GridPane();
+					root.add(new TaskBar(stage), 0, 0);
+					root.add(self.page,0, 1);
+					root.setAlignment(Pos.TOP_CENTER);
+					root.getStyleClass().add("raisedBorder");
+					GridPane root2 = new GridPane();
+					root2.getChildren().add(root);
+					root2.setAlignment(Pos.TOP_CENTER);
+					this.stage.getScene().setRoot(root2);
 		        });
 		        backgroundThread.start();
 			});
@@ -103,7 +98,7 @@ public abstract class ContentListPanel extends VBox implements Runnable{
 		makeSearchByPage(panel);
 		page.setPage();
 		page.setPadding(new Insets(20));
-		page.getStyleClass().add("raisedBorder");
+		//page.getStyleClass().add("raisedBorder");
 	}
 	protected abstract void makeSearchByPage(ContentPanel panel);
 	public abstract void addPanel(Content content);

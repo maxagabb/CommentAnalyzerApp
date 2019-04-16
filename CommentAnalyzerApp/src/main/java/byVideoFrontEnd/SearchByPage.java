@@ -51,25 +51,20 @@ import loginRegister.JavaFXStart;
 public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
 	public SearchByPage(Stage stage, TaskBar bar) {
+		//this.getStyleClass().add("raisedBorder");
 		this.bar = bar;
 		this.stage = stage;
 	}
 
 	public void setPage() {
-		//this.setLayout(new BorderLayout());
-		//top.setLayout(new BoxLayout(top,BoxLayout.PAGE_AXIS));
-		top.getChildren().add(bar);
-		//top.add(Box.createRigidArea(new Dimension(0,20)));
+		//top.getChildren().add(bar);
 		youtubeRetrieverSetup();
 		HBox title = getTitle();
-		//title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		title.getChildren().get(0).setId("title-text");
 		top.getChildren().add(title);
 		title.setAlignment(Pos.CENTER);
-		//top.add(Box.createRigidArea(new Dimension(0,20)));
 		setInitialContent();
-		//JPanel topPanel = new JPanel();
-		//topPanel.add(top);
-		top.setPadding(new Insets(25));
+		//top.setPadding(new Insets(25));
 		this.setTop(top);
 	}
 	/**
@@ -86,12 +81,15 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		panel.getChildren().clear();
 		panel.setPanel();
 		ScrollPane list = new ScrollPane(panel);
-		GridPane pane = new GridPane();
-		pane.getChildren().add(list);
+		GridPane grid = new GridPane();
+		VBox pane = new VBox(grid);
+		grid.getChildren().add(list);
 		this.setCenter(pane);
+		grid.setAlignment(Pos.CENTER);
 		pane.setAlignment(Pos.CENTER);
 		panel.setAlignment(Pos.CENTER);
 		panel.setPadding(new Insets(100));
+		pane.setPadding(new Insets(25));
 	}
 
 	protected void createJTextFields() {

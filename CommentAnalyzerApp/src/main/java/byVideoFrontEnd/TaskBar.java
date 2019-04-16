@@ -40,22 +40,15 @@ public class TaskBar extends HBox{
 			Button button = iterator.next();
 			
 			button.setOnAction(e ->{
-				Scene savedScene = this.stage.getScene();
-				
-				Pane root = getPane(button.getText());
-				GridPane grid = new GridPane();
-				grid.getChildren().add(root);
-				//grid.getChildren().add(root);
-				//ScrollPane pane = new ScrollPane(grid);
-				
-				Scene scene = new Scene(grid, savedScene.getWidth(), 
-						savedScene.getHeight());
-				grid.setAlignment(Pos.TOP_CENTER);
-				
-				scene.getStylesheets().add
-				(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-				stage.setScene(scene);
-	
+				GridPane root = new GridPane();
+				root.add(this, 0, 0);
+				root.add(getPane(button.getText()),0, 1);
+				root.setAlignment(Pos.TOP_CENTER);
+				root.getStyleClass().add("raisedBorder");
+				GridPane root2 = new GridPane();
+				root2.getChildren().add(root);
+				root2.setAlignment(Pos.TOP_CENTER);
+				this.stage.getScene().setRoot(root2);
 			});
 			this.getChildren().add(button);
 		}
@@ -78,7 +71,7 @@ public class TaskBar extends HBox{
 		}
 		else return new Pane();
 		StackPane centeredPage = new StackPane(page);
-		centeredPage.getStyleClass().add("raisedBorder");
+		//centeredPage.getStyleClass().add("raisedBorder");
 		
 		//Pane borderPage = new Pane();
 		page.setPadding(new Insets(40));

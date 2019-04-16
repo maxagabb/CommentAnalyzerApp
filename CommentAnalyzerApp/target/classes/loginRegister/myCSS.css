@@ -13,6 +13,11 @@
     -fx-effect: innershadow( three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0, 2 );
 }
 
+#title-text {
+    -fx-font-size: 16px;
+    -fx-font-family: "Arial Black";
+}
+
 #actiontarget {
     -fx-fill: FIREBRICK;
     -fx-font-weight: bold;
@@ -65,6 +70,6 @@
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
     -fx-border-width: 2px;
-    -fx-border-color: grey white white grey;
+    -fx-border-color: grey;
     -fx-background-color: grey;
 }
