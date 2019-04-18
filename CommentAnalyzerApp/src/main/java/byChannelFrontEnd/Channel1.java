@@ -12,7 +12,7 @@ public class Channel1 extends Content{
 	}
 	public Channel1 (String error) {
 		this.channel = "Some Error:\t" + error;
-		this.thumbnailURL = "iconfinder_sign-error_299045.png";
+		this.thumbnailURL = "iconfinderSignError299045.png";
 	}
 	public String getName() {
 		return channel;

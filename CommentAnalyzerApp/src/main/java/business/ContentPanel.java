@@ -1,6 +1,8 @@
 package business;
 
+import java.io.File;
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.net.URL;
 
@@ -20,35 +22,32 @@ public abstract class ContentPanel extends HBox {
 	public void setPanel() {
 		Label name = new Label(getName());
 		name.setWrapText(true);
-		name.setPrefWidth(200);
-		
+		name.setPrefWidth(300);
+		HBox imageBox = new HBox();
 		try {
 			URL imageUrl = new URL(content.getthumbnailURL());
 			InputStream in = imageUrl.openStream();
 			this.image = new Image(in);
 			in.close();
 			ImageView imageView = new ImageView(image);
-			HBox imageBox = new HBox(imageView);
+			imageBox.getChildren().add(imageView);
 			imageBox.getChildren().add(name);
 
-			this.getChildren().add(imageBox);
-			imageBox.setAlignment(Pos.CENTER_LEFT);
-			imageBox.setSpacing(20);
 		}
 		catch (IOException ioe) {
-			ioe.printStackTrace();
 			try {
-				URL imageUrl = new URL(content.getthumbnailURL());
-				InputStream in = imageUrl.openStream();
-				this.image = new Image(in);
-				in.close();
-			} catch (IOException e) {
+				File file = new File(content.getthumbnailURL());
+				this.image = new Image(file.toURI().toString());
+				ImageView imageView = new ImageView(image);
+				imageBox.getChildren().add(imageView);
+				imageBox.getChildren().add(name);
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
-
-			this.getChildren().add(new ImageView(image));
-			this.getChildren().add(name);
 		}
+		imageBox.setSpacing(20);
+		this.getChildren().add(imageBox);
 	}
 	public String getVideoID() {return null;}
 	public String getChannelID() {return null;}

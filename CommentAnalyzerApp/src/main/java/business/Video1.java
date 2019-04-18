@@ -18,7 +18,7 @@ public class Video1 extends Content{
 	}
 	public Video1(String error) {
 		this.name = "Some Error:\t" + error;
-		this.thumbnailURL = "iconfinder_sign-error_299045.png";
+		this.thumbnailURL = "iconfinderSignError299045.png";
 	}
 	public Video1(PlaylistItem item) {
 		this.ID = item.getSnippet().getResourceId().getVideoId();
