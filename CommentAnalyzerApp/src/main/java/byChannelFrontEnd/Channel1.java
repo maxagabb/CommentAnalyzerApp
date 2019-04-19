@@ -11,7 +11,7 @@ public class Channel1 extends Content{
 		this.thumbnailURL = result.getSnippet().getThumbnails().getDefault().getUrl();
 	}
 	public Channel1 (String error) {
-		this.channel = "Some Error:\t" + error;
+		this.channel = error;
 		this.thumbnailURL = "iconfinderSignError299045.png";
 	}
 	public String getName() {

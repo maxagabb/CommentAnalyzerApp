@@ -23,6 +23,7 @@ public abstract class ContentPanel extends HBox {
 		Label name = new Label(getName());
 		name.setWrapText(true);
 		name.setPrefWidth(300);
+		HBox panelBox = new HBox();
 		HBox imageBox = new HBox();
 		try {
 			URL imageUrl = new URL(content.getthumbnailURL());
@@ -31,7 +32,8 @@ public abstract class ContentPanel extends HBox {
 			in.close();
 			ImageView imageView = new ImageView(image);
 			imageBox.getChildren().add(imageView);
-			imageBox.getChildren().add(name);
+			panelBox.getChildren().add(imageBox);
+			panelBox.getChildren().add(name);
 
 		}
 		catch (IOException ioe) {
@@ -40,14 +42,17 @@ public abstract class ContentPanel extends HBox {
 				this.image = new Image(file.toURI().toString());
 				ImageView imageView = new ImageView(image);
 				imageBox.getChildren().add(imageView);
-				imageBox.getChildren().add(name);
+				panelBox.getChildren().add(imageBox);
+				panelBox.getChildren().add(name);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		imageBox.setSpacing(20);
-		this.getChildren().add(imageBox);
+		imageBox.setAlignment(Pos.CENTER_LEFT);
+		name.setAlignment(Pos.CENTER_LEFT);
+		panelBox.setSpacing(20);
+		this.getChildren().add(panelBox);
 	}
 	public String getVideoID() {return null;}
 	public String getChannelID() {return null;}

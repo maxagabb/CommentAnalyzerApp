@@ -17,7 +17,7 @@ public class Video1 extends Content{
 		this.qualityThumbnailURL = result.getSnippet().getThumbnails().getHigh().getUrl();
 	}
 	public Video1(String error) {
-		this.name = "Some Error:\t" + error;
+		this.name = error;
 		this.thumbnailURL = "iconfinderSignError299045.png";
 	}
 	public Video1(PlaylistItem item) {

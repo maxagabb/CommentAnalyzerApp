@@ -3,6 +3,7 @@ package byVideoFrontEnd;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -68,10 +69,14 @@ public class ByVideoPage extends SearchByPage{
 				InputStream in = imageUrl.openStream();
 				this.image = new Image(in);
 				in.close();
+				ImageView imageView = new ImageView(image);
+				panel.getChildren().add(imageView);
 			}
-			catch(Exception e) {e.printStackTrace();}
-			ImageView imageView = new ImageView(image);
-			panel.getChildren().add(imageView);
+			catch(Exception e) {
+				Text errorText = new Text("A Problem occured when retrieving channel videos");
+				errorText.setId("title-text");
+				panel.getChildren().add(errorText);
+			}
 			panel.setPadding(new Insets(25));
 			panel.setSpacing(25);
 		}
