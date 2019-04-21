@@ -28,4 +28,5 @@ module commentAnalyzerApp {
 	requires javafx.controls;
 	requires javafx.graphics;
 	requires org.json;
+	requires org.jsoup;
 }
