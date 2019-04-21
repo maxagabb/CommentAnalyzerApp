@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -18,6 +19,8 @@ import business.ContentListPanel;
 import business.ContentPanel;
 import byVideoFrontEnd.TaskBar;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CommentListPanel extends ContentListPanel{
@@ -29,6 +32,13 @@ public class CommentListPanel extends ContentListPanel{
 		
 		this.setPadding(new Insets(25));
 		for(CommentPanel panel: panels) {
+			panel.setPanel();
+			panel.setPadding(new Insets(20));
+			this.getChildren().add(panel);
+		}
+		if (panels.isEmpty()){
+			CommentPanel panel = new CommentPanel
+					(new Comment("No comments"));
 			panel.setPanel();
 			panel.setPadding(new Insets(20));
 			this.getChildren().add(panel);
