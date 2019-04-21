@@ -9,6 +9,8 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import org.jsoup.Jsoup;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -20,7 +22,7 @@ public abstract class ContentPanel extends HBox {
 		this.content = content;
 	}
 	public void setPanel() {
-		Label name = new Label(getName());
+		Label name = new Label(getPanelText());
 		name.setWrapText(true);
 		name.setPrefWidth(300);
 		HBox panelBox = new HBox();
@@ -44,6 +46,7 @@ public abstract class ContentPanel extends HBox {
 				imageBox.getChildren().add(imageView);
 				panelBox.getChildren().add(imageBox);
 				panelBox.getChildren().add(name);
+				this.setDisable(true);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
@@ -54,9 +57,11 @@ public abstract class ContentPanel extends HBox {
 		panelBox.setSpacing(20);
 		this.getChildren().add(panelBox);
 	}
+	public String getPanelText() {
+		return content.getText();
+	}
 	public String getVideoID() {return null;}
 	public String getChannelID() {return null;}
-	public String getName() {return "default name";}
 	public Image getImage() {
 		return image;
 	}

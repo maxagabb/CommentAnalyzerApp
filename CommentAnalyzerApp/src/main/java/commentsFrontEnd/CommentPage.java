@@ -29,6 +29,7 @@ import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,7 +43,7 @@ public class CommentPage extends SearchByPage{
 		super(stage, bar);
 		this.videoID = videoPanel.getVideoID();
 		this.panel = new CommentListPanel(stage);
-		this.videoName = videoPanel.getName();
+		this.videoName = videoPanel.getPanelText();
 
 	}
 
@@ -68,6 +69,12 @@ public class CommentPage extends SearchByPage{
 	protected void setInitialContent() {
 		createPanels((ArrayList) retrieverInput.get("comments"), panel);
 		createJTextFields();
+		Button analyze = new Button("Tone Analyze");
+		analyze.setOnAction(e ->{
+			//Watson.analyze(panel.getComments());
+			System.out.print(panel.getComments()+ "\n");
+		});
+		top.getChildren().add(analyze);
 	}
 	@Override
 	protected HBox getTitle() {

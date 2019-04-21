@@ -17,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
+import org.jsoup.Jsoup;
+
 import business.Content;
 import business.ContentPanel;
 import business.Video1;
@@ -31,9 +33,6 @@ public class VideoPanel extends ContentPanel{
 	
 	public VideoPanel(Video1 content) {
 		super(content);
-	}
-	public String getName() {
-		return content.getName();
 	}
 	public String getVideoID() {
 		return content.getID();

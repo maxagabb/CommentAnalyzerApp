@@ -33,19 +33,14 @@ import javafx.scene.layout.Priority;
 public class CommentPanel extends ContentPanel implements Cloneable{
 	public CommentPanel(Content comment) {
 		super(comment);
-		//this.setPanel();
-	}
-	
-	public String toString() {
-		return content.getComment() + "\n";
 	}
 	
 	public boolean contains(String input) {
-		return content.getComment().toLowerCase().contains(input.toLowerCase());
+		return content.getText().toLowerCase().contains(input.toLowerCase());
 	}
 	
 	public void setPanel() {
-		Label comment = new Label(content.getComment());
+		Label comment = new Label(content.getText());
 		comment.setWrapText(true);
 		comment.setPrefWidth(500);
 		HBox commentBox = new HBox(comment);

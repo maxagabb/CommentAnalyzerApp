@@ -23,26 +23,15 @@ import javafx.stage.Stage;
 public class CommentListPanel extends ContentListPanel{
 	public CommentListPanel(Stage stage) {
 		super(stage);
-		//gbc = new GridBagConstraints();
-		//gbc.insets = new Insets(20, 0, 20, 0);
-		//gbc.ipady = 10;
-		//this.frame = frame;
 	}
 
 	public void setPanel(){
-		//this.setLayout(new GridBagLayout());
-		//gbc.anchor = GridBagConstraints.WEST;
-		//gbc.gridx = 0;
-		//gbc.gridy = 0;
 		
 		this.setPadding(new Insets(25));
 		for(CommentPanel panel: panels) {
 			panel.setPanel();
 			panel.setPadding(new Insets(20));
-			//panel.setAlignmentX(LEFT_ALIGNMENT);
 			this.getChildren().add(panel);
-			
-			//gbc.gridy++;
 		}
 	}
 	
@@ -64,10 +53,13 @@ public class CommentListPanel extends ContentListPanel{
 		}
 		panels.removeAll(panelsToRemove);
 		this.getChildren().clear();
-		//this.removeAll();
-		//this.revalidate();
-		//this.repaint();
 		setPanel();
+	}
+	
+	public ArrayList<String> getComments(){
+		ArrayList<String> result = new ArrayList<String>();
+		panels.stream().forEach((e)-> result.add(e.getPanelText()));
+		return result;
 	}
 	protected void makeSearchByPage(ContentPanel panel) {}
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();

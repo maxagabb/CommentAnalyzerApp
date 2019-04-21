@@ -43,7 +43,7 @@ public class ByVideoPage extends SearchByPage{
 	}
 	public ByVideoPage(Stage stage,TaskBar bar, ChannelPanel channelPanel) {
 		super(stage,bar);
-		this.channelName = channelPanel.getName();
+		this.channelName = channelPanel.getPanelText();
 		this.channelID = channelPanel.getChannelID();
 	}
 
