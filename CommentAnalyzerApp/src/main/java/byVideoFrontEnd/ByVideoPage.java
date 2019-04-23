@@ -3,6 +3,7 @@ package byVideoFrontEnd;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -59,7 +60,12 @@ public class ByVideoPage extends SearchByPage<Object, Video1>{
 				ImageView imageView = new ImageView(image);
 				panel.getChildren().add(imageView);
 			}
-			catch(Exception e) {
+			catch(MalformedURLException e) {
+				Text text = new Text(channelName);
+				text.setId("title-text");
+				panel.getChildren().add(text);
+			}
+			catch(IOException e) {
 				Text errorText = new Text("A Problem occured when retrieving channel videos");
 				errorText.setId("title-text");
 				panel.getChildren().add(errorText);

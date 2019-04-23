@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 
 //T defines whatretrieverInput holds  
 //Z is Content subclass
-public abstract class SearchByPage<T,Z extends Content> extends BorderPane implements Runnable {
+public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
 
 	public SearchByPage(Stage stage, TaskBar bar) {
 		//this.getStyleClass().add("raisedBorder");
@@ -77,7 +77,9 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane imple
 					return new Task<Void>() {
 						@Override
 						protected Void call() throws Exception {
-							self.run();
+							self.setRetreiverInput();
+							addContentListPanel(panel);
+							panel.setPadding(new Insets(20));
 							return null;
 						}
 					};
@@ -100,7 +102,8 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane imple
 		top.setSpacing(30);
 	}
 
-	public void run() {
+	
+	public void setRetreiverInput() {
 		try {
 			HashMap<String, T> map = new HashMap<String, T>();
 			map.put("content", (T) retriever.retrieve(field.getText()));
@@ -112,11 +115,7 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane imple
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		addContentListPanel(panel);
-		panel.setPadding(new Insets(20));
 	}
-
-
 
 
 	protected Stage stage;

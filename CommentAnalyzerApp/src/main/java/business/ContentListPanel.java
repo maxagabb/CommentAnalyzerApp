@@ -34,31 +34,10 @@ public abstract class ContentListPanel extends VBox{
 				self.panel.getStyleClass().remove("raisedBorder");
 				self.panel.getStyleClass().add("pressedBorder");
 				self.panel.setStyle("-fx-background-color: #f2f2f2;");
-				Service<Void> backgroundThread = new Service<Void>() {
-		            @Override
-		            protected Task<Void> createTask() {
-		                return new Task<Void>() {
-		                    @Override
-		                    protected Void call() throws Exception {
-		                        self.setNextPage();
-		                        return null;
-		                    }
-		                };
-		            }
-		        };
 
-		        backgroundThread.setOnSucceeded((evt) -> {
-		    		GridPane root = new GridPane();
-					root.add(new TaskBar(stage), 0, 0);
-					root.add(self.page,0, 1);
-					root.setAlignment(Pos.TOP_CENTER);
-					root.getStyleClass().add("raisedBorder");
-					GridPane root2 = new GridPane();
-					root2.getChildren().add(root);
-					root2.setAlignment(Pos.TOP_CENTER);
-					this.stage.getScene().setRoot(root2);
-		        });
-		        backgroundThread.start();
+				tasks.stream().forEach((task)->task.cancel());
+				Service<Void> thread = makeThread();
+		        thread.start();
 			});
 			
 			panel.setOnMouseEntered(e->{
@@ -70,7 +49,36 @@ public abstract class ContentListPanel extends VBox{
 			});
 			this.getChildren().add(panel);
 		}
-
+	}
+	
+	private Service<Void> makeThread() {
+		ContentListPanel self  = this;
+		Service<Void> backgroundThread = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                Task<Void> task =  new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        self.setNextPage();
+                        return null;
+                    }
+                };
+                tasks.add(task);
+                return task;
+            }
+        };
+        backgroundThread.setOnSucceeded((evt) -> {
+    		GridPane root = new GridPane();
+			root.add(new TaskBar(stage), 0, 0);
+			root.add(self.page,0, 1);
+			root.setAlignment(Pos.TOP_CENTER);
+			root.getStyleClass().add("raisedBorder");
+			GridPane root2 = new GridPane();
+			root2.getChildren().add(root);
+			root2.setAlignment(Pos.TOP_CENTER);
+			this.stage.getScene().setRoot(root2);
+        });
+        return backgroundThread;
 	}
 
 	public void setNextPage() {
@@ -84,4 +92,5 @@ public abstract class ContentListPanel extends VBox{
 	protected Stage stage;
 	protected ContentPanel panel;
 	protected SearchByPage<?,?> page;
+	private ArrayList<Task<Void>> tasks = new ArrayList<Task<Void>>();
 }
