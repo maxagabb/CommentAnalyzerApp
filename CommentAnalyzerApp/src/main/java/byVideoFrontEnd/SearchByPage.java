@@ -1,43 +1,19 @@
 package byVideoFrontEnd;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
 import api.Retriever;
 import business.Content;
 import business.ContentListPanel;
-import business.ContentPanel;
-import commentsFrontEnd.CommentListPanel;
-import commentsFrontEnd.CommentPanel;
-import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -46,9 +22,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import loginRegister.JavaFXStart;
 
-public abstract class SearchByPage<T> extends BorderPane implements Runnable {
+//T defines whatretrieverInput holds  
+//Z is Content subclass
+public abstract class SearchByPage<T,Z extends Content> extends BorderPane implements Runnable {
 
 	public SearchByPage(Stage stage, TaskBar bar) {
 		//this.getStyleClass().add("raisedBorder");
@@ -73,8 +50,7 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 	 * @param retrieverInput
 	 * @param panel
 	 */
-	protected void createPanels(ArrayList<Content> retrieverInput, ContentListPanel panel) {
-		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+	protected void createPanels(ArrayList<? extends Content> retrieverInput, ContentListPanel panel) {
 		for (Content content: retrieverInput) {
 			panel.addPanel(content);
 		}
@@ -94,7 +70,7 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
 	protected void createJTextFields() {
 		field.setOnAction(e->{
-			SearchByPage<T> self = this;
+			SearchByPage<T,Z> self = this;
 			Service<Void> backgroundThread = new Service<Void>() {
 				@Override
 				protected Task<Void> createTask() {
@@ -126,9 +102,9 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 
 	public void run() {
 		try {
-			HashMap<String, Object> map = new HashMap();
-			map.put("content", retriever.retrieve(field.getText()));
-			retrieverInput =  map;
+			HashMap<String, T> map = new HashMap<String, T>();
+			map.put("content", (T) retriever.retrieve(field.getText()));
+			retrieverInput = map;
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -140,14 +116,17 @@ public abstract class SearchByPage<T> extends BorderPane implements Runnable {
 		panel.setPadding(new Insets(20));
 	}
 
+
+
+
 	protected Stage stage;
 	protected abstract void youtubeRetrieverSetup();
 	protected  void addContentListPanel(ContentListPanel panel) {};
 	protected abstract HBox getTitle();
 	protected abstract void setInitialContent();
 	protected ContentListPanel panel;
-	protected Retriever retriever;
-	protected HashMap<String, Object> retrieverInput;
+	protected Retriever<Z> retriever;
+	protected HashMap<String, T> retrieverInput;
 	protected TaskBar bar;
 	protected VBox top = new VBox();
 	final TextField field = new TextField();

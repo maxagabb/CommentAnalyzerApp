@@ -1,42 +1,29 @@
 package byVideoFrontEnd;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
+
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-import api.Retriever;
+
 import api.VideoRetriever;
+import business.Content;
 import business.ContentListPanel;
-import business.ContentPanel;
 import business.Video1;
-import byChannelFrontEnd.Channel1;
 import byChannelFrontEnd.ChannelPanel;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ByVideoPage extends SearchByPage{
+public class ByVideoPage extends SearchByPage<Object, Video1>{
 	public ByVideoPage(Stage stage,TaskBar bar) {
 		super(stage,bar);
 		//this.panel = new VideoListPanel(frame);
@@ -53,7 +40,7 @@ public class ByVideoPage extends SearchByPage{
 			createJTextFields();
 		else {
 			addContentListPanel(panel);
-			createPanels((ArrayList) retrieverInput.get("videos"), panel);
+			createPanels((ArrayList<Content>) retrieverInput.get("videos"), panel);
 		}
 	}
 	@Override
@@ -85,8 +72,6 @@ public class ByVideoPage extends SearchByPage{
 	}
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
-			//panel.removeAll();
-			//panel.validate();
 			panel.emptyList();
 		}
 		else 

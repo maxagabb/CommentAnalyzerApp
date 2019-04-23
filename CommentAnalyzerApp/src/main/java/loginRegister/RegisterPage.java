@@ -1,18 +1,8 @@
 package loginRegister;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;

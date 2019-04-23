@@ -14,48 +14,25 @@
 
 package api;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.auth.oauth2.Credential;
 
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.util.ArrayMap;
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.google.api.services.youtube.model.SearchResultSnippet;
-import com.google.api.services.youtube.model.Video;
-import com.google.api.services.youtube.model.VideoListResponse;
-import com.google.api.services.youtube.model.VideoLocalization;
 import com.google.common.collect.Lists;
 
-import business.Video1;
 import byChannelFrontEnd.Channel1;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.json.JSONObject;
 
 
-public class ChannelRetriever extends Retriever{
+public class ChannelRetriever extends Retriever<Channel1>{
 
-    /**
-     * Define a global instance of a YouTube object, which will be used to make
-     * YouTube Data API requests.
-     */
-    private static YouTube youtube;
+
 
 
     /**
@@ -102,22 +79,6 @@ public class ChannelRetriever extends Retriever{
         
     }
 
-
-
-    /*
-     * Prompt the user to enter a resource ID. Then return the ID.
-     */
-    private static String getId(String resource) throws IOException {
-
-        String id = "";
-
-        System.out.print("Please enter a " + resource + " id: ");
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-        id = bReader.readLine();
-
-        System.out.println("You chose " + id + " for localizations.");
-        return id;
-    }
 
 
 

@@ -1,32 +1,18 @@
 package commentsFrontEnd;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import java.io.File;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
+
 
 import com.fasterxml.jackson.core.JsonParseException;
 
 import api.CommentRetriever;
-import api.Retriever;
+import business.Comment;
 import byVideoFrontEnd.SearchByPage;
 import byVideoFrontEnd.TaskBar;
-import byVideoFrontEnd.VideoListPanel;
 import byVideoFrontEnd.VideoPanel;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -36,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class CommentPage extends SearchByPage{
+public class CommentPage extends SearchByPage<ArrayList<Comment>, Comment>{
 
 
 	public CommentPage(Stage stage, TaskBar bar, VideoPanel videoPanel) {
@@ -62,12 +48,11 @@ public class CommentPage extends SearchByPage{
 		top.getChildren().add(fieldPanel);
 		fieldBox.setAlignment(Pos.CENTER);
 		top.setSpacing(30);
-
 	}
 
 	@Override
 	protected void setInitialContent() {
-		createPanels((ArrayList) retrieverInput.get("comments"), panel);
+		createPanels(retrieverInput.get("comments"), panel);
 		createJTextFields();
 		Button analyze = new Button("Tone Analyze");
 		analyze.setOnAction(e ->{
@@ -86,7 +71,7 @@ public class CommentPage extends SearchByPage{
 	protected void youtubeRetrieverSetup() {
 		try {
 			retriever = new CommentRetriever();
-			HashMap<String, Object> map = new HashMap();
+			HashMap<String, ArrayList<Comment>> map = new HashMap<String, ArrayList<Comment>>();
 			map.put("comments", retriever.retrieve(videoID));
 			retrieverInput =  map;
 		} catch (JsonParseException e1) {

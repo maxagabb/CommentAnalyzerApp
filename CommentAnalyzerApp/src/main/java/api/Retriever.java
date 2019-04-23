@@ -6,9 +6,11 @@ import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-public abstract class Retriever {
+import business.Content;
 
-	public abstract <T> ArrayList<T> retrieve(String fieldInput) throws JsonParseException, IOException;
+public abstract class Retriever<T extends Content> {
+
+	public abstract ArrayList<T> retrieve(String fieldInput) throws JsonParseException, IOException;
 	public HashMap<String, Object> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
 		return null;
 	}

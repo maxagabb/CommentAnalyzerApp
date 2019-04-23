@@ -1,11 +1,8 @@
 package business;
 
-import java.io.IOException;
 
-import com.google.api.services.youtube.model.Playlist;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.SearchResult;
-import com.google.api.services.youtube.model.Thumbnail;
 
 public class Video1 extends Content{
 
@@ -32,7 +29,7 @@ public class Video1 extends Content{
 	public String toString() {
 		return ID + " " + text;
 	}
-	private String qualityThumbnailURL;
+	//private String qualityThumbnailURL;
 	private String ID;
 	private String thumbnailURL;
 }

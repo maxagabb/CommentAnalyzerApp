@@ -1,15 +1,12 @@
 package business;
 
 import java.io.File;
+
 import java.io.IOException;
 
 import java.io.InputStream;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-
-import org.jsoup.Jsoup;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

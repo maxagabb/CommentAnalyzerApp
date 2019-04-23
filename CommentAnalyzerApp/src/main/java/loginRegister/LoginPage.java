@@ -1,26 +1,13 @@
 package loginRegister;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
-
 import byVideoFrontEnd.MainPage;
 import byVideoFrontEnd.TaskBar;
-import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 

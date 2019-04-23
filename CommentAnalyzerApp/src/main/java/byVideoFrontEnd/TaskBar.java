@@ -1,6 +1,7 @@
 package byVideoFrontEnd;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -9,15 +10,12 @@ import java.util.stream.Stream;
 import byChannelFrontEnd.ByChannelPage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import loginRegister.JavaFXStart;
 
 public class TaskBar extends HBox{
 	public TaskBar(Stage stage) {

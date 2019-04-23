@@ -1,26 +1,15 @@
 package commentsFrontEnd;
 
-import java.awt.GridBagConstraints;
 
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 
 import business.Comment;
 import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
-import byVideoFrontEnd.TaskBar;
 import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CommentListPanel extends ContentListPanel{
