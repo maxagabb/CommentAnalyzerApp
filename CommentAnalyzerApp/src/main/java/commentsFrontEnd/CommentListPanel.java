@@ -17,6 +17,7 @@ public class CommentListPanel extends ContentListPanel{
 		super(stage);
 	}
 
+        @Override
 	public void setPanel(){
 		this.setPadding(new Insets(25));
 		for(CommentPanel panel: panels) {
@@ -33,6 +34,7 @@ public class CommentListPanel extends ContentListPanel{
 		}
 	}
 	
+        @Override
 	public void addPanel(Content content) {
 		panels.add(new CommentPanel((Comment) content));
 		allPanels.add(new CommentPanel((Comment) content));
@@ -69,6 +71,7 @@ public class CommentListPanel extends ContentListPanel{
 		panels.stream().forEach((e)-> result.add(e.getPanelText()));
 		return result;
 	}
+        @Override
 	protected void makeSearchByPage(ContentPanel panel) {}
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();
 	ArrayList<CommentPanel> allPanels= new ArrayList<CommentPanel>();

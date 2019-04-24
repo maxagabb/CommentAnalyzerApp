@@ -16,7 +16,7 @@ public class LoginPage extends InputPage{
 	/**
 	 * concrete child of InputPage,
 	 * implements nextPage and setPageName
-	 * @param frame
+	 * @param primaryStage
 	 * @invariant this != null
 	 */
 	public LoginPage(Stage primaryStage) {

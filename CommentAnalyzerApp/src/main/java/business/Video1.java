@@ -30,7 +30,9 @@ public class Video1 extends Content{
 	}
         @Override
 	public String toString() {
-		return ID + " " + text;
+            if (ID!=null)
+		return ID + ", " + text;
+            return "no videoID, " + text;
 	}
 	//private String qualityThumbnailURL;
 	private String ID;
