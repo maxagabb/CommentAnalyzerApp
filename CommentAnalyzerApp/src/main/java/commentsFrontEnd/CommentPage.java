@@ -2,8 +2,8 @@ package commentsFrontEnd;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+
 
 
 
@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class CommentPage extends SearchByPage<ArrayList<Comment>, Comment>{
+public class CommentPage extends SearchByPage<Comment>{
 
 
 	public CommentPage(Stage stage, TaskBar bar, VideoPanel videoPanel) {
@@ -52,7 +52,7 @@ public class CommentPage extends SearchByPage<ArrayList<Comment>, Comment>{
 
 	@Override
 	protected void setInitialContent() {
-		createPanels(retrieverInput.get("comments"), panel);
+		createPanels(retrieverOutput, panel);
 		createJTextFields();
 		Button analyze = new Button("Tone Analyze");
 		analyze.setOnAction(e ->{
@@ -71,9 +71,9 @@ public class CommentPage extends SearchByPage<ArrayList<Comment>, Comment>{
 	protected void youtubeRetrieverSetup() {
 		try {
 			retriever = new CommentRetriever();
-			HashMap<String, ArrayList<Comment>> map = new HashMap<String, ArrayList<Comment>>();
-			map.put("comments", retriever.retrieve(videoID));
-			retrieverInput =  map;
+			//HashMap<String, ArrayList<Comment>> map = new HashMap<String, ArrayList<Comment>>();
+			//map.put("comments", retriever.retrieve(videoID));
+			retrieverOutput =  retriever.retrieve(videoID);
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

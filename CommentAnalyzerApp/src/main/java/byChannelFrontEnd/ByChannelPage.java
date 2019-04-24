@@ -10,14 +10,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ByChannelPage extends SearchByPage<Object, Channel1>{
+public class ByChannelPage extends SearchByPage<Channel1>{
 	public ByChannelPage(Stage stage,TaskBar bar) {
 		super(stage, bar);
 	}
 
 	@Override
 	protected void setInitialContent() {
-			createJTextFields();
+		createJTextFields();
 	}
 	@Override
 	protected HBox getTitle() {
@@ -33,7 +33,7 @@ public class ByChannelPage extends SearchByPage<Object, Channel1>{
 		else 
 			this.panel = new ChannelListPanel(stage);
 	}
-	
+
 	@Override
 	protected void youtubeRetrieverSetup() {
 		retriever = new ChannelRetriever();

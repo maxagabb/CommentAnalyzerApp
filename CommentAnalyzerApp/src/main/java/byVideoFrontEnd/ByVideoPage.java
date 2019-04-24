@@ -2,10 +2,10 @@ package byVideoFrontEnd;
 
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 
 
@@ -13,7 +13,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 
 
 import api.VideoRetriever;
-import business.Content;
 import business.ContentListPanel;
 import business.Video1;
 import byChannelFrontEnd.ChannelPanel;
@@ -24,7 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class ByVideoPage extends SearchByPage<Object, Video1>{
+public class ByVideoPage extends SearchByPage<Video1>{
 	public ByVideoPage(Stage stage,TaskBar bar) {
 		super(stage,bar);
 		//this.panel = new VideoListPanel(frame);
@@ -41,7 +40,7 @@ public class ByVideoPage extends SearchByPage<Object, Video1>{
 			createJTextFields();
 		else {
 			addContentListPanel(panel);
-			createPanels((ArrayList<Content>) retrieverInput.get("videos"), panel);
+			createPanels(retrieverOutput,panel);
 		}
 	}
 	@Override
@@ -53,7 +52,7 @@ public class ByVideoPage extends SearchByPage<Object, Video1>{
 		}
 		else {
 			try {
-				URL imageUrl = new URL((String) retrieverInput.get("bannerURL"));
+				URL imageUrl = new URL(((VideoRetriever)retriever).getBannerURL());
 				InputStream in = imageUrl.openStream();
 				this.image = new Image(in);
 				in.close();
@@ -90,7 +89,7 @@ public class ByVideoPage extends SearchByPage<Object, Video1>{
 		if(channelName == null) {}
 		else {
 			try {
-				retrieverInput = retriever.retrieveFromChannel(channelID);
+				retrieverOutput = ((VideoRetriever) retriever).retrieveFromChannel(channelID);
 			} catch (JsonParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

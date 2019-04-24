@@ -91,6 +91,6 @@ public abstract class ContentListPanel extends VBox{
 	protected ArrayList<ContentPanel> panels = new ArrayList<ContentPanel>();
 	protected Stage stage;
 	protected ContentPanel panel;
-	protected SearchByPage<?,?> page;
+	protected SearchByPage<?> page;
 	private ArrayList<Task<Void>> tasks = new ArrayList<Task<Void>>();
 }

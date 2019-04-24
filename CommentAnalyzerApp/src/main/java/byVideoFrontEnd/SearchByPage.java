@@ -2,8 +2,8 @@ package byVideoFrontEnd;
 
 
 import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 
 //T defines whatretrieverInput holds  
 //Z is Content subclass
-public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
+public abstract class SearchByPage<Z extends Content> extends BorderPane{
 
 	public SearchByPage(Stage stage, TaskBar bar) {
 		//this.getStyleClass().add("raisedBorder");
@@ -50,7 +50,7 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
 	 * @param retrieverInput
 	 * @param panel
 	 */
-	protected void createPanels(ArrayList<? extends Content> retrieverInput, ContentListPanel panel) {
+	protected void createPanels(ArrayList<Z> retrieverInput, ContentListPanel panel) {
 		for (Content content: retrieverInput) {
 			panel.addPanel(content);
 		}
@@ -70,7 +70,7 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
 
 	protected void createJTextFields() {
 		field.setOnAction(e->{
-			SearchByPage<T,Z> self = this;
+			SearchByPage<Z> self = this;
 			Service<Void> backgroundThread = new Service<Void>() {
 				@Override
 				protected Task<Void> createTask() {
@@ -86,7 +86,7 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
 				}
 			};
 			backgroundThread.setOnSucceeded((evt) -> {
-				createPanels((ArrayList<Content>) retrieverInput.get("content"),panel);
+				createPanels(retrieverOutput,panel);
 			});
 			backgroundThread.start();
 		});
@@ -105,9 +105,9 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
 	
 	public void setRetreiverInput() {
 		try {
-			HashMap<String, T> map = new HashMap<String, T>();
-			map.put("content", (T) retriever.retrieve(field.getText()));
-			retrieverInput = map;
+			//HashMap<String, T> map = new HashMap<String, T>();
+			//map.put("content", (T) retriever.retrieve(field.getText()));
+			retrieverOutput = retriever.retrieve(field.getText());
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -125,7 +125,8 @@ public abstract class SearchByPage<T,Z extends Content> extends BorderPane{
 	protected abstract void setInitialContent();
 	protected ContentListPanel panel;
 	protected Retriever<Z> retriever;
-	protected HashMap<String, T> retrieverInput;
+	//protected HashMap<String, T> retrieverInput;
+	protected ArrayList<Z> retrieverOutput;
 	protected TaskBar bar;
 	protected VBox top = new VBox();
 	final TextField field = new TextField();

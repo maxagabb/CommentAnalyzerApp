@@ -102,7 +102,7 @@ public class VideoRetriever extends Retriever<Video1>{
 		ChannelListResponse response = request.setId(searchTerm)
 				.setMaxResults(1L)
 				.execute();
-		String bannerURL = response.getItems().get(0).getBrandingSettings().getImage().getBannerMobileMediumHdImageUrl();
+		bannerURL = response.getItems().get(0).getBrandingSettings().getImage().getBannerMobileMediumHdImageUrl();
 
 		String uploadsID = response.getItems().get(0).getContentDetails().getRelatedPlaylists().getUploads();
 		System.out.print(uploadsID);
@@ -126,8 +126,6 @@ public class VideoRetriever extends Retriever<Video1>{
 
 	}
 
-
-
 	@Override
 	public ArrayList<Video1> retrieve(String fieldInput) throws JsonParseException, IOException {
 		ArrayList<Video1> videos = new ArrayList<Video1>();
@@ -144,9 +142,16 @@ public class VideoRetriever extends Retriever<Video1>{
 			return videos;
 		}
 	}
-
-	public HashMap<String,Object> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
-		HashMap<String,Object> result = new HashMap<>();;
+	/**
+	 * Returns hashmap filled with objects of multiple types: ArrayList<Video1>, String
+	 * @param fieldInput
+	 * @return
+	 * @throws JsonParseException
+	 * @throws IOException
+	 * @postcondition bannerURL != null
+	 */
+	public ArrayList<Video1> retrieveFromChannel(String fieldInput) throws JsonParseException, IOException{
+		//HashMap<String,Object> result = new HashMap<>();;
 		ArrayList<Video1> videos = new ArrayList<Video1>();
 		try {
 			HashMap<String,Object> response =  getJson2(fieldInput);
@@ -156,15 +161,25 @@ public class VideoRetriever extends Retriever<Video1>{
 				Video1 video = new Video1(item);
 				videos.add(video);
 			}
-			result.put("videos", videos);
-			result.put("bannerURL", response.get("bannerURL"));
-			return result;
+			//result.put("videos", videos);
+			//result.put("bannerURL", response.get("bannerURL"));
+			return videos;
 		}
 		catch(Exception e){
 			videos.add(new Video1(e.getMessage()));
-			result.put("videos", videos);
-			return result;
+			//result.put("videos", videos);
+			return videos;
 		}
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @precondition bannerURL != null 
+	 */
+	public String getBannerURL() {
+		return bannerURL;
+	}
+	private String bannerURL;
 
 }
