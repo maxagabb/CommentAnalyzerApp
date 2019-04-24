@@ -33,7 +33,7 @@ public class UserTest extends TestCase {
      */
     public void testGetName() {
         System.out.println("getName");
-        ArrayList<String> user = new ArrayList();
+        ArrayList<String> user = new ArrayList<String>();
         user.add("username");
         user.add("password");
         User instance = new User(user);
@@ -47,7 +47,7 @@ public class UserTest extends TestCase {
      */
     public void testGetPassword() {
         System.out.println("getPassword");
-        ArrayList<String> user = new ArrayList();
+        ArrayList<String> user = new ArrayList<String>();
         user.add("username");
         user.add("password");
         User instance = new User(user);
@@ -61,7 +61,7 @@ public class UserTest extends TestCase {
      */
     public void testGetEmail() {
         System.out.println("getEmail");
-        ArrayList<String> user = new ArrayList();
+        ArrayList<String> user = new ArrayList<String>();
         user.add("username");
         user.add("password");
         user.add("email");
@@ -76,7 +76,7 @@ public class UserTest extends TestCase {
      */
     public void testValidate() {
         System.out.println("validate");
-        ArrayList<String> user = new ArrayList();
+        ArrayList<String> user = new ArrayList<String>();
         user.add("username");
         user.add("password");
         user.add("email");

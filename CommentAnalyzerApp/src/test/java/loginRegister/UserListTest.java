@@ -5,7 +5,6 @@
  */
 package loginRegister;
 
-import business.User;
 import java.io.File;
 import java.util.ArrayList;
 import junit.framework.TestCase;
@@ -35,10 +34,9 @@ public class UserListTest extends TestCase {
      */
     public void testValidate() {
         System.out.println("validate");
-        ArrayList<String> inputinfo = new ArrayList();
+        ArrayList<String> inputinfo = new ArrayList<String>();
         inputinfo.add("1");
         inputinfo.add("1");
-        User user = new User(inputinfo);
         UserList instance = new UserList(new File("users.csv"));
         boolean expResult = true;
         boolean result = instance.validate(inputinfo);
