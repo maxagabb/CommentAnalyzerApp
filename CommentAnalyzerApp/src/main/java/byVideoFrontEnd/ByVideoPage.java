@@ -37,7 +37,7 @@ public class ByVideoPage extends SearchByPage<Video1>{
 	@Override
 	protected void setInitialContent() {
 		if(channelName == null) 
-			createJTextFields();
+			setTextFieldListener();
 		else {
 			addContentListPanel(panel);
 			createPanels(retrieverOutput,panel);
@@ -75,6 +75,7 @@ public class ByVideoPage extends SearchByPage<Video1>{
 
 		return panel;
 	}
+        @Override
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
 			panel.emptyList();

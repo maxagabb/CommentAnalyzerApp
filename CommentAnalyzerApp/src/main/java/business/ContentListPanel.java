@@ -22,6 +22,12 @@ public abstract class ContentListPanel extends VBox{
 		}
 
 
+        /**
+         * sets content list panel, calling setPanel on all aggregated
+         * panels(composition pattern). Adds listeners to panels
+         * @precondition none
+         * @postcondition ContentListPanel object is set 
+         */
 	public void setPanel(){
 		ContentListPanel self  = this;
 		for(ContentPanel panel: (ArrayList<ContentPanel>)panels) {
@@ -50,7 +56,13 @@ public abstract class ContentListPanel extends VBox{
 			this.getChildren().add(panel);
 		}
 	}
-	
+	/**
+         * creates background thread which starts when a ContentPanel
+         * is clicked. The thread sets the next page. 
+         * @return Service with Task that runs in background
+         * @precondition none
+         * @postcondition returns Service with defined Task
+         */
 	private Service<Void> makeThread() {
 		ContentListPanel self  = this;
 		Service<Void> backgroundThread = new Service<Void>() {
@@ -81,7 +93,13 @@ public abstract class ContentListPanel extends VBox{
         return backgroundThread;
 	}
 
-	public void setNextPage() {
+        /**
+         * Calls factory method in concrete subclass and sets the 
+         * resulting page. 
+         * @precondition none
+         * @postcondition this.page != null
+         */
+	private void setNextPage() {
 		makeSearchByPage(panel);
 		page.setPage();
 		page.setPadding(new Insets(20));

@@ -20,12 +20,15 @@ public class Video1 extends Content{
 		this.text = item.getSnippet().getTitle();
 		this.thumbnailURL = item.getSnippet().getThumbnails().getDefault().getUrl();
 	}
+        @Override
 	public String getID() {
 		return ID;
 	}
+        @Override
 	public String getthumbnailURL() {
 		return thumbnailURL;
 	}
+        @Override
 	public String toString() {
 		return ID + " " + text;
 	}

@@ -18,6 +18,12 @@ public abstract class ContentPanel extends HBox {
 	public ContentPanel(Content content) {
 		this.content = content;
 	}
+        /**
+         * Sets panel with image and text content derived from
+         * concrete classes
+         * @precondition this.content != null
+         * @postcondition panel is set 
+         */
 	public void setPanel() {
 		Label name = new Label(getPanelText());
 		name.setWrapText(true);
@@ -54,14 +60,20 @@ public abstract class ContentPanel extends HBox {
 		panelBox.setSpacing(20);
 		this.getChildren().add(panelBox);
 	}
+        /**
+         * retrieves text from Content object held in panel
+         * @return content.getText()
+         * @precondition this.content != null
+         * @postcondition none
+         */
 	public String getPanelText() {
 		return content.getText();
 	}
-	public String getVideoID() {return null;}
+	/*public String getVideoID() {return null;}
 	public String getChannelID() {return null;}
 	public Image getImage() {
 		return image;
-	}
+	}*/
 	protected Image image;
 	protected Content content;
 }

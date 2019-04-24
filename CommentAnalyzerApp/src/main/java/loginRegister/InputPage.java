@@ -111,20 +111,7 @@ public abstract class InputPage extends BorderPane{
 		return submitBox;
 		
 	}
-
 	protected JFrame frame;
 	protected String inputName;
 	protected String inputPassword;
-	
-	public static void main(String[] args) {
-		/*
-		JFrame frame = new JFrame();
-		frame.setLayout(new BorderLayout());
-		frame.setBounds(800, 400, 1200, 800);
-		frame.add(new WelcomePage(frame));
-		frame.setLocationRelativeTo(null); 
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);*/
-	}
-
 }

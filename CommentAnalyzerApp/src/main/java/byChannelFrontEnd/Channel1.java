@@ -16,9 +16,11 @@ public class Channel1 extends Content{
 		this.thumbnailURL = "iconfinderSignError299045.png";
 	}
 
+        @Override
 	public String getID() {
 		return ID;
 	}
+        @Override
 	public String getthumbnailURL() {
 		return thumbnailURL;
 	}

@@ -14,6 +14,7 @@ public class ChannelListPanel extends ContentListPanel{
 		super(stage);
 	}
 	
+        @Override
 	public void emptyList() {
 		panels.removeAll(panels);
 	}

@@ -30,10 +30,10 @@ public class CommentPage extends SearchByPage<Comment>{
 		this.videoID = videoPanel.getVideoID();
 		this.panel = new CommentListPanel(stage);
 		this.videoName = videoPanel.getPanelText();
-
 	}
 
-	protected void createJTextFields() {
+        @Override
+	protected void setTextFieldListener() {
 		final TextField field2 = new TextField();
 		field2.setOnAction(e ->{
 			panel.parseComments(field2.getText());
@@ -53,7 +53,7 @@ public class CommentPage extends SearchByPage<Comment>{
 	@Override
 	protected void setInitialContent() {
 		createPanels(retrieverOutput, panel);
-		createJTextFields();
+		setTextFieldListener();
 		Button analyze = new Button("Tone Analyze");
 		analyze.setOnAction(e ->{
 			//Watson.analyze(panel.getComments());
@@ -71,8 +71,6 @@ public class CommentPage extends SearchByPage<Comment>{
 	protected void youtubeRetrieverSetup() {
 		try {
 			retriever = new CommentRetriever();
-			//HashMap<String, ArrayList<Comment>> map = new HashMap<String, ArrayList<Comment>>();
-			//map.put("comments", retriever.retrieve(videoID));
 			retrieverOutput =  retriever.retrieve(videoID);
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block

@@ -25,6 +25,11 @@ public class TaskBar extends HBox{
 		setBar();
 	}
 
+        /**
+         * instantiates and adds buttons to the taskBar
+         * @precondition none
+         * @postcondition none
+         */
 	private void setBar() {
 		ArrayList<String> buttonNames = new ArrayList<String>();
 		buttonNames.add("Manage Favorites");buttonNames.add("By Video");
@@ -52,7 +57,13 @@ public class TaskBar extends HBox{
 		}
 		this.setAlignment(Pos.CENTER);
 	}
-	
+	/**
+         * instantiates page based on button label
+         * @param name is button text
+         * @return page depending on name
+         * @precondition name != null
+         * @postcondition centeredPage != null
+         */
 	private Pane getPane(String name) {
 		Pane page = null;
 		if(name.equals("Manage Favorites"))
@@ -69,9 +80,6 @@ public class TaskBar extends HBox{
 		}
 		else return new Pane();
 		StackPane centeredPage = new StackPane(page);
-		//centeredPage.getStyleClass().add("raisedBorder");
-		
-		//Pane borderPage = new Pane();
 		page.setPadding(new Insets(40));
 		return centeredPage;
 	}

@@ -12,11 +12,22 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 	public CommentPanel(Content comment) {
 		super(comment);
 	}
-	
-	public boolean contains(String input) {
-		return content.getText().toLowerCase().contains(input.toLowerCase());
+	/**
+         * Determine if comment held in panel contains keyword
+         * @param keyword
+         * @return true if comment contains keyword
+         * @precondition this != null
+         * @postcondition contains == true || contains == false
+         */
+	public boolean contains(String keyword) {
+		return content.getText().toLowerCase().contains(keyword.toLowerCase());
 	}
-	
+	/**
+         * Sets and styles comment panel
+         * @precondition this != null
+         * @postcondition this != null
+         */
+        @Override
 	public void setPanel() {
 		Label comment = new Label(content.getText());
 		comment.setWrapText(true);
@@ -29,6 +40,12 @@ public class CommentPanel extends ContentPanel implements Cloneable{
 		commentBox.setAlignment(Pos.CENTER_LEFT);
 		
 	}
+        /**
+         * returns deep clone of commentPanel
+         * @return  new CommentPanel()
+         * @precondition this != null
+         * @postcondition this.clone != null
+         */
 	public CommentPanel clone() {
 		return new CommentPanel(content);
 	}

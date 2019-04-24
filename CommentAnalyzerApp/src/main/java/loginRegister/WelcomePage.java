@@ -35,18 +35,6 @@ public class WelcomePage extends BorderPane{
 			root.getChildren().add(new LoginPage(primaryStage));
 			root.setAlignment(Pos.TOP_CENTER);
     		this.primaryStage.getScene().setRoot(root);
-			//primaryStage.setWidth(1200);primaryStage.setHeight(800);
-			//primaryStage.centerOnScreen();
-			/*StackPane root = new StackPane();
-			root.getChildren().add(new LoginPage(primaryStage));
-			
-			Scene scene = new Scene(root, primaryStage.getWidth(), 
-					primaryStage.getHeight());
-			scene.getStylesheets().add
-			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-			
-			primaryStage.setScene(scene);*/
-
 		});
 		Button register = new Button("register");
 		register.setOnAction(e ->{
@@ -54,16 +42,6 @@ public class WelcomePage extends BorderPane{
 			root.getChildren().add(new RegisterPage(primaryStage));
 			root.setAlignment(Pos.TOP_CENTER);
     		this.primaryStage.getScene().setRoot(root);
-			/*
-			StackPane root = new StackPane();
-			root.getChildren().add(new RegisterPage(primaryStage));
-			
-			Scene scene = new Scene(root, primaryStage.getWidth(), 
-					primaryStage.getHeight());
-			scene.getStylesheets().add
-			 (JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-			
-			primaryStage.setScene(scene);*/
 		});
 		
 		Text welcome = new Text("Welcome Screen");

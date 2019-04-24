@@ -17,7 +17,7 @@ public class ByChannelPage extends SearchByPage<Channel1>{
 
 	@Override
 	protected void setInitialContent() {
-		createJTextFields();
+		setTextFieldListener();
 	}
 	@Override
 	protected HBox getTitle() {
@@ -26,6 +26,7 @@ public class ByChannelPage extends SearchByPage<Channel1>{
 		panel.getChildren().add(label);
 		return panel;
 	}
+        @Override
 	protected void addContentListPanel(ContentListPanel panel) {
 		if(panel != null) {
 			panel.emptyList();

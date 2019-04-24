@@ -39,25 +39,6 @@ public class LoginPage extends InputPage{
     		grid.getChildren().add(new MainPage(stage, new TaskBar(stage)));
     		grid.setAlignment(Pos.TOP_CENTER);
     		this.stage.getScene().setRoot(grid);
-			
-			/*
-			StackPane root = new StackPane(new MainPage(stage, new TaskBar(stage)));
-			ScrollPane pane = new ScrollPane(root);
-			GridPane grid = new GridPane();
-
-			root.minWidthProperty().bind(Bindings.createDoubleBinding(() -> 
-			pane.getViewportBounds().getWidth(), pane.viewportBoundsProperty()));
-			grid.getChildren().add(pane);
-
-			Scene scene = new Scene(root, 800, 
-					stage.getHeight());
-			
-			grid.setAlignment(Pos.TOP_CENTER);
-
-			scene.getStylesheets().add
-			(JavaFXStart.class.getResource("myCSS.css").toExternalForm());
-			stage.setScene(scene);*/
-			
 		}
 
 		else

@@ -22,9 +22,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+ 
 
-//T defines whatretrieverInput holds  
-//Z is Content subclass
+/**
+ * Abstract class that defines template method setPage()
+ * @author mgabb2015
+ * @param <Z> is a subclass of Content
+  */
 public abstract class SearchByPage<Z extends Content> extends BorderPane{
 
 	public SearchByPage(Stage stage, TaskBar bar) {
@@ -32,16 +36,18 @@ public abstract class SearchByPage<Z extends Content> extends BorderPane{
 		this.bar = bar;
 		this.stage = stage;
 	}
-
+        /**
+         * template method for initial page setup
+         * @precondition this != null
+         * @postcondition top != null
+         */
 	public void setPage() {
-		//top.getChildren().add(bar);
 		youtubeRetrieverSetup();
 		HBox title = getTitle();
 		title.getChildren().get(0).setId("title-text");
 		top.getChildren().add(title);
 		title.setAlignment(Pos.CENTER);
 		setInitialContent();
-		//top.setPadding(new Insets(25));
 		this.setTop(top);
 	}
 	/**
@@ -49,6 +55,8 @@ public abstract class SearchByPage<Z extends Content> extends BorderPane{
 	 * then adds it to the SearchByPage
 	 * @param retrieverInput
 	 * @param panel
+         * @precondition panel != null
+         * @postcondition panel != null
 	 */
 	protected void createPanels(ArrayList<Z> retrieverInput, ContentListPanel panel) {
 		for (Content content: retrieverInput) {
@@ -67,17 +75,21 @@ public abstract class SearchByPage<Z extends Content> extends BorderPane{
 		panel.setPadding(new Insets(100));
 		pane.setPadding(new Insets(25));
 	}
-
-	protected void createJTextFields() {
+        /**
+         * Sets a listener for TextField that sets contentListPanel in 
+         * a background thread
+         * @precondition this.field != null
+         * @postcondition this.field != null
+         */
+	protected void setTextFieldListener() {
 		field.setOnAction(e->{
-			SearchByPage<Z> self = this;
 			Service<Void> backgroundThread = new Service<Void>() {
 				@Override
 				protected Task<Void> createTask() {
 					return new Task<Void>() {
 						@Override
 						protected Void call() throws Exception {
-							self.setRetreiverInput();
+							setRetreiverOutput();
 							addContentListPanel(panel);
 							panel.setPadding(new Insets(20));
 							return null;
@@ -102,11 +114,13 @@ public abstract class SearchByPage<Z extends Content> extends BorderPane{
 		top.setSpacing(30);
 	}
 
-	
-	public void setRetreiverInput() {
+	/**
+         * Calls retrieve from YouTube API and sets retrieverOutput
+         * @precondition this.retriever != null 
+         * @postcondition this.retrieverOutput != null
+         */
+	public void setRetreiverOutput() {
 		try {
-			//HashMap<String, T> map = new HashMap<String, T>();
-			//map.put("content", (T) retriever.retrieve(field.getText()));
 			retrieverOutput = retriever.retrieve(field.getText());
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
@@ -117,18 +131,42 @@ public abstract class SearchByPage<Z extends Content> extends BorderPane{
 		}
 	}
 
-
-	protected Stage stage;
+        /**
+         * Instantiates Retriever with Retriever Subclass in 
+         * concrete subclasses of SearchByPage.
+         * primitiveOP and factory method 
+         * @precondiiton none
+         * @postcondition this.retriever != null
+         */
 	protected abstract void youtubeRetrieverSetup();
-	protected  void addContentListPanel(ContentListPanel panel) {};
+        /**
+         * Factory method implemented by concrete subclasses that
+         * instantiate the right subclass of ContentListPanel
+         * @param panel 
+         * @precondition none
+         * @postcondition this.panel != null
+         */
+	protected  void addContentListPanel(ContentListPanel panel){};
+        /**
+         * PrimitiveOP for concrete classes that sets the title of the page
+         * @return HBox containing page title
+         * @precondition none
+         * @postcondition HBox != null
+         */
 	protected abstract HBox getTitle();
+        /**
+         * PrimitiveOP for concrete classes that sets initialize page content.
+         * Some pages are initialized with output from API 
+         * @precondition none
+         * @postcondition none 
+         */
 	protected abstract void setInitialContent();
 	protected ContentListPanel panel;
 	protected Retriever<Z> retriever;
-	//protected HashMap<String, T> retrieverInput;
 	protected ArrayList<Z> retrieverOutput;
 	protected TaskBar bar;
 	protected VBox top = new VBox();
 	final TextField field = new TextField();
 	protected Image image;
+        protected Stage stage;
 }

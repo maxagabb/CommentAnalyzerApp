@@ -18,7 +18,6 @@ public class CommentListPanel extends ContentListPanel{
 	}
 
 	public void setPanel(){
-		
 		this.setPadding(new Insets(25));
 		for(CommentPanel panel: panels) {
 			panel.setPanel();
@@ -38,7 +37,12 @@ public class CommentListPanel extends ContentListPanel{
 		panels.add(new CommentPanel((Comment) content));
 		allPanels.add(new CommentPanel((Comment) content));
 	}
-	
+	/**
+         * Selects out CommentPanels without keyword and updates view
+         * @param text is the keyword
+         * @precondition none
+         * @postcondition none
+         */
 	public void parseComments(String text) {
 		panels.clear();
 		for(CommentPanel panel : allPanels) {
@@ -54,7 +58,12 @@ public class CommentListPanel extends ContentListPanel{
 		this.getChildren().clear();
 		setPanel();
 	}
-	
+	/**
+         * returns all comments currently displayed by the view
+         * @return ArrayList<String> of comments
+         * @precondition panels != null
+         * @postcondition returns ArrayList of comments
+         */
 	public ArrayList<String> getComments(){
 		ArrayList<String> result = new ArrayList<String>();
 		panels.stream().forEach((e)-> result.add(e.getPanelText()));
