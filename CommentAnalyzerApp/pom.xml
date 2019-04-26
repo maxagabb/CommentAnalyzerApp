@@ -21,7 +21,7 @@
                 <dependency>
                         <groupId>com.ibm.watson.developer_cloud</groupId>
                         <artifactId>tone-analyzer</artifactId>
-                        <version>3.4.0</version>
+                        <version>6.14.2</version>
                 </dependency>
 		<dependency>
 			<!-- jsoup HTML parser library @ https://jsoup.org/ -->
