@@ -1,6 +1,7 @@
 package commentsFrontEnd;
 
 
+import business.AnalyzedComment;
 import java.util.ArrayList;
 
 
@@ -9,6 +10,7 @@ import business.Comment;
 import business.Content;
 import business.ContentListPanel;
 import business.ContentPanel;
+import com.ibm.watson.tone_analyzer.v3.model.ToneAnalysis;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 
@@ -71,6 +73,17 @@ public class CommentListPanel extends ContentListPanel{
 		panels.stream().forEach((e)-> result.add(e.getPanelText()));
 		return result;
 	}
+        
+        
+        public void applyAnalysis(ArrayList<ToneAnalysis> tones){
+            panels.clear();
+            for (ToneAnalysis tone: tones){
+                panels.add(new AnalysisPanel(new AnalyzedComment(tone)));
+            }
+            this.getChildren().clear();
+            setPanel();
+        }
+        
         @Override
 	protected void makeSearchByPage(ContentPanel panel) {}
 	private ArrayList<CommentPanel> panels = new ArrayList<CommentPanel>();

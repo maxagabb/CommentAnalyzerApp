@@ -14,6 +14,9 @@ import business.Comment;
 import byVideoFrontEnd.SearchByPage;
 import byVideoFrontEnd.TaskBar;
 import byVideoFrontEnd.VideoPanel;
+import com.ibm.watson.tone_analyzer.v3.Analyzer;
+import com.ibm.watson.tone_analyzer.v3.model.ToneAnalysis;
+import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -56,8 +59,10 @@ public class CommentPage extends SearchByPage<Comment>{
 		setTextFieldListener();
 		Button analyze = new Button("Tone Analyze");
 		analyze.setOnAction(e ->{
-			//Watson.analyze(panel.getComments());
-			System.out.print(panel.getComments()+ "\n");
+                        Analyzer watson = new Analyzer();
+			analyzedComments = watson.analyze(panel.getComments());
+                        panel.applyAnalysis(analyzedComments);
+                        //analyzedComments.stream().forEach((com)->System.out.print(com));
 		});
 		top.getChildren().add(analyze);
 	}
@@ -81,6 +86,7 @@ public class CommentPage extends SearchByPage<Comment>{
 		}
 
 	}
+        private ArrayList<ToneAnalysis> analyzedComments;
 	private String videoID;
 	private String videoName;
 	private CommentListPanel panel = new CommentListPanel(stage);
