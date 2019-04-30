@@ -6,17 +6,15 @@
 package commentsFrontEnd;
 
 import business.AnalyzedComment;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.ibm.watson.tone_analyzer.v3.model.ToneAnalysis;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 /**
  *
@@ -31,17 +29,8 @@ public class AnalysisPanel extends CommentPanel {
 
     @Override
     public void setPanel() {
-        //System.out.print(node.get("tone_id\\").asText());
-        //Text title = new Text(node.get("tone_id\\").asText());
-        
-        
-        Label comment = new Label("No Tones Detected");
-        try {
-            comment = new Label(mapper.writerWithDefaultPrettyPrinter().
-                    writeValueAsString(content.getText()));
-        } catch (JsonProcessingException ex) {
-            Logger.getLogger(AnalysisPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Label comment = new Label(parseJson());
+
         comment.setWrapText(true);
         comment.setPrefWidth(500);
         VBox commentBox = new VBox();
@@ -53,18 +42,12 @@ public class AnalysisPanel extends CommentPanel {
         commentBox.setAlignment(Pos.CENTER_LEFT);
 
     }
-    private void parseJson(){
-        try {
-            node = mapper.readTree(tone.toString());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(AnalysisPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private String parseJson(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(tone.toString());
+        return gson.toJson(je);
     }
-    
-
-
     private final ToneAnalysis tone;
     private final ObjectMapper mapper = new ObjectMapper();
-    private JsonNode node;
 }
