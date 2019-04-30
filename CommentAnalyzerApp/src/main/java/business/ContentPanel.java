@@ -1,5 +1,6 @@
 package business;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 
 import java.io.IOException;
@@ -43,8 +44,9 @@ public abstract class ContentPanel extends HBox {
 		}
 		catch (IOException ioe) {
 			try {
-				File file = new File(content.getthumbnailURL());
-				this.image = new Image(file.toURI().toString());
+				InputStream in = new BufferedInputStream(getClass().getResourceAsStream("/" + content.getthumbnailURL()));
+				this.image = new Image(in);
+				in.close();
 				ImageView imageView = new ImageView(image);
 				imageBox.getChildren().add(imageView);
 				panelBox.getChildren().add(imageBox);

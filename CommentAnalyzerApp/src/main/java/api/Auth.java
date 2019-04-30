@@ -19,6 +19,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -50,8 +53,10 @@ public class Auth {
     public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException {
 
         // Load client secrets.
-    	InputStream in =  new FileInputStream("client_secret_460298885215-rlitofilod32q6sfcl5ln21p3pqcg93p.apps.googleusercontent.com.json");
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader( in ));
+    	Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secret_460298885215-rlitofilod32q6sfcl5ln21p3pqcg93p.apps.googleusercontent.com.json"));
+    	//InputStream in =  Auth.class.getResourceAsStream("client_secret_460298885215-rlitofilod32q6sfcl5ln21p3pqcg93p.apps.googleusercontent.com.json");
+    	//System.out.print(in);
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")

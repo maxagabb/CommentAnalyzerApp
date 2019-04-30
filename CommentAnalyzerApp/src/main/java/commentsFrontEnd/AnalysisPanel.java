@@ -41,7 +41,7 @@ public class AnalysisPanel extends CommentPanel {
 
     @Override
     public void setPanel() {
-        System.out.print(parseJson());
+        //System.out.print(parseJson());
         VBox commentBox = new VBox();
         Text title = new Text("Comment Tones:");
         title.setId("welcome-text");
